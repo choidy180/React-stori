@@ -1,14 +1,20 @@
 import React from 'react';
 import styled from "styled-components"
-import { Helmet } from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import BackLogoImage from '../components/BackLogoImage';
+import { useRecoilValue } from 'recoil';
+import { isDarkAtom } from '../recoil/theme';
 
 
 export default function Home(){
+  const isDark = useRecoilValue(isDarkAtom);
+  console.log(isDark);
   return (
     <Container>
-      <Helmet>
-        <title>홈페이지</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet title="홈페이지"/>
+      </HelmetProvider>
+      <BackLogoImage/>
     </Container>
   )
 }

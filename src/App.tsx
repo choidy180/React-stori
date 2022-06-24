@@ -3,9 +3,9 @@ import { useRecoilValue } from 'recoil';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import reset from 'styled-reset';
 import './App.css';
-import { isDarkAtom } from './atom';
+import { darkTheme, lightTheme } from './enum/ThemeEnums';
+import { isDarkAtom } from './recoil/theme';
 import Router from './Router';
-import { darkTheme, lightTheme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -14,22 +14,30 @@ const GlobalStyle = createGlobalStyle`
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-    * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-    }
-    html{
-      min-width: 100vw;
-      min-height: 100vh;
-    }
-    body {
-      font-family: 'NEXON Lv1 Gothic OTF';
-      background-color: ${props => props.theme.bgColor};
-      color: ${props => props.theme.textColor};
-      min-width: 100vw;
-      min-height: 100vh;
-    }
+  }
+  @font-face {
+    font-family: 'NEXON Lv1 Gothic OTF Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  * {
+    box-sizing: border-box;
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+  html{
+    min-width: 100vw;
+    min-height: 100vh;
+  }
+  body {
+    font-family: 'NEXON Lv1 Gothic OTF';
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.textColor};
+    min-width: 100vw;
+    min-height: 100vh;
   }
 `
 
