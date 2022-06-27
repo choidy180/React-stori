@@ -7,14 +7,13 @@ import { useRecoilValue } from 'recoil';
 import { isDarkAtom } from '../recoil/theme';
 import { darkTheme, lightTheme } from '../enum/ThemeEnums';
 
-interface titleProps {
+interface title {
   title: string;
 }
 
-export default function Topup(title:titleProps){
+export default function Topup(title:title){
   const isDark = useRecoilValue(isDarkAtom);
   const coinSelect = (event:any) => {
-    console.log(event?.target);
   }
   return (
     <>
@@ -127,6 +126,18 @@ export default function Topup(title:titleProps){
             <p>결제를 취소하실 경우 익월 취소로 승인 됩니다.</p>
             <p>월자동충전권으로 결제한 캐쉬는 1개월간만 유효하며, 사용하지 않은 만큼 자동 소멸됩니다.</p> 
           </SubText>
+          <SubulTitle>구매 전 필수 유의사항</SubulTitle>
+          <Subul>
+            <li>구매한 캐시의 유효기간은 구입일로부터 5년간 입니다.</li>
+            <li>캐시 구매/ 이용내역은 마이 페이지 토리캐시 지갑에서 확인이 가능합니다.</li>
+            <li>150개 이상 구매시 결제 방법에 따라 보너스 캐시를 제공할 수 있습니다. <br/>(신용카드1%,계좌이체2%,가상계좌2%,무통장입금3%)</li>
+            <li>캐시구매 한도가 초과한 경우 구매 불가 합니다. (일 :10,000개 / 월 : 400,000개)</li>
+            <li>캐시구매 한도가 초과한 경우 선물이 불가합니다. (일 : 95,000개 / 월 : 300,000개)당일 한도는 23시59분59초 / 당월 한도는 매월 말일까지 적용 됩니다.</li>
+            <li>미성년자 가입자는 캐시 및 유료 아이템을 구매할 수 없습니다.</li>
+            <li>법정 대리인의 동의 없이 미성년자 명의로 결제한 캐시는 환불이 가능합니다.</li>
+            <li>사용하지 않은 캐시에 한에 구매 후 7일 이내 청약철회가 가능하며, 1:1문의 게시판에 신청해 주시기 바랍니다.</li>
+            <li>유료아이템의 내용 표시. 광고의 내용과 다르거나 계약 내용과 다게 이행된 경우에는 해당 유료 아이템을 공급받은 날부터 3개월 이내, 그 사실을 안 날 또는 알수 있었던 날부터 30일 이내 청약 철회가 가능 합니다.</li>
+          </Subul>
         </Box>
       </Container>
     </>
@@ -134,7 +145,7 @@ export default function Topup(title:titleProps){
 }
 
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 0px 20px 30px 20px;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
@@ -149,12 +160,13 @@ const Box = styled.div`
   padding: 40px 30px;
   border-radius: 16px;
   position: relative;
-  background-color: ${props => props.theme.boxColor};
+  background-color: white;
   z-index: 999;
   margin-top: 24px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `
 const Title = styled.p`
-  font-size: 1rem;
+  font-size: 20px;
   letter-spacing: -.6px;
   color: #141414;
   display: flex;
@@ -171,13 +183,13 @@ const Title = styled.p`
 const TopupBoxTop = styled.div`
   position: relative;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 24px;
   border-top: 1px solid #DCDCDC;
-  padding: 12px 0;
+  padding: 24px 0 12px 0;
   button {
     position: absolute;
     right: 10px;
-    top: 50%;
+    top: calc(50% + 6px);
     transform: translateY(-50%);
     background-color: #070707;
     border-radius: 6px;
@@ -192,9 +204,9 @@ const TopupBoxTop = styled.div`
     top: 0;
     width: auto;
     left: 14px;
-    background-color: ${props => props.theme.boxColor};
+    background-color: white;
     color: #000000;
-    padding: 4px 6px 4px 6px;
+    padding: 16px 6px 4px 6px;
   }
   b {
     color: #DD4C4C;
@@ -204,18 +216,18 @@ const TopupBoxTop = styled.div`
 `
 const Directly = styled.input`
   width: 100%;
-  padding: 7.5px 85px 7.5px 12px;
+  padding: 12px 95px 12px 12px;
   border: 1px solid #DD4C4C;
   border-radius: 6px;
-  font-size: 1.15rem;
+  font-size: 20px;
   text-align: right;
   outline: none;
-  background-color: ${props => props.theme.boxColor};;
+  background-color: white;
 `
 const TopupBox = styled.div`
   position: relative;
   width: 100%;
-  padding-top: 12px;
+  margin-top: 16px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -233,6 +245,7 @@ const CoinBox = styled.div`
   border-radius: 8px;
   row-gap: 11px;
   font-size: 1.15rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
   cursor: pointer;
   div {
     display: flex;
@@ -261,7 +274,7 @@ const Semen = styled.button`
   padding: 14px 20px;
   background-color: #212121;
   border-radius: 5px;
-  margin-top: 14px;
+  margin-top: 32px;
   color: #fff;
   border: none;
   outline: none;
@@ -301,7 +314,7 @@ const Semen = styled.button`
 `
 const SubText = styled.div`
   width: 100%;
-  margin-top: 18px;
+  margin-top: 32px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -310,5 +323,25 @@ const SubText = styled.div`
     color: #8E8D8D;
     line-height: 1.25rem;
     letter-spacing: -.4px;
+  }
+`
+const SubulTitle = styled.p`
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+  margin-top: 32px;
+`
+const Subul = styled.ul`
+  font-size: 14px;
+  line-height: 19px;
+  list-style-type: disc;
+  padding-left: 12px;
+  li:nth-child(1){
+    margin-top: 16px;
+  }
+  li {
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    color: #000000;
   }
 `

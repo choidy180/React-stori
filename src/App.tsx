@@ -38,6 +38,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.textColor};
     min-width: 100vw;
     min-height: 100vh;
+    transition: .2s background ease-in-out
   }
 `
 
