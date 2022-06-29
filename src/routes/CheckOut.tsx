@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { ChevronDownOutline, ChevronUpOutline } from 'react-ionicons';
 import styled from 'styled-components';
+import BackLogoImage from '../components/BackLogoImage';
 import NavBar from '../components/Nav';
 
 interface title {
   title: string;
 }
 export default function CheckOut(title:title){
+  const [ method, setMethod ] = useState<string>("신용카드");
+  const [ meansChange, setMeansChange ] = useState<Boolean>(false);
+  const ClickMeansTab = () => {
+    setMeansChange((e) => !e);
+  }
+  const choiceMean = (event:any) => {
+    setMethod(event.target.innerText);
+  }
   return(
     <>
       <NavBar title={title.title}/>
@@ -14,54 +24,48 @@ export default function CheckOut(title:title){
         <HelmetProvider>
           <Helmet title={title.title}/>
         </HelmetProvider>
+        <BackLogoImage/>
         <Box>
           <TopTitle>구매 상품명</TopTitle>
           <TopTitleLine/>
-          <ProductName style={{marginTop: "32px"}}>
-            <div>상품명</div>
-            <div>100TC</div>
-          </ProductName>
-          <ProductName style={{marginTop: "12px"}}>
-            <div>가격</div>
-            <div>11,000원<span>(VAT포함)</span></div>
-          </ProductName>
-          <Means>
-            <MeasLeft>결제 방법</MeasLeft>
-            <ItemBox>
-              <div>
-                <input type="radio" id="credit" className="select-radio" name="select" value="신용카드"/>
-                <label className="label-select" htmlFor='credit'>신용카드</label>
-              </div>
-              <div>
-                <input type="radio" id="phone"  className="select-radio" name="select" value="휴대폰"/>
-                <label className="label-select" htmlFor="phone">휴대폰</label>
-              </div>
-              <div>
-                <input type="radio" id="account"  className="select-radio" name="select" value="계좌이체"/>
-                <label className="label-select" htmlFor="account">계좌이체</label>
-              </div>
-              <div>
-                <input type="radio" id="toss"  className="select-radio" name="select" value="토스"/>
-                <label className="label-select" htmlFor="toss">토스</label>
-              </div>
-              <div>
-                <input type="radio" id="naver"  className="select-radio" name="select" value="네이버페이"/>
-                <label className="label-select" htmlFor="naver">네이버페이</label>
-              </div>
-              <div>
-                <input type="radio" id="point"  className="select-radio" name="select" value="포인트"/>
-                <label className="label-select" htmlFor="point">포인트</label>
-              </div>
-              <div>
-                <input type="radio" id="kakao"  className="select-radio" name="select" value="카카오페이"/>
-                <label className="label-select" htmlFor="kakao">카카오페이</label>
-              </div>
-            </ItemBox>
-          </Means>
-          <ProductName style={{marginTop: "12px"}}>
-            <div>결제 아이디</div>
-            <div>moon@storicha.in</div>
-          </ProductName>
+          <PaymentTitle>결제</PaymentTitle>
+          <PaymentInfo>
+            <p><span>TC</span> 100</p>
+            <p>11,000원</p>
+          </PaymentInfo>
+          <MeansSelect onClick={ClickMeansTab}>
+            <p>{method}</p>
+            {!meansChange ? 
+              <p>변경
+                <ChevronDownOutline
+                  width={"20px"}
+                  height={"20px"}
+                  color={"#DD4C4C"}
+                />
+              </p> :
+              <p>닫기
+                <ChevronUpOutline
+                  width={"20px"}
+                  height={"20px"}
+                  color={"#DD4C4C"}
+                />
+              </p>
+            }
+          </MeansSelect>
+          <MeansBox meansChange={meansChange}>
+            <div onClick={choiceMean}>신용카드</div>
+            <div onClick={choiceMean}>휴대폰</div>
+            <div onClick={choiceMean}>계좌이체</div>
+            <div onClick={choiceMean}>토스</div>
+            <div onClick={choiceMean}>네이버페이</div>
+            <div onClick={choiceMean}>포인트</div>
+            <div onClick={choiceMean}>카카오페이</div>
+            <div onClick={choiceMean}>페이코</div>
+            <div onClick={choiceMean}>문화상품권</div>
+            <div onClick={choiceMean}>도서문화상품권</div>
+            <div onClick={choiceMean}>T-money</div>
+            <div onClick={choiceMean}>OK 캐쉬백</div>
+          </MeansBox>
           <ButtonBox>
             <button>결제하기</button>
             <button>취소하기</button>
@@ -92,6 +96,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  @media screen and (max-width: 500px) {
+    padding: 0px;
+    padding-bottom: 20px;
+  }
 `
 const Box = styled.div`
   box-sizing: border-box;
@@ -105,6 +114,11 @@ const Box = styled.div`
   margin-top: 24px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   color: #000000;
+  @media screen and (max-width: 500px) {
+    width: calc(100% - 16px);
+    min-width: 350px;
+    padding: 50px 14px 30px 14px;
+  }
 `
 const TopTitle = styled.span`
   font-size: 18px;
@@ -116,122 +130,79 @@ const TopTitle = styled.span`
   z-index: 9999;
   padding-right: 8px;
   color: #0A0A0A;
+  @media screen and (max-width: 500px) {
+    left: 12px;
+  }
 `
 const TopTitleLine = styled.div`
   border-top: 1px solid #DCDCDC;
   position: absolute;
   width: calc(100% - 60px);
   top: 33px;
+  @media screen and (max-width: 500px) {
+    width: calc(100% - 32px);
+  }
 `
-const ProductName = styled.div`
-  font-size: 22px;
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+const PaymentTitle = styled.p`
   width: 100%;
+  text-align: left;
+  color: #666666;
+  font-size: 24px;
+  margin-top: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
-  font-weight: 300;
-  div:nth-child(1){
-    width: 140px;
-    padding: 12px;
-    font-size: 16px;
-    background-color: #EEEEEE;
+`
+const PaymentInfo = styled.div`
+  padding: 12px 0;
+  border-top: 1px solid #DCDCDC;
+  border-bottom: 1px solid #DCDCDC;
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  span{
+    font-size: 14px;
+    color: #DD4C4C;
+  }
+`
+const MeansSelect = styled.div`
+  padding: 8px 12px;
+  width: 100%;
+  border: 2px solid #000000;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  cursor: pointer;
+  p:nth-child(2){
+    display: flex;
+    align-items: center;
+    color: #DD4C4C;
+  }
+`
+const MeansBox = styled.div<{meansChange: Boolean}>`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  row-gap: 8px;
+  overflow: hidden;
+  height: ${(props) => (props.meansChange ? "auto" : "0px")};
+  div {
+    width: 32%;
+    padding: 16px 0;
+    font-size: 14px;
     color: #666666;
-    font-weight: 700;
+    border: 1px solid #C5C5C5;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  div:nth-child(2){
-    width: calc(100% - 160px);
-    font-size: 18px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    border-top: 1px solid #DCDCDC;
-    border-bottom: 1px solid #DCDCDC;
-    height: 100%;
-    padding: 10px 0;
-    font-weight: 500;
-  }
-  span{
-    font-weight: 500;
-    font-size: 12px;
-    margin-bottom: -2px;
-  }
-`
-const Means = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-`
-const MeasLeft = styled.div`
-  width: 140px;
-  padding: 12px;
-  font-size: 16px;
-  background-color: #EEEEEE;
-  color: #505050;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
-  align-items: center;  
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-  height: 133px;
-`
-const ItemBox = styled.div`
-  background-color: transparent;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  border-top: 1px solid #DCDCDC;
-  border-bottom: 1px solid #DCDCDC;
-  justify-content: flex-start;
-  row-gap: 4px;
-  width: calc(100% - 160px);
-  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-  padding: 8px 0;
-  div {
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 4px 0;
-    background-color: transparent;
-    color: #BDBDBD;
-  }
-  input {
-    margin-left: 6px;
-  }
-  .label-select{
-    display: flex;
-    align-items: center; 
     cursor: pointer;
-    font-size:18px;
-  }
-  .label-select::after{
-    content: ""; 
-    display: flex; 
-    width: 10px; 
-    height: 10px; 
-    background: #ffffff; 
-    border: 3px solid #e0e0e0; 
-    margin-top: -4px;
-    margin-left: 3px;
-  }
-  .label-select::after{
-    border-radius: 50%;
-  }
-  .select-radio{
-    display: none;
-  }
-  .select-radio:checked + .label-select::after{
-    background: #f00;
-  }
-  .select-radio:checked + .label-select{
-    color: #141414;
   }
 `
 const SubulTitle = styled.p`
@@ -262,13 +233,13 @@ const ButtonBox = styled.div`
   margin-top: 16px;
   button{
     width: 49%;
-    padding: 12px;
+    padding: 8px 12px;
     border-radius: 32px;
     border: none;
     outline: none;
     color: #fff;
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
     cursor: pointer;
   }

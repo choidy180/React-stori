@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
     position: relative;
     padding: 0;
     margin: 0;
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   }
   html{
     min-width: 100vw;

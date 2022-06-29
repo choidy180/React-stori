@@ -152,6 +152,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  @media screen and (max-width: 500px) {
+    padding: 12px 0px;
+    padding-top: 0;
+  }
 `
 const Box = styled.div`
   box-sizing: border-box;
@@ -163,7 +168,12 @@ const Box = styled.div`
   background-color: white;
   z-index: 999;
   margin-top: 24px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  @media screen and (max-width: 500px) {
+    width: calc(100% - 12px);
+    min-width: 350px;
+    padding: 30px 16px 20px 16px;
+  }
 `
 const Title = styled.p`
   font-size: 20px;
@@ -178,6 +188,10 @@ const Title = styled.p`
   }
   span {
     color: #DD4C4C;
+  }
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    justify-content: center;
   }
 `
 const TopupBoxTop = styled.div`
@@ -213,6 +227,9 @@ const TopupBoxTop = styled.div`
     font-weight: bold;
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   }
+  @media screen and (max-width: 500px) {
+    margin-top: 12px;
+  }
 `
 const Directly = styled.input`
   width: 100%;
@@ -233,6 +250,9 @@ const TopupBox = styled.div`
   justify-content: space-between;
   align-items: center;
   row-gap: 8px;
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
 `
 const CoinBox = styled.div`
   width: 49%;
@@ -267,6 +287,27 @@ const CoinBox = styled.div`
   }
   p{
     color: #000000;
+  }
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    div:nth-child(1){
+      width: auto;
+      margin-right: 8px;
+    }
+    div:nth-child(2){
+      justify-content: flex-start;
+    }
+    div:nth-child(3){
+      justify-content: flex-end;
+    }
+    div:nth-child(4){
+      width: auto;
+      margin-left: 8px;
+    }
   }
 `
 const Semen = styled.button`
@@ -310,6 +351,21 @@ const Semen = styled.button`
   p:nth-child(3){
     width: 60%;
     justify-content: flex-end;
+  }
+  @media screen and (max-width: 500px) {
+    border-radius: 8px;
+    p:nth-child(1){
+      font-size: 18px;
+    }
+    p:nth-child(2){
+      font-size: 14px;
+    }
+    p:nth-child(3){
+      font-size: 14px;
+    }
+    span{
+      font-weight: 600;
+    }
   }
 `
 const SubText = styled.div`

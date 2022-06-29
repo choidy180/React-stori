@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ChevronBackOutline } from 'react-ionicons';
 import styled from 'styled-components';
+import BackLogoImage from '../components/BackLogoImage';
 import NavBar from '../components/Nav';
 
 interface title {
@@ -15,6 +16,7 @@ export default function PaymentDone(title:title){
         <HelmetProvider>
           <Helmet title={title.title}/>
         </HelmetProvider>
+        <BackLogoImage/>
         <Box>
           <TopTitle>결제 완료</TopTitle>
           <TopTitleLine/>

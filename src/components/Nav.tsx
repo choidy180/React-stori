@@ -17,7 +17,6 @@ export default function NavBar({title}:titleProps){
   const toggleDarkAtom = () => {
     setDarkAtom((e) => !e);
   };
-  console.log(isDark);
   return (
     <Container>
       <Left>
@@ -62,6 +61,10 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 40px;
+  @media screen and (max-width: 768px) {
+    justify-content: space-between;
+    padding: 8px;
+  }
 `
 const Left = styled.div`
   width: 100%;
@@ -69,6 +72,9 @@ const Left = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding-left: 12px;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `
 const Center = styled.div`
   width: 100%;
@@ -83,6 +89,9 @@ const Center = styled.div`
     font-size: 1.2rem;
     line-height: 1.4rem;
   }
+  @media screen and (max-width: 768px) {
+    width: auto;
+  }
 `
 const Right = styled.div`
   width: 100%;
@@ -94,6 +103,13 @@ const Right = styled.div`
     cursor: pointer;
     margin-right: 14px;
     color: ${props => props.theme.textColor};
+  }
+  @media screen and (max-width: 768px) {
+    width: auto;
+    padding-right: 0;
+    svg{
+      margin: 0;
+    }
   }
 `
 const UserImage = styled.div`
@@ -108,8 +124,17 @@ const UserImage = styled.div`
   img {
     width: 100%;
   }
+  @media screen and (max-width: 768px) {
+    margin-left: 8px;
+  }
 `
 const UserEmail = styled.p`
   font-size: 1rem;
   margin-right: 4px;
+  @media screen and (max-width: 768px) {
+    font-size: .8rem;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
