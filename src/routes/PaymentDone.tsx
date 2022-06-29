@@ -56,6 +56,10 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 500px) {
+    padding: 0px;
+    padding-bottom: 20px;
+  }
 `
 const Box = styled.div`
   box-sizing: border-box;
@@ -76,6 +80,11 @@ const Box = styled.div`
   img {
     margin-top: 24px;
     width: 22%;
+  }
+  @media screen and (max-width: 500px) {
+    width: calc(100% - 16px);
+    min-width: 350px;
+    padding: 50px 14px 30px 14px;
   }
   button {
     padding: 10px 28px;
