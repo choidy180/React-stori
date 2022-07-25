@@ -2,7 +2,6 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import reset from 'styled-reset';
-import './App.css';
 import { darkTheme, lightTheme } from './enum/ThemeEnums';
 import { isDarkAtom } from './recoil/theme';
 import Router from './Router';
@@ -39,7 +38,8 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.textColor};
     min-width: 100vw;
     min-height: 100vh;
-    transition: .2s background ease-in-out
+    transition: .2s background ease-in-out;
+    overflow-x: hidden;
   }
 `
 

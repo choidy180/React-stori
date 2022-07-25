@@ -8,7 +8,6 @@ import { isDarkAtom } from '../recoil/theme';
 
 export default function Home(){
   const isDark = useRecoilValue(isDarkAtom);
-  console.log(isDark);
   return (
     <Container>
       <HelmetProvider>
