@@ -6,6 +6,7 @@ import Home from "./routes/Home";
 import CashWallet from './routes/CashWallet';
 import PaymentDone from './routes/PaymentDone';
 import Topup from './routes/topup';
+import Series from './routes/Series';
 
 interface IRouterProps{
 
@@ -22,6 +23,7 @@ function Router({}: IRouterProps){
         <Route path='/checkout2' element={<CheckOutSecond title={"CheckOut"}/>}/>
         <Route path='/paymentdone' element={<PaymentDone title={"PaymentDone"}/>}/>
         <Route path='/cashWallet' element={<CashWallet title={"결제완료"}/>}/>
+        <Route path='/series' element={<Series title={"Series"}/>}/>
       </Routes>
     </BrowserRouter>
   )

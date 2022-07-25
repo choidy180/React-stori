@@ -71,7 +71,7 @@ const Box = styled.div`
   background-color: white;
   z-index: 999;
   margin-top: 24px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   color: #000000;
   display: flex;
   flex-direction: column;

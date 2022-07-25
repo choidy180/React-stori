@@ -16,6 +16,8 @@ export default function CheckOut(title:title){
   }
   const choiceMean = (event:any) => {
     setMethod(event.target.innerText);
+    document.getElementById("focusMean").id = "";
+    event.target.id = "focusMean";
   }
   return(
     <>
@@ -53,7 +55,7 @@ export default function CheckOut(title:title){
             }
           </MeansSelect>
           <MeansBox meansChange={meansChange}>
-            <div onClick={choiceMean}>신용카드</div>
+            <div id='focusMean' onClick={choiceMean}>신용카드</div>
             <div onClick={choiceMean}>휴대폰</div>
             <div onClick={choiceMean}>계좌이체</div>
             <div onClick={choiceMean}>토스</div>
@@ -112,7 +114,7 @@ const Box = styled.div`
   background-color: white;
   z-index: 999;
   margin-top: 24px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   color: #000000;
   @media screen and (max-width: 500px) {
     width: calc(100% - 16px);
@@ -203,6 +205,9 @@ const MeansBox = styled.div<{meansChange: Boolean}>`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+  }
+  #focusMean{
+    border-color: #DD4C4C;
   }
 `
 const SubulTitle = styled.p`
