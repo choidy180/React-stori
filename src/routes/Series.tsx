@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, useState } from 'react';
-import { BookmarkOutline, BookOutline } from 'react-ionicons';
+import { BookmarkOutline, BookOutline, ListOutline } from 'react-ionicons';
 import styled from 'styled-components';
 import HelmetPd from '../components/Helmet';
 import NavBar from "../components/Nav";
@@ -7,13 +7,28 @@ import NavBar from "../components/Nav";
 interface title {
   title: string;
 }
-interface Iprops{
-  onClick: () => void;
-}
 
 export default function Series(title: title){
   const tabTitle = ["대여하기","소장하기","NFT IP 구매"];
+  const ListSort = ["인기순","업데이트순","조회순","별점순"];
   const [TabState, setTabState] = useState<Number>(0);
+  const [ListOn, setListOn] = useState<Boolean>(false);
+  const [sort, setSort] = useState<String>("업데이트순");
+  const sortSelect = (content:string) => {
+    setSort(content);
+  }
+  const data = [
+    {episode: 1, title: "사랑과 악마", score: 4.8, date: "22.06.22"},
+    {episode: 2, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22"},
+    {episode: 3, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22"},
+    {episode: 4, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22"},
+    {episode: 5, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22"},
+    {episode: 6, title: "사랑과 악마", score: 4.8, date: "22.06.22"},
+    {episode: 7, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22"},
+    {episode: 8, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22"},
+    {episode: 9, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22"},
+    {episode: 10, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22"},
+  ]
   return(
     <>
       <NavBar title={title.title}/>
@@ -83,8 +98,34 @@ export default function Series(title: title){
             </SelectTab>
             <ListTop>
               <input id='allSelect' type="checkbox" />
-              <label htmlFor="allSelect">생성</label>
+              <label htmlFor="allSelect">전체선택</label>
+              <p className='sortList' onClick={()=> setListOn((e) => !e)}>
+                <ListOutline
+                  width={"28px"}
+                  height={"28px"}
+                />
+                <span>{sort}</span>
+              </p>
+              <SortBox>
+                {ListOn && 
+                  ListSort.map((content, i) => (
+                    <p key={i} onClick={()=> {
+                      setListOn((e) => !e);
+                      sortSelect(content);
+                    }}>{content}</p>
+                  ))
+                }
+              </SortBox>
             </ListTop>
+            <ContentBox>
+              {data.map((content,i)=>(
+                <ContentLine key={i}>
+                  <ContentImageBox>
+
+                  </ContentImageBox>
+                </ContentLine>
+              ))}
+            </ContentBox>
           </Right>
         </Box>
       </Container>
@@ -339,8 +380,124 @@ const SelectTab = styled.div`
 `
 const ListTop = styled.div`
   width: 100%;
-  padding: 8px;
+  padding: 14px 0;
   background-color: ${props => props.theme.bgColor};
   margin-top: 18px;
   border-radius: 6px;
+  #allSelect{
+    display: none;
+  }
+  input[type="checkbox"] + label{
+    display: block;
+    padding-left: 46px;
+    cursor: pointer;
+  }
+  input[type="checkbox"]:hover + label::before{
+    border : 2px solid #E9446C;
+  }
+  input[type="checkbox"] + label:last-child {
+    margin-bottom: 0;
+  }
+  input[type="checkbox"] + label:before {
+    content: "";
+    display: block;
+    width: 20.5px;
+    height: 21px;
+    border: 2px solid #E9446C;
+    border-radius: 0.2em;
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    -webkit-transition: all 0.2s, background 0.2s ease-in-out;
+    transition: all 0.2s, background 0.2s ease-in-out;
+    background: transparent;
+    transform: translateY(-50%);
+  }
+  input[type="checkbox"]:checked + label:before {
+    content: "✓";
+    font-size: 16px;
+    color: #fff;
+    padding-left: 4px;
+    padding-top: 4px;
+    width: 17px;
+    height: 17px;
+    border-radius: 0.2em;
+    background: transparent;
+    /* box-shadow: inset 0px 0px 0px 3px var(--box2); */
+    box-shadow: inset 0px 0px 0px 3px #E9446C;
+    background-color: #E9446C;
+  }
+  input[type="checkbox"]{
+    transform: translateY(-2px) scale(2);
+  }
+  label{
+    width: auto;
+    padding-left: 12px;
+  }
+  .sortList{
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .sortList svg{
+    color: ${props => props.theme.textColor};
+    margin-right: 4px;
+  }
+`
+const SortBox = styled.div`
+  position: absolute;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* border: 1.4px solid ${props => props.theme.textColor2}; */
+  background-color: ${props => props.theme.bgColor};
+  color: ${props=> props.theme.textColor};
+  border-radius: 12px;
+  p{
+    padding: 14.5px 18px;
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+  }
+  p:hover{
+    color: #E9446C;
+  }
+`
+const ContentBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  div{
+    border-bottom: 2px solid ${props => props.theme.textColor2};
+  }
+  div:last-child{
+    border: none;
+  }
+`
+const ContentLine = styled.div`
+  width: 100%;
+  padding: 20px;
+  padding-left: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`
+const ContentImageBox = styled.div`
+  width: 135px;
+  height: 180px;
+  border-radius: 4px;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `
