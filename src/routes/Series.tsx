@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, useState } from 'react';
-import { BookmarkOutline, BookOutline, ListOutline } from 'react-ionicons';
+import { BookmarkOutline, BookOutline, ListOutline, Star } from 'react-ionicons';
 import styled from 'styled-components';
 import HelmetPd from '../components/Helmet';
 import NavBar from "../components/Nav";
@@ -11,23 +11,24 @@ interface title {
 export default function Series(title: title){
   const tabTitle = ["대여하기","소장하기","NFT IP 구매"];
   const ListSort = ["인기순","업데이트순","조회순","별점순"];
-  const [TabState, setTabState] = useState<Number>(0);
-  const [ListOn, setListOn] = useState<Boolean>(false);
+  const [tabState, setTabState] = useState<Number>(0);
+  const [listOn, setListOn] = useState<Boolean>(false);
   const [sort, setSort] = useState<String>("업데이트순");
+  const [moreView, setMoreview] = useState<Boolean>(false);
   const sortSelect = (content:string) => {
     setSort(content);
   }
   const data = [
-    {episode: 1, title: "사랑과 악마", score: 4.8, date: "22.06.22"},
-    {episode: 2, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22"},
-    {episode: 3, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22"},
-    {episode: 4, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22"},
-    {episode: 5, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22"},
-    {episode: 6, title: "사랑과 악마", score: 4.8, date: "22.06.22"},
-    {episode: 7, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22"},
-    {episode: 8, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22"},
-    {episode: 9, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22"},
-    {episode: 10, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22"},
+    {episode: 1, title: "사랑과 악마", score: 4.8, date: "22.06.22", free: true},
+    {episode: 2, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22", free: true},
+    {episode: 3, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
+    {episode: 4, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
+    {episode: 5, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
+    {episode: 6, title: "사랑과 악마", score: 4.8, date: "22.06.22", free: false},
+    {episode: 7, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22", free: false},
+    {episode: 8, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
+    {episode: 9, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
+    {episode: 10, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
   ]
   return(
     <>
@@ -93,7 +94,7 @@ export default function Series(title: title){
             </InfoBox>
             <SelectTab>
               {tabTitle.map((title, i)=>(
-                <p  key={i} className={TabState === Number(i) ? "tabChoice" : ""} onClick={() => setTabState(i)}>{title}</p>
+                <p key={i} className={tabState === Number(i) ? "tabChoice" : ""} onClick={() => setTabState(i)}>{title}</p>
               ))}
             </SelectTab>
             <ListTop>
@@ -107,7 +108,7 @@ export default function Series(title: title){
                 <span>{sort}</span>
               </p>
               <SortBox>
-                {ListOn && 
+                {listOn && 
                   ListSort.map((content, i) => (
                     <p key={i} onClick={()=> {
                       setListOn((e) => !e);
@@ -120,9 +121,23 @@ export default function Series(title: title){
             <ContentBox>
               {data.map((content,i)=>(
                 <ContentLine key={i}>
+                  <input id={`selectBox${i}`} type="checkbox" />
+                  <label htmlFor={`selectBox${i}`}></label>
                   <ContentImageBox>
-
+                    <img src="images/Illustration/5a345987bf1dda7b5d93c2971f8f4975.png" alt="" />
                   </ContentImageBox>
+                  <p className='ep'><b>EP</b>{content.episode}</p>
+                  <p className='epTitle'>{content.title.length < 10 ? content.title : content.title}</p>
+                  <p className='scoreDate'>
+                    <Star
+                      width={"20px"}
+                      height={"20px"}
+                    />
+                    {content.score}&nbsp;&nbsp;&nbsp;&nbsp;{content.date}
+                  </p>
+                  <button>
+                    {content.free ? "무료보기" : "대여하기"}
+                  </button>
                 </ContentLine>
               ))}
             </ContentBox>
@@ -308,11 +323,13 @@ const Right = styled.div`
   position: absolute;
   width: calc(100% - 390px);
   right: 30px;
-  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  .moreView{
+    max-height: auto;
+  }
 `
 const BookMark = styled.p`
   width: 100%;
@@ -347,6 +364,7 @@ const InfoBox = styled.div`
     justify-content: center;
     align-items: center;
     gap: 12px;
+
   }
   div :nth-child(1){
     font-size: 18px;
@@ -373,6 +391,8 @@ const SelectTab = styled.div`
     font-weight: bold;
     color: ${props => props.theme.textColor};
     cursor: pointer;
+    letter-spacing: -.2px;
+    word-spacing: -1px;
   }
   .tabChoice{
     border-bottom: 3px solid #E9446C;
@@ -389,7 +409,7 @@ const ListTop = styled.div`
   }
   input[type="checkbox"] + label{
     display: block;
-    padding-left: 46px;
+    padding-left: 48px;
     cursor: pointer;
   }
   input[type="checkbox"]:hover + label::before{
@@ -401,7 +421,7 @@ const ListTop = styled.div`
   input[type="checkbox"] + label:before {
     content: "";
     display: block;
-    width: 20.5px;
+    width: 21px;
     height: 21px;
     border: 2px solid #E9446C;
     border-radius: 0.2em;
@@ -415,12 +435,11 @@ const ListTop = styled.div`
   }
   input[type="checkbox"]:checked + label:before {
     content: "✓";
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
-    padding-left: 4px;
-    padding-top: 4px;
-    width: 17px;
-    height: 17px;
+    padding: 2px 2.5px 2px 3.5px;
+    width: 16px;
+    height: 16px;
     border-radius: 0.2em;
     background: transparent;
     /* box-shadow: inset 0px 0px 0px 3px var(--box2); */
@@ -472,10 +491,12 @@ const SortBox = styled.div`
 `
 const ContentBox = styled.div`
   width: 100%;
+  height: 888px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  overflow: hidden;
   div{
     border-bottom: 2px solid ${props => props.theme.textColor2};
   }
@@ -485,16 +506,117 @@ const ContentBox = styled.div`
 `
 const ContentLine = styled.div`
   width: 100%;
-  padding: 20px;
-  padding-left: 40px;
+  height: 222px;
+  padding: 20px 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  input[type="checkbox"]{
+    display: none;
+  }
+  input[type="checkbox"] + label{
+    display: block;
+    padding-left: 48px;
+    cursor: pointer;
+  }
+  input[type="checkbox"]:hover + label::before{
+    border : 2px solid #E9446C;
+  }
+  input[type="checkbox"] + label:last-child {
+    margin-bottom: 0;
+  }
+  input[type="checkbox"] + label:before {
+    content: "";
+    display: block;
+    width: 21px;
+    height: 21px;
+    border: 2px solid #E9446C;
+    border-radius: 0.2em;
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    -webkit-transition: all 0.2s, background 0.2s ease-in-out;
+    transition: all 0.2s, background 0.2s ease-in-out;
+    background: transparent;
+    transform: translateY(-50%);
+  }
+  input[type="checkbox"]:checked + label:before {
+    content: "✓";
+    font-size: 20px;
+    color: #fff;
+    padding: 2px 2.5px 2px 3.5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 0.2em;
+    background: transparent;
+    /* box-shadow: inset 0px 0px 0px 3px var(--box2); */
+    box-shadow: inset 0px 0px 0px 3px #E9446C;
+    background-color: #E9446C;
+  }
+  input[type="checkbox"]{
+    transform: translateY(-2px) scale(2);
+  }
+  label{
+    width: auto;
+    padding-left: 12px;
+  }
+  .ep{
+    position: absolute;
+    font-size: 22px;
+    top: 32px;
+    left: 200px;
+    b{
+      color: ${props => props.theme.textColor2};
+      font-weight: bold;
+      margin-right: 4px;
+    }
+  }
+  .epTitle{
+    max-width: 280px;
+    position: absolute;
+    font-size: 20px;
+    top: 64px;
+    left: 200px;
+    font-weight: bold;
+    line-height: 24px;
+  }
+  .scoreDate{
+    position: absolute;
+    left: 200px;
+    bottom: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    svg {
+      color: ${props => props.theme.textColor};
+      fill: ${props => props.theme.textColor};
+      margin-right: 4px;
+    }
+  }
+  button{
+    position: absolute;
+    padding: 8px 24px;
+    right: 8px;
+    bottom: 20px;
+    border-radius: 28px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.textColor};
+    cursor: pointer;
+  }
 `
 const ContentImageBox = styled.div`
   width: 135px;
   height: 180px;
-  border-radius: 4px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
   img{
     width: 100%;
     height: 100%;
