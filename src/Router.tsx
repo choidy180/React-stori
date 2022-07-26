@@ -9,7 +9,6 @@ import Topup from './routes/topup';
 import Series from './routes/Series';
 
 interface IRouterProps{
-
 }
 
 function Router({}: IRouterProps){

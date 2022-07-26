@@ -1,5 +1,5 @@
-import React, { MouseEventHandler, useState } from 'react';
-import { BookmarkOutline, BookOutline, ListOutline, Star } from 'react-ionicons';
+import React, { InputHTMLAttributes, MouseEventHandler, useState } from 'react';
+import { BookmarkOutline, BookOutline, ChevronDownOutline, ListOutline, Star } from 'react-ionicons';
 import styled from 'styled-components';
 import HelmetPd from '../components/Helmet';
 import NavBar from "../components/Nav";
@@ -15,20 +15,44 @@ export default function Series(title: title){
   const [listOn, setListOn] = useState<Boolean>(false);
   const [sort, setSort] = useState<String>("업데이트순");
   const [moreView, setMoreview] = useState<Boolean>(false);
+
+  // 체크 아이템 배열
+  const [checkItems, setCheckItems] = useState([]);
+
+  // 체크박스 전체 선택
+  const handleAllCheck = (checked:Boolean) => {
+    if(checked){
+      const idArray:any = [];
+      data.forEach((el) => idArray.push(el.idx));
+      setCheckItems(idArray);
+    } else {
+      setCheckItems([]);
+    }
+  }
+  // 체크박스 단일 선택
+  const handleSingleCheck = (checked:any , idx:any) => {
+    if(checked){
+      // 단일 선택 시 체크된 아이템을 배열에 추가
+      setCheckItems([...checkItems, idx])
+    } else {
+      // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+      setCheckItems(checkItems.filter((el) => el !== idx));
+    }
+  };
   const sortSelect = (content:string) => {
     setSort(content);
   }
   const data = [
-    {episode: 1, title: "사랑과 악마", score: 4.8, date: "22.06.22", free: true},
-    {episode: 2, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22", free: true},
-    {episode: 3, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
-    {episode: 4, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
-    {episode: 5, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
-    {episode: 6, title: "사랑과 악마", score: 4.8, date: "22.06.22", free: false},
-    {episode: 7, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22", free: false},
-    {episode: 8, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
-    {episode: 9, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
-    {episode: 10, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
+    {idx: "e1894d49-8483-4dcf-8436-aefb3449f9ce", episode: 1, title: "사랑과 악마", score: 4.8, date: "22.06.22", free: true},
+    {idx: "189bccc4-1845-45b0-a596-6b12e4786b4d", episode: 2, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22", free: true},
+    {idx: "710d58f5-948f-414f-9775-ba27be29399a", episode: 3, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
+    {idx: "74a3edf5-13db-43ed-8210-74c5393c054c", episode: 4, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
+    {idx: "e9d9e6b7-66ff-46e2-81c8-a2bdc73afd24", episode: 5, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
+    {idx: "f1f426cb-32af-4d49-96d4-c72e352dedd3", episode: 6, title: "사랑과 악마", score: 4.8, date: "22.06.22", free: false},
+    {idx: "b1ce70a8-986e-4ea4-b883-2f5d8a0a0ca5", episode: 7, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22", free: false},
+    {idx: "c680891e-2c65-4287-944a-595f5c5617d8", episode: 8, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
+    {idx: "6539a18a-5705-4f64-bb39-06925c9f63c4", episode: 9, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
+    {idx: "4f310282-584f-4718-92ce-f3f56cf3eee0", episode: 10, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
   ]
   return(
     <>
@@ -98,7 +122,12 @@ export default function Series(title: title){
               ))}
             </SelectTab>
             <ListTop>
-              <input id='allSelect' type="checkbox" />
+              <input 
+                id='allSelect' 
+                type="checkbox"
+                onChange={(e) => handleAllCheck(e.target.checked)}
+                checked={checkItems.length === data.length ? true : false}
+              />
               <label htmlFor="allSelect">전체선택</label>
               <p className='sortList' onClick={()=> setListOn((e) => !e)}>
                 <ListOutline
@@ -118,10 +147,15 @@ export default function Series(title: title){
                 }
               </SortBox>
             </ListTop>
-            <ContentBox>
+            <ContentBox className={moreView ? "moreView" : ""}>
               {data.map((content,i)=>(
                 <ContentLine key={i}>
-                  <input id={`selectBox${i}`} type="checkbox" />
+                  <input 
+                    id={`selectBox${i}`} 
+                    type="checkbox" 
+                    onChange={(e)=>handleSingleCheck(e.target.checked, content.idx)}
+                    checked={checkItems.includes(content.idx) ? true : false}
+                  />
                   <label htmlFor={`selectBox${i}`}></label>
                   <ContentImageBox>
                     <img src="images/Illustration/5a345987bf1dda7b5d93c2971f8f4975.png" alt="" />
@@ -135,12 +169,24 @@ export default function Series(title: title){
                     />
                     {content.score}&nbsp;&nbsp;&nbsp;&nbsp;{content.date}
                   </p>
-                  <button>
+                  <button 
+                    className={content.free ? "freeBtn" : ""}
+                    onClick={()=>console.log(checkItems)}
+                  >
                     {content.free ? "무료보기" : "대여하기"}
                   </button>
                 </ContentLine>
               ))}
             </ContentBox>
+            <MoreViewBtn 
+              className={moreView ? "moreViweHide" : ""}
+              onClick={()=> setMoreview((e) => !e)}
+            >
+              <ChevronDownOutline
+                width={"24px"}
+                height={"24px"}
+              /> 더보기
+            </MoreViewBtn>
           </Right>
         </Box>
       </Container>
@@ -179,7 +225,9 @@ const TopupBox = styled.div`
 `
 const Box = styled.div`
   width: 100%;
-  min-height: 1200px;
+  height: auto;
+  display: flex;
+  justify-content: flex-end;
   padding: 20px 30px 20px 350px;
   background-color: ${props => props.theme.boxColor};
   border-radius: 15px;
@@ -320,15 +368,17 @@ const WriteSupport = styled.button`
   cursor: pointer;
 `
 const Right = styled.div`
-  position: absolute;
-  width: calc(100% - 390px);
-  right: 30px;
+  position: relative;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   .moreView{
-    max-height: auto;
+    height: auto;
+  }
+  .moreViewHide{
+    display: none;
   }
 `
 const BookMark = styled.p`
@@ -476,7 +526,6 @@ const SortBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  /* border: 1.4px solid ${props => props.theme.textColor2}; */
   background-color: ${props => props.theme.bgColor};
   color: ${props=> props.theme.textColor};
   border-radius: 12px;
@@ -599,13 +648,23 @@ const ContentLine = styled.div`
     right: 8px;
     bottom: 20px;
     border-radius: 28px;
-    border: none;
     outline: none;
     font-size: 16px;
     font-weight: bold;
+    border: 2px solid ${props => props.theme.bgColor};
     background-color: ${props => props.theme.bgColor};
     color: ${props => props.theme.textColor};
     cursor: pointer;
+    transition: all .15s ease-in-out;
+  }
+  .freeBtn{
+    border: 2px solid #E9446C;
+    background-color: #E9446C;
+    color: #ffffff;
+  }
+  .freeBtn:hover{
+    color: #E9446C;
+    background-color: transparent;
   }
 `
 const ContentImageBox = styled.div`
@@ -621,5 +680,24 @@ const ContentImageBox = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+`
+
+const MoreViewBtn = styled.div`
+  width: 100%;
+  padding: 8px 0;
+  background-color: ${props => props.theme.bgColor};
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+  font-size: 18px;
+  border-radius: 24px;
+  cursor: pointer;
+  svg {
+    color: ${props => props.theme.textColor};
+    fill: ${props => props.theme.textColor};
+    margin-right: 4px;
   }
 `
