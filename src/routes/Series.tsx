@@ -1,5 +1,5 @@
-import React, { InputHTMLAttributes, MouseEventHandler, useState } from 'react';
-import { BookmarkOutline, BookOutline, ChevronDownOutline, ListOutline, Star } from 'react-ionicons';
+import React, { InputHTMLAttributes, MouseEventHandler, useRef, useState } from 'react';
+import { BookmarkOutline, BookOutline, ChevronBackCircleOutline, ChevronDownOutline, ChevronForwardCircleOutline, ListOutline, MenuOutline, Star } from 'react-ionicons';
 import styled from 'styled-components';
 import HelmetPd from '../components/Helmet';
 import NavBar from "../components/Nav";
@@ -15,7 +15,21 @@ export default function Series(title: title){
   const [listOn, setListOn] = useState<Boolean>(false);
   const [sort, setSort] = useState<String>("업데이트순");
   const [moreView, setMoreview] = useState<Boolean>(false);
+  const slideRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const [otherState, setOtherState] = useState<any>(0);
 
+  const OtherMoveLeft = () => {
+    if((-(otherData.length-1) * 170) !== otherState){
+      slideRef.current.style.transform = `translateX(${otherState - 170}px)`;
+      setOtherState(otherState - 170);
+    }
+  }
+  const OtherMoveRight = () => {
+    if(otherState !== 0){
+      slideRef.current.style.transform = `translateX(${otherState + 170}px)`;
+      setOtherState(otherState + 170);
+    }
+  }
   // 체크 아이템 배열
   const [checkItems, setCheckItems] = useState([]);
 
@@ -53,6 +67,15 @@ export default function Series(title: title){
     {idx: "c680891e-2c65-4287-944a-595f5c5617d8", episode: 8, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
     {idx: "6539a18a-5705-4f64-bb39-06925c9f63c4", episode: 9, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
     {idx: "4f310282-584f-4718-92ce-f3f56cf3eee0", episode: 10, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
+  ]
+  const otherData = [
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 1", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 2", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 3", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 4", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 5", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 6", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 7", genre: "판타지, 멜로"},
   ]
   return(
     <>
@@ -179,7 +202,7 @@ export default function Series(title: title){
               ))}
             </ContentBox>
             <MoreViewBtn 
-              className={moreView ? "moreViweHide" : ""}
+              className={moreView ? "moreViewHide" : ""}
               onClick={()=> setMoreview((e) => !e)}
             >
               <ChevronDownOutline
@@ -188,7 +211,50 @@ export default function Series(title: title){
               /> 더보기
             </MoreViewBtn>
           </Right>
+          <OtherBox>
+            <p className='title' onClick={()=>console.log(otherState)}>이 작가의 다른 작품 보기</p>
+            <OtherContentBox>
+              <ChevronBackCircleOutline
+                width={"42px"}
+                height={"42px"}
+                onClick={OtherMoveLeft}
+              />
+              <ChevronForwardCircleOutline
+                width={"42px"}
+                height={"42px"}
+                onClick={OtherMoveRight}
+              />
+              <OtherLine>
+                <OtherWrapper className='slideRef' ref={slideRef} style={listStyled}>
+                  {otherData.map((content, i) => (
+                    <OtherContent key={i}>
+                      <OtherImage>
+                        <img src={`images/Illustration/${content.image}`} alt=""/>
+                      </OtherImage>
+                      <OtherTitle>{content.title.length < 10 ? content.title : content.title.slice(0, 10)+"..."}</OtherTitle>
+                      <OtherGenre>{content.genre}</OtherGenre>
+                    </OtherContent>
+                  ))}
+                </OtherWrapper>
+              </OtherLine>
+            </OtherContentBox>
+          </OtherBox>
         </Box>
+        <ResultBox
+          className={checkItems[0] ? "" : "showResult"}
+        >
+          <div className='top'>
+            <p>총 주문 금액</p>
+            <p>100 TC</p>
+            <p>총 2건</p>
+          </div>
+          <button>선택 구매</button>
+          {/* <MenuOutline
+            width={"36px"}
+            height={"36px"}
+            cssClasses={"menuOutline"}
+          /> */}
+        </ResultBox>
       </Container>
     </>
   )
@@ -205,6 +271,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 12px;
+  z-index: 5;
   @media screen and (max-width: 500px) {
     padding: 0px;
     padding-bottom: 20px;
@@ -228,7 +295,7 @@ const Box = styled.div`
   height: auto;
   display: flex;
   justify-content: flex-end;
-  padding: 20px 30px 20px 350px;
+  padding: 20px 30px 370px 350px;
   background-color: ${props => props.theme.boxColor};
   border-radius: 15px;
 `
@@ -700,4 +767,174 @@ const MoreViewBtn = styled.div`
     fill: ${props => props.theme.textColor};
     margin-right: 4px;
   }
+`
+const ResultBox = styled.div`
+  position: fixed;
+  left: 0;
+  bottom: -80px;
+  padding: 32px 40px 100px 20px;
+  background-color: ${props => props.theme.bgColor};
+  width: 100%;
+  border: 2px solid #D7D7D7;
+  border-bottom: none;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: all .45s ease-in-out;
+  .top{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      width: 100%;
+      font-size: 22px;
+      text-align: center;
+    }
+    p:nth-child(1){
+      text-align: left;
+    }
+    p:nth-child(3){
+      text-align: right;
+    }
+  }
+  button{
+    padding: 12px 150px;
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #E9446C;
+    border-radius: 28px;
+    margin-top: 24px;
+    border: none;
+    outline: none;
+    color: #FFFFFF;
+    cursor: pointer;
+  }
+  &::before{
+    position: absolute;
+    display: none;
+    content: "";
+    top: -40px;
+    width: 200px;
+    height: 50px;
+    background-color: rgb(45, 52, 54);
+    /* border: 2px solid #D7D7D7; */
+    border-top-left-radius: 42px;
+    border-top-right-radius: 42px;
+    z-index: 9;
+  }
+  .menuOutline {
+    position: absolute;
+    bottom: 112px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #FFFFFF;
+    fill: #FFFFFF;
+    z-index: 99999;
+  }
+  &.showResult{
+    bottom: -500px;
+  }
+`
+
+const OtherBox = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .title{
+    font-size: 20px;
+    font-weight: bold;
+  }
+`
+const OtherContentBox = styled.div`
+  width: 100%;
+  border-radius: 15px;
+  height: 250px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 24px 78px;
+  background-color: ${props => props.theme.bgColor};
+  margin-top: 24px;
+  overflow: hidden;
+  span{
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    svg{
+      color: ${props => props.theme.textColor};
+      fill: ${props => props.theme.textColor};
+    }
+  }
+  span:nth-child(1){
+    left: 18px;
+  }
+  span:nth-child(2){
+    right: 18px;
+  }
+`
+const OtherLine = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+`
+const OtherWrapper = styled.div`
+  width: 999%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  transition: all .3s ease-in-out;
+`
+const listStyled = {
+  width: "200%",
+  height: "100%",
+}
+
+const OtherContent = styled.div`
+  width: 152px;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+  background-color: ${props => props.theme.boxColor};
+  cursor: pointer;
+  margin-right: 18px;
+`
+const OtherImage = styled.div`
+  width: 100%;
+  height: 135px;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`
+const OtherTitle = styled.p`
+  width: 100%;
+  padding-left: 8px;
+  margin-top: 12px;
+  font-size: 18px;
+`
+const OtherGenre = styled.p`
+  font-size: 14px;
+  width: 100%;
+  padding-left: 8px;
+  margin-top: 8px;
 `
