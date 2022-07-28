@@ -76,6 +76,9 @@ export default function Series(title: title){
     {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 5", genre: "판타지, 멜로"},
     {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 6", genre: "판타지, 멜로"},
     {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 7", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 8", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 9", genre: "판타지, 멜로"},
+    {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 10", genre: "판타지, 멜로"},
   ]
   return(
     <>
@@ -249,11 +252,11 @@ export default function Series(title: title){
             <p>총 2건</p>
           </div>
           <button>선택 구매</button>
-          {/* <MenuOutline
+          <MenuOutline
             width={"36px"}
             height={"36px"}
             cssClasses={"menuOutline"}
-          /> */}
+          />
         </ResultBox>
       </Container>
     </>
@@ -772,7 +775,7 @@ const ResultBox = styled.div`
   position: fixed;
   left: 0;
   bottom: -80px;
-  padding: 32px 40px 100px 20px;
+  padding: 52px 40px 100px 20px;
   background-color: ${props => props.theme.bgColor};
   width: 100%;
   border: 2px solid #D7D7D7;
@@ -816,20 +819,20 @@ const ResultBox = styled.div`
   }
   &::before{
     position: absolute;
-    display: none;
     content: "";
-    top: -40px;
+    top: -52px;
     width: 200px;
     height: 50px;
-    background-color: rgb(45, 52, 54);
-    /* border: 2px solid #D7D7D7; */
+    background-color: ${props => props.theme.bgColor};
+    border: 2px solid #D7D7D7;
     border-top-left-radius: 42px;
     border-top-right-radius: 42px;
     z-index: 9;
+    border-bottom: none;
   }
   .menuOutline {
     position: absolute;
-    bottom: 112px;
+    bottom: 150px;
     left: 50%;
     transform: translateX(-50%);
     color: #FFFFFF;
@@ -930,7 +933,7 @@ const OtherTitle = styled.p`
   width: 100%;
   padding-left: 8px;
   margin-top: 12px;
-  font-size: 18px;
+  font-size: 16px;
 `
 const OtherGenre = styled.p`
   font-size: 14px;
