@@ -2,6 +2,7 @@ import React from 'react';
 import { Ellipse, EllipseOutline, EllipseSharp, WalletOutline } from 'react-ionicons';
 import styled from "styled-components";
 import NavBar from '../components/Nav';
+import SalePolicyBox from '../components/sale/policy';
 import SaleTopBar from "../components/sale/saleTopBar";
 
 interface title {
@@ -10,7 +11,7 @@ interface title {
 type IProgress = {
   state: string, 
   complete: number, // 시작전: 0, 진행중: 1, 완료: 2
-  request: boolean // 요청완료: true, 요청진행중: false  
+  request: number // 요청완료: true, 요청진행중: false  
 };
 
 export default function SalePolicy(title:title){
@@ -18,12 +19,12 @@ export default function SalePolicy(title:title){
     title: "사랑과 악마",
   }
   const Progress: IProgress[] = [
-    {state: "작성중", complete: 2, request: true},
-    {state: "검수중", complete: 2, request: true},
-    {state: "수정요청", complete: 2, request: true},
-    {state: "검수완료", complete: 1, request: true},
-    {state: "판매시작", complete: 0, request: true},
-    {state: "판매중지", complete: 0, request: true},
+    {state: "작성중", complete: 2, request: 1},
+    {state: "검수중", complete: 2, request: 1},
+    {state: "수정요청", complete: 2, request: 2},
+    {state: "검수완료", complete: 1, request: 0},
+    {state: "판매시작", complete: 0, request: 0},
+    {state: "판매중지", complete: 0, request: 0},
 
   ]
   return(
@@ -67,7 +68,7 @@ export default function SalePolicy(title:title){
                     </ProgressBox>
                     {i !== 5 ?
                       (<BarLine>
-
+                        <Bar className={progress.request === 1 ? "ongoingMax" : progress.request === 2 ? "ongoing" : ""}/>
                       </BarLine>): ""
                     }
                   </Line>
@@ -85,7 +86,7 @@ export default function SalePolicy(title:title){
                     </ProgressBox>
                     {i !== 5 ?
                       (<BarLine>
-                        
+                        <Bar className={progress.request === 1 ? "ongoingMax" : progress.request === 2 ? "ongoing" : ""}/>
                       </BarLine>): ""
                     }
                   </Line>
@@ -103,7 +104,7 @@ export default function SalePolicy(title:title){
                     </ProgressBox>
                     {i !== 5 ?
                       (<BarLine>
-                        
+                        <Bar className={progress.request === 1 ? "ongoingMax" : progress.request === 2 ? "ongoing" : ""}/>
                       </BarLine>): ""
                     }
                   </Line>
@@ -111,6 +112,7 @@ export default function SalePolicy(title:title){
               }
             })}
           </ProgressBarBox>
+          <SalePolicyBox kind={"basic"}/>
         </Box>
       </Container>
     </>
@@ -243,7 +245,19 @@ const ProgressBox = styled.div`
 
 const BarLine = styled.div`
   width: 100%;
+  height: 4px;
   margin-top: 30px;
   min-width: 72px;
-  border-top: 4px solid ${props => props.theme.textColor2};
+  background-color: ${props => props.theme.textColor2};
+  .ongoingMax{
+    width: 100%;
+  }
+  .ongoing{
+    width: 55%;
+  }
+`
+const Bar = styled.div`
+  width: 0;
+  height: 100%;
+  background-color: #E9446C;
 `
