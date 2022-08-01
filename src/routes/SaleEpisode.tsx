@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddCircleOutline, ChevronBackOutline, ChevronDownOutline, ChevronForwardOutline, ListOutline, SearchOutline } from 'react-ionicons';
+import { AddCircleOutline, ChevronBackOutline, ChevronDownOutline, ChevronForwardOutline, CopyOutline, ListOutline, SearchOutline } from 'react-ionicons';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import NavBar from '../components/Nav';
@@ -92,6 +92,17 @@ export default function SaleEpisode(title:title){
       public: 0,
     },
   ]
+
+  const copyLink = (event:any) => {
+    // let range = document.createRange();
+    // range.selectNode(event.target.childNodes[0]); // 텍스트 정보를 range 객체에 저장
+    // let sel = window.getSelection();
+    // sel.removeAllRanges(); // 기존 카피 삭제
+    // sel.addRange(range);
+    // document.execCommand("copy");
+    // sel.removeRange(range);
+    alert("복사되었습니다");
+  }
   return(
     <>
       <NavBar title={title.title}/>
@@ -146,7 +157,65 @@ export default function SaleEpisode(title:title){
                 최신순
               </span>
             </div>
+            {storyList.map((content, i) => (
+              <ContentLine key={i}>
+                <ContentLineBox>
+                  <ContentImg>
+                    <img src={`/images/Illustration/${content.img}`} alt="" />
+                  </ContentImg>
+                  <p className='title'>
+                    {content.title.length > 10 ? content.title.slice(0,10)+"..." : content.title}&nbsp;
+                    <span>
+                      {/* public: 0-공개 / 1-비공개 / 2-팔로워에게만공개 / 3-초대된사람만 */}
+                      {
+                        content.public === 0 ? "( 공개 )" :
+                        content.public === 1 ? "( 비공개 )" :
+                        content.public === 2 ? "( 팔로워에게만 공개 )" :
+                        content.public === 3 && "( 초대된 사람만 )"
+                      }
+                    </span>
+                  </p>
+                </ContentLineBox>
+                <ContentLineBox>
+                  <span className='link'>{content.link}</span>
+                  <CopyOutline
+                    width={"24px"}
+                    height={"24px"}
+                    cssClasses={"copyOutline"}
+                    onClick={copyLink}
+                  />
+                  <AddCircleOutline
+                    width={"38px"}
+                    height={"38px"}
+                    cssClasses={"AddCircleOutline"}
+                  />
+                </ContentLineBox>
+              </ContentLine>
+            ))}
+            <p className='pagingList'>
+              <ChevronBackOutline
+                width={"22px"}
+                height={"22px"}
+              />
+              <b onClick={()=> alert("페이징처리")}>1</b>
+              <b onClick={()=> alert("페이징처리")}>2</b>
+              <b onClick={()=> alert("페이징처리")}>3</b>
+              <b onClick={()=> alert("페이징처리")}>4</b>
+              <b onClick={()=> alert("페이징처리")}>5</b>
+              <b onClick={()=> alert("페이징처리")}>6</b>
+              <b onClick={()=> alert("페이징처리")}>7</b>
+              <b onClick={()=> alert("페이징처리")}>8</b>
+              <b onClick={()=> alert("페이징처리")}>9</b>
+              <ChevronForwardOutline
+                width={"22px"}
+                height={"22px"}
+              />
+            </p>
           </ContentBox>
+          <BottomBtnBox>
+            <button>가격 정책 관리로 가기</button>
+            <button>나의 책상으로 돌아가기</button>
+          </BottomBtnBox>
         </Box>
       </Container>
     </>
@@ -240,8 +309,9 @@ const ContentBox = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 0;
+    padding: 12px 0 20px 0;
     margin-top: 24px;
+    border-bottom: 2px solid ${props => props.theme.textColor2};
     .left {
       font-size: 20px;
       color: ${props=>props.theme.textColor2};
@@ -257,6 +327,7 @@ const ContentBox = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 12px 0;
       input {
         width: 999%;
         min-width: 300px;
@@ -287,5 +358,94 @@ const ContentBox = styled.div`
       fill: ${props => props.theme.textColor};
       color: ${props => props.theme.textColor};
     }
+  }
+  .pagingList{
+    width: 100%;
+    text-align: center;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    span, svg ,b{
+      fill: ${props => props.theme.textColor};
+      color: ${props => props.theme.textColor};
+      cursor: pointer;
+    }
+  }
+`
+const ContentLine = styled.div`
+  width: 100%;
+  padding: 16px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid ${props => props.theme.textColor2};
+`
+const ContentLineBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .title{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: ${props => props.theme.textColor};
+    letter-spacing: -.7px;
+    span {
+      font-size: 16px;
+      color: ${props => props.theme.textColor2};
+      fill:  ${props => props.theme.textColor};
+      letter-spacing: -.35px;
+    }
+  }
+  .link {
+    font-size: 16px;
+    color: ${props => props.theme.textColor2};
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .copyOutline{
+    color: ${props => props.theme.textColor2};
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  .AddCircleOutline{
+    margin-left: 8px;
+    color: #E9446C;
+  }
+`
+const ContentImg = styled.div`
+  width: 60px;
+  height: 80px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-right: 16px;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`
+const BottomBtnBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 36px;
+  button {
+    padding: 8.5px 48px;
+    font-size: 22px;
+    color: white;
+    background-color: #7D7D7D;
+    font-weight: 500;
+    border-radius: 28px;
+    border: none;
+    outline: none;
+    cursor: pointer;
   }
 `
