@@ -225,7 +225,6 @@ export default function SaleEpisode(title:title){
 const Container = styled.div`
   padding: 20px 20px 30px 20px;
   max-width: 1500px;
-  min-width: 1024px;
   margin: 0 auto;
   position: relative;
   display: flex;
@@ -261,15 +260,6 @@ const TopBox = styled.div`
   .subtitle {
     margin-top: 12px;
     font-size: 18px;
-  }
-  .removeBtn{
-    position: absolute;
-    right: -4px;
-    top:50%;
-    transform: translateY(-50%) rotate(45deg);
-    color: ${props=>props.theme.textColor};
-    fill: ${props=>props.theme.textColor};
-    cursor: pointer;
   }
   .pagingList{
     width: 100%;
@@ -383,6 +373,12 @@ const ContentLine = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid ${props => props.theme.textColor2};
+  @media screen and (max-width:769px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+  }
 `
 const ContentLineBox = styled.div`
   display: flex;

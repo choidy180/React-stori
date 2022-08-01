@@ -57,12 +57,14 @@ export default function AddContentBox(props:any){
           <span>소장가: {props.ownSale} TC</span>
         </div>
       </div>
-      <AddCircleOutline
-        width={"36px"}
-        height={"36px"}
-        cssClasses={"removeBtn"}
-        onClick={RemoveStory}
-      />
+      <AddCircle>
+        <AddCircleOutline
+          width={"36px"}
+          height={"36px"}
+          cssClasses={"removeBtn"}
+          onClick={RemoveStory}
+        />
+      </AddCircle>
     </AddContent>
   )
 }
@@ -157,6 +159,44 @@ const AddContent = styled.div`
       }
     }
   }
+  .removeBtn{
+    position: absolute;
+    right: -4px;
+    top:50%;
+    transform: translateY(-50%) rotate(45deg);
+    color: ${props=>props.theme.textColor};
+    fill: ${props=>props.theme.textColor};
+    cursor: pointer;
+  }
+  @media screen and (max-width:1023px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto !important;
+    gap: 12px;
+    .left {
+      width: 100%;
+    }
+    .underText{
+      bottom: 0 !important;
+      left: 100px !important;
+    }
+    .right{
+      flex-direction: column;
+      gap: 12px;
+      font-size: 18px !important;
+      .top {
+        position: relative !important;
+        top: 0 !important;
+        right: 0 !important;
+      }
+      .bottom{
+        position: relative !important;
+        bottom: 0 !important;
+        right: 0 !important;
+      }
+    }
+  }
 `
 const AddImageBox = styled.div`
   width: 90px !important; 
@@ -187,5 +227,13 @@ const SelectPriceBox = styled.div`
   }
   &.selectPriceBoxView{
     display: flex;
+  }
+`
+
+const AddCircle = styled.div`
+  position: absolute;
+  right: 18px;
+  @media screen and (max-width:769px) {
+    bottom: 30px !important;
   }
 `
