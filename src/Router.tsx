@@ -9,6 +9,7 @@ import Topup from './routes/topup';
 import Series from './routes/Series';
 import SalePolicy from './routes/SalePolicy';
 import SaleEpisode from './routes/SaleEpisode';
+import SalesExamin from './routes/admin/SalesExamin';
 
 interface IRouterProps{
 }
@@ -27,6 +28,7 @@ function Router({}: IRouterProps){
         <Route path='/series' element={<Series title={"Series"}/>}/>
         <Route path='/salePolicy' element={<SalePolicy title={"salePolicy"}/>}/>
         <Route path='/saleEpisode' element={<SaleEpisode title={"SaleEpisode"}/>}/>
+        <Route path='/admin/sales_examin' element={<SalesExamin title={"salesExamin"}/>}/>
       </Routes>
     </BrowserRouter>
   )
