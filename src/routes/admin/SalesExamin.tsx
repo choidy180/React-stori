@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import NavBar from '../../components/Nav';
 
@@ -105,74 +105,87 @@ export default function SalesExamin({title}:title){
       state: 2
     },
   ]
+  const [modal, setModal] = useState(false);
+  const ModalView = () => {
+    setModal((e) => !e);
+  }
   return (
-    <Container>
-      <NavBar title={title}/>
-      <TopBar>
-        <p>운영관리</p>
-      </TopBar>
-      <Box>
-        <HeadBox>
-          <div className='topBox'>
-            <p className='title'>심사요청번호</p>
-          </div>
-          <div className='topBox'>
-            <p className='title'>시리즈 제목</p>
-          </div>
-          <div className='topBox'>
-            <p className='title'>요청일시</p>
-          </div>
-          <div className='topBox'>
-            <p className='title'>수정일시</p>
-          </div>
-          <div className='topBox'>
-            <p className='title'>진행상태</p>
-          </div>
-          <div className='topBox'>
-            <p className='title'>심사하기</p>
-          </div>
-        </HeadBox>
-        {getData.map((content, i) => (
-          <ContentLine key={i}>
+    <>
+      <Container>
+        <NavBar title={title}/>
+        <TopBar>
+          <p>운영관리</p>
+        </TopBar>
+        <Box>
+          <HeadBox>
             <div className='topBox'>
-              <p className='requestAudit'>( {content.auditRequest} )</p>
+              <p className='title'>심사요청번호</p>
             </div>
             <div className='topBox'>
-              <p className='title'>{content.title}</p>
-              {content.new ? <button className='newBtn'>New</button> : ""}
+              <p className='title'>시리즈 제목</p>
             </div>
             <div className='topBox'>
-              <p className='requestDate'>{content.requestDate}</p>
+              <p className='title'>요청일시</p>
             </div>
             <div className='topBox'>
-              <p className='reviseDate'>{content.reviseDate}</p>
+              <p className='title'>수정일시</p>
             </div>
             <div className='topBox'>
-              {content.state === 0 ? 
-                <p className='state'>
-                  <img src="/images/icons/request.svg" alt="" />
-                  <span style={{marginTop: "2px"}}>요청중</span>
-                </p> 
-                : 
-                content.state === 1 ?
-                <p className='state'>
-                  <img src="/images/icons/OnSale.svg" alt="" />
-                  <span style={{marginTop: "2px"}}>판매중</span>
-                </p> : 
-                content.state === 2 ?
-                <p className='state'>
-                  <img src="/images/icons/StopSale.svg" alt="" />
-                  <span style={{marginTop: "2px"}}>판매중지</span>
-                </p> : ""
-              }
+              <p className='title'>진행상태</p>
             </div>
             <div className='topBox'>
-              <button className='auditBtn'>심사 하기</button>
+              <p className='title'>심사하기</p>
             </div>
-          </ContentLine>
-        ))}
-      </Box>
-    </Container>
+          </HeadBox>
+          {getData.map((content, i) => (
+            <ContentLine key={i}>
+              <div className='topBox'>
+                <p className='requestAudit'>( {content.auditRequest} )</p>
+              </div>
+              <div className='topBox'>
+                <p className='title'>{content.title}</p>
+                {content.new ? <button className='newBtn'>New</button> : ""}
+              </div>
+              <div className='topBox'>
+                <p className='requestDate'>{content.requestDate}</p>
+              </div>
+              <div className='topBox'>
+                <p className='reviseDate'>{content.reviseDate}</p>
+              </div>
+              <div className='topBox'>
+                {content.state === 0 ? 
+                  <p className='state'>
+                    <img src="/images/icons/request.svg" alt="" />
+                    <span style={{marginTop: "2px"}}>요청중</span>
+                  </p> 
+                  : 
+                  content.state === 1 ?
+                  <p className='state'>
+                    <img src="/images/icons/OnSale.svg" alt="" />
+                    <span style={{marginTop: "2px"}}>판매중</span>
+                  </p> : 
+                  content.state === 2 ?
+                  <p className='state'>
+                    <img src="/images/icons/StopSale.svg" alt="" />
+                    <span style={{marginTop: "2px"}}>판매중지</span>
+                  </p> : ""
+                }
+              </div>
+              <div className='topBox'>
+                <button className='auditBtn btn' onClick={()=> setModal((e)=>!e)}>심사 하기</button>
+              </div>
+            </ContentLine>
+          ))}
+        </Box>
+      </Container>
+      <BlackBox 
+        className={modal ? "on" : ""}
+        onClick={()=> setModal((e)=>!e)}
+      />
+      <RightModal className={modal ? "on" : ""}>
+
+      </RightModal>
+    </>
   )
 }
 
@@ -298,6 +311,38 @@ const ContentLine = styled.div`
     padding: 6px 14px;
     color: #FFFFFF;
     font-size: 16px;
+    cursor: pointer;
+  }
+`
+const BlackBox = styled.div`
+  position: fixed;
+  display: none;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  opacity: 0.6;
+  &.on{
+    display: block;
+  }
+`
+const RightModal = styled.div`
+  position: fixed;
+  right: -500px;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: ${props => props.theme.boxColor};
+  border-left: 1.4px solid ${props => props.theme.textColor};
+  width: 400px;
+  min-height: 100vh;
+  transition: all .2s ease-in-out;
+  z-index: 999999;
+  &.on{
+    right: 0px;
   }
 `
 
