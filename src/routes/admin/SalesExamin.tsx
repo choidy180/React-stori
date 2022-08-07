@@ -377,7 +377,7 @@ const Container = styled.div`
   align-items: center;
   gap: 18px;
   @media screen and (max-width: 500px) {
-    padding: 0px;
+    padding: 0;
     padding-bottom: 20px;
   }
 `
