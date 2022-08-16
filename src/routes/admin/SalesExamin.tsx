@@ -621,6 +621,7 @@ const ModalBtn = styled.div`
     color: #FFFFFF;
     font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
   }
   button:nth-child(1){
     background-color: #5472B4;
