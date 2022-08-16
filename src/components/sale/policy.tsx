@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { AddCircleOutline } from 'react-ionicons';
 import styled from 'styled-components';
+import {FiEdit} from "@react-icons/all-files/fi/FiEdit";
+import {FaRegTrashAlt} from "@react-icons/all-files/fa/FaRegTrashAlt";
 
 interface kind{
   kind: string;
@@ -8,6 +10,7 @@ interface kind{
 
 export default function SalePolicyBox({kind}:kind){
   const [exception, setException] = useState(false);
+  const [onModify, setOnModify] = useState(false);
   return(
     <>
       <Box>
@@ -49,32 +52,52 @@ export default function SalePolicyBox({kind}:kind){
             <div className='boxline'>
               판매 정책 제목
               <div className='box'>
-                <p>사랑과 악마</p>
+                <input 
+                  type="text" 
+                  placeholder={"사랑과 악마"} 
+                  readOnly={onModify ? false : true}
+                />
               </div>
             </div>
             <div className='line'></div>
             <div className='boxline'>
               대여 정상가
               <div className='box'>
-                <p>10</p>
+                <input 
+                  type="text" 
+                  placeholder={"10"} 
+                  readOnly={onModify ? false : true}
+                />
               </div>
             </div>
             <div className='boxline hot'>
               대여 할인가
               <div className='box'>
-                <p>8</p>
+                <input 
+                  type="text" 
+                  placeholder={"8"} 
+                  readOnly={onModify ? false : true}
+                />
               </div>
             </div>
             <div className='boxline'>
               소장 정상가
               <div className='box'>
-                <p>10</p>
+                <input 
+                  type="text" 
+                  placeholder={"10"} 
+                  readOnly={onModify ? false : true}
+                />
               </div>
             </div>
             <div className='boxline hot'>
               소장 할인가
               <div className='box'>
-                <p>8</p>
+                <input 
+                  type="text" 
+                  placeholder={"8"} 
+                  readOnly={onModify ? false : true}
+                />
               </div>
             </div>
             <div className='boxline'>
@@ -101,7 +124,17 @@ export default function SalePolicyBox({kind}:kind){
                 <p>2022-06-31</p>
               </div>
             </div>
-            <DelBtn>삭제</DelBtn>
+            <BtnLine>
+              <FiEdit onClick={()=>{
+                setOnModify((e)=>!e);
+                if(!onModify){
+                  alert("이제부터 수정하실 수 있습니다.");
+                }else{
+                  alert("수정완료 되었습니다.");
+                }
+              }}/>
+              <FaRegTrashAlt/>
+            </BtnLine>
           </PolicyBox>
         </>
         <>
@@ -132,32 +165,52 @@ export default function SalePolicyBox({kind}:kind){
               <div className='boxline'>
                 판매 정책 제목
                 <div className='box'>
-                  <p>사랑과 악마</p>
+                  <input 
+                    type="text" 
+                    placeholder={"사랑과 악마"} 
+                    readOnly={onModify ? false : true}
+                  />
                 </div>
               </div>
               <div className='line'></div>
               <div className='boxline'>
                 대여 정상가
                 <div className='box'>
-                  <p>10</p>
+                  <input 
+                    type="text" 
+                    placeholder={"10"} 
+                    readOnly={onModify ? false : true}
+                  />
                 </div>
               </div>
               <div className='boxline hot'>
                 대여 할인가
                 <div className='box'>
-                  <p>8</p>
+                  <input 
+                    type="text" 
+                    placeholder={"8"} 
+                    readOnly={onModify ? false : true}
+                  />
                 </div>
               </div>
               <div className='boxline'>
                 소장 정상가
                 <div className='box'>
-                  <p>10</p>
+                  <input 
+                    type="text" 
+                    placeholder={"10"} 
+                    readOnly={onModify ? false : true}
+                  />
                 </div>
               </div>
               <div className='boxline hot'>
                 소장 할인가
                 <div className='box'>
-                  <p>8</p>
+                  <input 
+                    type="text" 
+                    placeholder={"8"} 
+                    readOnly={onModify ? false : true}
+                  />
                 </div>
               </div>
               <div className='boxline'>
@@ -184,7 +237,17 @@ export default function SalePolicyBox({kind}:kind){
                   <p>2022-06-31</p>
                 </div>
               </div>
-              <DelBtn>삭제</DelBtn>
+              <BtnLine>
+                <FiEdit onClick={()=>{
+                  setOnModify((e)=>!e);
+                  if(!onModify){
+                    alert("이제부터 수정하실 수 있습니다.");
+                  }else{
+                    alert("수정완료 되었습니다.");
+                  }
+                }}/>
+                <FaRegTrashAlt/>
+              </BtnLine>
             </PolicyBox>
           </ExceptionBox>
         </>
@@ -359,6 +422,17 @@ const PolicyBox = styled.div`
         line-height: 20px;
         margin-top: 2px;
       }
+      input {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        text-align: right;
+        color: ${props => props.theme.textColor};
+        font-size: 18px;
+        ::placeholder{
+          color: ${props => props.theme.textColor};
+        }
+      }
     }
     .toggler-wrapper {
       display: block;
@@ -405,17 +479,20 @@ const PolicyBox = styled.div`
     color: #E9446C;
   }
 `
-const DelBtn = styled.button`
+const BtnLine = styled.div`
   width: 100%;
-  padding: 8px;
-  border-radius: 8.5px;
-  background-color: #E9446C;
-  color: #FFFFFF;
-  outline: none;
-  border: none;
-  font-size: 22px;
-  margin-top: 18px;
-  font-weight: bold;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10.5px;
+  margin-top: 8px;
+  padding-right: 6px;
+  svg {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
 `
 const ExceptionBox = styled.div`
   display: none;

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import NavBar from '../../components/Nav';
+import { HiSortDescending } from '@react-icons/all-files/hi/HiSortDescending';
 
 interface title {
   title: string;
@@ -24,6 +25,11 @@ interface  calcStats {
 
 interface listData {
   appDate: string;
+  seller: string;
+  episodeCount: number;
+  salesAmount: number;
+  appAmount: number;
+  salesAppStatus: boolean;
 }
 
 export default function SalesSettlementList({title}:title){
@@ -42,8 +48,53 @@ export default function SalesSettlementList({title}:title){
     currentApplication: 150,
     cumulativeCompletion: 150,
   }
+  // 리스트데이터
+  const listData:listData[] = [
+    {
+      appDate:'2022-10-11',
+      seller: 'Partner',
+      episodeCount: 50,
+      salesAmount: 2237000,
+      appAmount: 237000,
+      salesAppStatus: true,
+    },
+    {
+      appDate:'2022-10-11',
+      seller: 'Partner',
+      episodeCount: 50,
+      salesAmount: 2137000,
+      appAmount: 237000,
+      salesAppStatus: true,
+    },
+    {
+      appDate:'2022-10-11',
+      seller: 'Partner',
+      episodeCount: 50,
+      salesAmount: 2100000,
+      appAmount: 237000,
+      salesAppStatus: true,
+    },
+    {
+      appDate:'2022-10-11',
+      seller: 'Partner',
+      episodeCount: 50,
+      salesAmount: 237000,
+      appAmount: 237000,
+      salesAppStatus: true,
+    },
+  ]
   const commaNumber = (number:Number) => {
     return String(number).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  }
+  const [viewSort, setViewSort] = useState<Boolean>(false);
+  const [criterion, setCriterion] = useState<String>("정산신청일순")
+  const listViewOn = (event:any) => {
+    event.preventDefault();
+    setViewSort((e) => !e);
+  }
+  function sortCriterion(text:string){
+    setViewSort((e) => !e);
+    setCriterion(text);
   }
   return (
     <>
@@ -67,6 +118,48 @@ export default function SalesSettlementList({title}:title){
             <p><span>현재 정산신청 판매자</span>{commaNumber(calcStats.currentApplication)}</p>
             <p><span>누적 정산 완료자</span>{commaNumber(calcStats.currentApplication)}</p>
           </CalcBox>
+          <ListBox>
+            <List style={{
+              marginBottom: '12px', 
+              marginTop: '48px',
+              boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
+              fontFamily: 'Pretendard-Medium',
+              fontSize: '20px',
+              padding: '18px 0 12.5px 0',
+            }}>
+              <div className='number head'>No</div>
+              <div className='head'>정산신청일</div>
+              <div className='head'>판매자</div>
+              <div className='head'>판매 EP수</div>
+              <div className='head'>판매한 금액</div>
+              <div className='head'>정산신청금액</div>
+              <div className='head'>정산신청여부</div>
+            </List>
+            <div className='sort'>
+              <p onClick={listViewOn}>
+                <HiSortDescending/>
+                <span>{criterion}</span>
+              </p>
+              <div style={!viewSort ? {display:"none"} : {display: "flex"}}>
+                <p onClick={()=> sortCriterion("정산신청일순")}>정산신청일순</p>
+                <p onClick={()=> sortCriterion("정산 완료만")}>정산 완료만</p>
+                <p onClick={()=> sortCriterion("정산 신청만")}>정산 신청만</p>
+                <p onClick={()=> sortCriterion("판매 금액순")}>판매 금액순</p>
+                <p onClick={()=> sortCriterion("파트너레벨 순")}>파트너레벨 순</p>
+              </div>
+            </div>
+            {listData.map((data, i) => (
+              <List key={i}>
+                <div className='number'>{i+1}</div>
+                <div>{data.appDate}</div>
+                <div>{data.seller}</div>
+                <div>{data.episodeCount}</div>
+                <div>{commaNumber(data.salesAmount)}</div>
+                <div>{commaNumber(data.appAmount)}</div>
+                <div>{data.salesAppStatus ? "가능" : "불가능"}</div>
+              </List>
+            ))}
+          </ListBox>
         </Box>
       </Container>
     </>
@@ -144,5 +237,90 @@ const CalcBox = styled.div`
     @media screen and (max-width: 1000px) {
       width: 100%;
     }
+  }
+`
+const ListBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 64px;
+  div{
+    background-color: ${props => props.theme.bgColor};
+  }
+  .sort{
+    position: absolute;
+    right: 6px;
+    top: 12px;
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 9999;
+    cursor: pointer;
+    p {
+      display: flex;
+      align-items: center;
+    }
+    span{
+      margin-top: -4px;
+      font-size: 20px;
+      margin-left: -2px;
+    }
+    div {
+      width: auto;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      border: 1.4px solid ${props => props.theme.textColor2};
+      top: 12px;
+      padding: 8px 0;
+      border-radius: 12px;
+      p{
+        padding: 10px 14.5px;
+        font-size: 18px;
+        transition: all .1s ease-in-out;
+      }
+      p:hover{
+        color: #DD4C4C;
+      }
+    }
+  }
+  svg{
+    width: 32px;
+    height: 32px;
+  }
+`
+const List = styled.div`
+  width: 100%;
+  background-color: ${props => props.theme.bgColor};
+  padding: 14px 0 14px 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 18px;
+  font-family: 'Pretendard-Regular';
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  @media screen and (max-width: 1000px) {
+    min-width: 800px;
+  }
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    z-index: 99;
+  }
+  .number{
+    width: 50%;
+  }
+  .head{
+    font-size: 20px;
   }
 `
