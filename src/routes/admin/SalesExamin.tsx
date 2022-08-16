@@ -21,7 +21,6 @@ interface modalDataInterface {
   ownSalePrice: number;
   auditState: number;
 }
-
 export default function SalesExamin({title}:title){
   const getData = [
     {
