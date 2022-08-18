@@ -172,93 +172,90 @@ export default function SalesExamin({title}:title){
   }
   return (
     <>
-      <Container>
-        <NavBar title={title}/>
-        <TopBar>
-          <p>운영관리</p>
-        </TopBar>
-        <Box>
-          <HeadBox>
+      <TopBar>
+        <p>운영관리</p>
+      </TopBar>
+      <Box>
+        <HeadBox>
+          <div className='topBox'>
+            <p className='title'>심사요청번호</p>
+          </div>
+          <div className='topBox'>
+            <p className='title'>시리즈 제목</p>
+          </div>
+          <div className='topBox'>
+            <p className='title'>요청일시</p>
+          </div>
+          <div className='topBox'>
+            <p className='title'>수정일시</p>
+          </div>
+          <div className='topBox'>
+            <p className='title'>진행상태</p>
+          </div>
+          <div className='topBox'>
+            <p className='title'>심사하기</p>
+          </div>
+        </HeadBox>
+        {getData.map((content, i) => (
+          <ContentLine key={i}>
             <div className='topBox'>
-              <p className='title'>심사요청번호</p>
+              <p className='requestAudit'>( {content.auditRequest} )</p>
             </div>
             <div className='topBox'>
-              <p className='title'>시리즈 제목</p>
+              <p className='title'>{
+                content.seriesName.length > 10 ? content.seriesName.slice(0,10) + "..." : content.seriesName
+              }</p>
+              {content.new ? <button className='newBtn'>New</button> : ""}
             </div>
             <div className='topBox'>
-              <p className='title'>요청일시</p>
+              <p className='requestDate'>{content.requestDate}</p>
             </div>
             <div className='topBox'>
-              <p className='title'>수정일시</p>
+              <p className='reviseDate'>{content.reviseDate}</p>
             </div>
             <div className='topBox'>
-              <p className='title'>진행상태</p>
+              {content.state === 0 ? 
+                <p className='state'>
+                  <img className='infiniteLotate' src="/images/icons/request.svg" alt="" />
+                  <span style={{marginTop: "2px"}}>요청중</span>
+                </p> 
+                : 
+                content.state === 1 ?
+                <p className='state'>
+                  <img src="/images/icons/OnSale.svg" alt="" />
+                  <span style={{marginTop: "2px"}}>판매중</span>
+                </p> : 
+                content.state === 2 ?
+                <p className='state'>
+                  <img src="/images/icons/StopSale.svg" alt="" />
+                  <span style={{marginTop: "2px"}}>판매중지</span>
+                </p> : ""
+              }
             </div>
             <div className='topBox'>
-              <p className='title'>심사하기</p>
+              <button 
+                className='auditBtn btn' 
+                onClick={()=> 
+                  modalDataSet(
+                    content.auditRequest, // 심사상태
+                    "https://storicha.in/testEpisode", // 시리즈링크 
+                    content.seriesName, // 시리즈이름
+                    1248, // 에피소드카운터
+                    1721480,// 텍스트 카운터
+                    32, // 삽화카운터
+                    35, // 장면카운터
+                    11, //캐릭터카운터
+                    18,
+                    18,
+                    18,
+                    18,
+                    0
+                  )
+                }>심사 하기</button>
             </div>
-          </HeadBox>
-          {getData.map((content, i) => (
-            <ContentLine key={i}>
-              <div className='topBox'>
-                <p className='requestAudit'>( {content.auditRequest} )</p>
-              </div>
-              <div className='topBox'>
-                <p className='title'>{
-                  content.seriesName.length > 10 ? content.seriesName.slice(0,10) + "..." : content.seriesName
-                }</p>
-                {content.new ? <button className='newBtn'>New</button> : ""}
-              </div>
-              <div className='topBox'>
-                <p className='requestDate'>{content.requestDate}</p>
-              </div>
-              <div className='topBox'>
-                <p className='reviseDate'>{content.reviseDate}</p>
-              </div>
-              <div className='topBox'>
-                {content.state === 0 ? 
-                  <p className='state'>
-                    <img className='infiniteLotate' src="/images/icons/request.svg" alt="" />
-                    <span style={{marginTop: "2px"}}>요청중</span>
-                  </p> 
-                  : 
-                  content.state === 1 ?
-                  <p className='state'>
-                    <img src="/images/icons/OnSale.svg" alt="" />
-                    <span style={{marginTop: "2px"}}>판매중</span>
-                  </p> : 
-                  content.state === 2 ?
-                  <p className='state'>
-                    <img src="/images/icons/StopSale.svg" alt="" />
-                    <span style={{marginTop: "2px"}}>판매중지</span>
-                  </p> : ""
-                }
-              </div>
-              <div className='topBox'>
-                <button 
-                  className='auditBtn btn' 
-                  onClick={()=> 
-                    modalDataSet(
-                      content.auditRequest, // 심사상태
-                      "https://storicha.in/testEpisode", // 시리즈링크 
-                      content.seriesName, // 시리즈이름
-                      1248, // 에피소드카운터
-                      1721480,// 텍스트 카운터
-                      32, // 삽화카운터
-                      35, // 장면카운터
-                      11, //캐릭터카운터
-                      18,
-                      18,
-                      18,
-                      18,
-                      0
-                    )
-                  }>심사 하기</button>
-              </div>
-            </ContentLine>
-          ))}
-        </Box>
-      </Container>
+          </ContentLine>
+        ))}
+      </Box>
       <BlackBox 
         className={modal ? "on" : ""}
         onClick={()=> setModal((e)=>!e)}

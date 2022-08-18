@@ -3,17 +3,21 @@ import styled from "styled-components"
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import NavBar from '../components/Nav';
 import BackLogoImage from '../components/BackLogoImage';
-import { useRecoilValue } from 'recoil';
-import { isDarkAtom } from '../recoil/theme';
-import { darkTheme, lightTheme } from '../enum/ThemeEnums';
 
 interface title {
   title: string;
 }
 
 export default function Topup(title:title){
-  const isDark = useRecoilValue(isDarkAtom);
-  const coinSelect = (event:any) => {
+  const [inputValue, setInputValue] = useState<any>("0");
+  const [selectNumber, setSelectNumber] = useState<Number>(0);
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const onlyNumber = value.replace(/[^0-9]/g, '');
+    return setInputValue(onlyNumber);
+  }
+  const coinSelect = (number:number) => {
+    return setSelectNumber(number);
   }
   return (
     <>
@@ -29,12 +33,14 @@ export default function Topup(title:title){
             <Directly
               placeholder='0'
               type="text"
+              onChange={onChange}
+              value={inputValue}
             />
             <button>구매하기</button>
             <span><b>CASH</b>직접입력</span>
           </TopupBoxTop>
           <TopupBox>
-            <CoinBox onClick={coinSelect}>
+            <CoinBox onClick={()=> coinSelect(10)} className={selectNumber === 10 ? "select" : ""}>
               <div className='left'>
                 <img src="images/icons/toriCoin.png" alt="" />
               </div>
@@ -47,7 +53,7 @@ export default function Topup(title:title){
                 <p>₩1,100</p>
               </div>
             </CoinBox>
-            <CoinBox>
+            <CoinBox onClick={()=> coinSelect(50)} className={selectNumber === 50 ? "select" : ""}>
               <div className='left'>
                 <img src="images/icons/toriCoin.png" alt="" />
               </div>
@@ -60,7 +66,7 @@ export default function Topup(title:title){
                 <p>₩5,500</p>
               </div>
             </CoinBox>
-            <CoinBox>
+            <CoinBox onClick={()=> coinSelect(100)} className={selectNumber === 100 ? "select" : ""}>
               <div className='left'>
                 <img src="images/icons/toriCoin.png" alt="" />
               </div>
@@ -73,7 +79,7 @@ export default function Topup(title:title){
                 <p>₩11,000</p>
               </div>
             </CoinBox>
-            <CoinBox>
+            <CoinBox onClick={()=> coinSelect(150)} className={selectNumber === 150 ? "select" : ""}>
               <div className='left'>
                 <img src="images/icons/toriCoin.png" alt="" />
               </div>
@@ -87,7 +93,7 @@ export default function Topup(title:title){
                 <p>₩13,200</p>
               </div>
             </CoinBox>
-            <CoinBox>
+            <CoinBox onClick={()=> coinSelect(300)} className={selectNumber === 300 ? "select" : ""}>
               <div className='left'>
                 <img src="images/icons/toriCoin.png" alt="" />
               </div>
@@ -101,7 +107,7 @@ export default function Topup(title:title){
                 <p>₩25,500</p>
               </div>
             </CoinBox>
-            <CoinBox>
+            <CoinBox onClick={()=> coinSelect(500)} className={selectNumber === 500 ? "select" : ""}>
               <div className='left'>
                 <img src="images/icons/toriCoin.png" alt="" />
               </div>
@@ -198,7 +204,7 @@ const TopupBoxTop = styled.div`
   position: relative;
   width: 100%;
   margin-top: 24px;
-  border-top: 1px solid #DCDCDC;
+  border-top: 1.8px solid #DCDCDC;
   padding: 24px 0 12px 0;
   button {
     position: absolute;
@@ -234,7 +240,7 @@ const TopupBoxTop = styled.div`
 const Directly = styled.input`
   width: 100%;
   padding: 12px 95px 12px 12px;
-  border: 1px solid #DD4C4C;
+  border: 1.8px solid #DD4C4C;
   border-radius: 6px;
   font-size: 20px;
   text-align: right;
@@ -256,7 +262,7 @@ const TopupBox = styled.div`
 `
 const CoinBox = styled.div`
   width: 49%;
-  border: 1px solid #DCDCDC;
+  border: 1.8px solid #DCDCDC;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -287,6 +293,10 @@ const CoinBox = styled.div`
   }
   p{
     color: #000000;
+  }
+  &.select{
+    border: 1.8px solid #DD4C4C;
+    box-shadow: 0;
   }
   @media screen and (max-width: 500px) {
     width: 100%;

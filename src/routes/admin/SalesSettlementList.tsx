@@ -98,70 +98,67 @@ export default function SalesSettlementList({title}:title){
   }
   return (
     <>
-      <Container>
-        <NavBar title={title}/>
-        <TopBar>
-          <p>판매 정산 관리</p>
-        </TopBar>
-        <Box>
-          <CalcBox>
-            <h4 className='title'>정산 정책</h4>
-            <p><span>정산 주기</span>{calcPolicy.cycle}</p>
-            <p><span>정산 요율</span>{calcPolicy.lowestRate}% ~ {calcPolicy.highestRate}%</p>
-            <p><span>파트너 티어</span>{calcPolicy.partnerTier}</p>
-            <p><span>정산 가능 최소 금액</span>{calcPolicy.minimumAmount}만원 ({commaNumber(calcPolicy.minimumAmount * 100)}TC)</p>
-          </CalcBox>
-          <CalcBox style={{marginTop: "72px"}}>
-            <h4 className='title'>정산 통계</h4>
-            <p><span>현재 정산가능 판매자</span>{commaNumber(calcStats.currentlyAvailable)}</p>
-            <p><span>누적 정산가능 판매자</span>{commaNumber(calcStats.cumulativeAvailable)}</p>
-            <p><span>현재 정산신청 판매자</span>{commaNumber(calcStats.currentApplication)}</p>
-            <p><span>누적 정산 완료자</span>{commaNumber(calcStats.currentApplication)}</p>
-          </CalcBox>
-          <ListBox>
-            <List style={{
-              marginBottom: '12px', 
-              marginTop: '48px',
-              boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
-              fontFamily: 'Pretendard-Medium',
-              fontSize: '20px',
-              padding: '18px 0 12.5px 0',
-            }}>
-              <div className='number head'>No</div>
-              <div className='head'>정산신청일</div>
-              <div className='head'>판매자</div>
-              <div className='head'>판매 EP수</div>
-              <div className='head'>판매한 금액</div>
-              <div className='head'>정산신청금액</div>
-              <div className='head'>정산신청여부</div>
-            </List>
-            <div className='sort'>
-              <p onClick={listViewOn}>
-                <HiSortDescending/>
-                <span>{criterion}</span>
-              </p>
-              <div style={!viewSort ? {display:"none"} : {display: "flex"}}>
-                <p onClick={()=> sortCriterion("정산신청일순")}>정산신청일순</p>
-                <p onClick={()=> sortCriterion("정산 완료만")}>정산 완료만</p>
-                <p onClick={()=> sortCriterion("정산 신청만")}>정산 신청만</p>
-                <p onClick={()=> sortCriterion("판매 금액순")}>판매 금액순</p>
-                <p onClick={()=> sortCriterion("파트너레벨 순")}>파트너레벨 순</p>
-              </div>
+      <TopBar>
+        <p>판매 정산 관리</p>
+      </TopBar>
+      <Box>
+        <CalcBox>
+          <h4 className='title'>정산 정책</h4>
+          <p><span>정산 주기</span>{calcPolicy.cycle}</p>
+          <p><span>정산 요율</span>{calcPolicy.lowestRate}% ~ {calcPolicy.highestRate}%</p>
+          <p><span>파트너 티어</span>{calcPolicy.partnerTier}</p>
+          <p><span>정산 가능 최소 금액</span>{calcPolicy.minimumAmount}만원 ({commaNumber(calcPolicy.minimumAmount * 100)}TC)</p>
+        </CalcBox>
+        <CalcBox style={{marginTop: "72px"}}>
+          <h4 className='title'>정산 통계</h4>
+          <p><span>현재 정산가능 판매자</span>{commaNumber(calcStats.currentlyAvailable)}</p>
+          <p><span>누적 정산가능 판매자</span>{commaNumber(calcStats.cumulativeAvailable)}</p>
+          <p><span>현재 정산신청 판매자</span>{commaNumber(calcStats.currentApplication)}</p>
+          <p><span>누적 정산 완료자</span>{commaNumber(calcStats.currentApplication)}</p>
+        </CalcBox>
+        <ListBox>
+          <List style={{
+            marginBottom: '12px', 
+            marginTop: '48px',
+            boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
+            fontFamily: 'Pretendard-Medium',
+            fontSize: '20px',
+            padding: '18px 0 12.5px 0',
+          }}>
+            <div className='number head'>No</div>
+            <div className='head'>정산신청일</div>
+            <div className='head'>판매자</div>
+            <div className='head'>판매 EP수</div>
+            <div className='head'>판매한 금액</div>
+            <div className='head'>정산신청금액</div>
+            <div className='head'>정산신청여부</div>
+          </List>
+          <div className='sort'>
+            <p onClick={listViewOn}>
+              <HiSortDescending/>
+              <span>{criterion}</span>
+            </p>
+            <div style={!viewSort ? {display:"none"} : {display: "flex"}}>
+              <p onClick={()=> sortCriterion("정산신청일순")}>정산신청일순</p>
+              <p onClick={()=> sortCriterion("정산 완료만")}>정산 완료만</p>
+              <p onClick={()=> sortCriterion("정산 신청만")}>정산 신청만</p>
+              <p onClick={()=> sortCriterion("판매 금액순")}>판매 금액순</p>
+              <p onClick={()=> sortCriterion("파트너레벨 순")}>파트너레벨 순</p>
             </div>
-            {listData.map((data, i) => (
-              <List key={i}>
-                <div className='number'>{i+1}</div>
-                <div>{data.appDate}</div>
-                <div>{data.seller}</div>
-                <div>{data.episodeCount}</div>
-                <div>{commaNumber(data.salesAmount)}</div>
-                <div>{commaNumber(data.appAmount)}</div>
-                <div>{data.salesAppStatus ? "가능" : "불가능"}</div>
-              </List>
-            ))}
-          </ListBox>
-        </Box>
-      </Container>
+          </div>
+          {listData.map((data, i) => (
+            <List key={i}>
+              <div className='number'>{i+1}</div>
+              <div>{data.appDate}</div>
+              <div>{data.seller}</div>
+              <div>{data.episodeCount}</div>
+              <div>{commaNumber(data.salesAmount)}</div>
+              <div>{commaNumber(data.appAmount)}</div>
+              <div>{data.salesAppStatus ? "가능" : "불가능"}</div>
+            </List>
+          ))}
+        </ListBox>
+      </Box>
     </>
   )
 }

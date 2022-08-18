@@ -12,6 +12,8 @@ import SalesExamin from './routes/admin/SalesExamin';
 import SalesSettlementList from './routes/admin/SalesSettlementList';
 import SalePolicy from './routes/sale/Policy';
 import SaleBox from './components/sale/Box';
+// ADMIN
+import AdminBox from './components/admin/Box';
 
 interface IRouterProps{
 }
@@ -36,8 +38,10 @@ function Router({}: IRouterProps){
         </Route>
 
         {/* ADMIN */}
-        <Route path='/admin/sales_examin' element={<SalesExamin title={"SALESEXAMIN"}/>}/>
-        <Route path='/admin/sales_settlement_list' element={<SalesSettlementList title={"SALESEXAMIN"}/>}/>
+        <Route path='/admin' element={<AdminBox/>}>
+          <Route path='examin' element={<SalesExamin title={"SALESEXAMIN"}/>}/>
+          <Route path='settlementlist' element={<SalesSettlementList title={"SALESEXAMIN"}/>}/>
+        </Route>
       </Routes>
     </BrowserRouter>
   )
