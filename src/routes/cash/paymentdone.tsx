@@ -2,8 +2,6 @@ import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ChevronBackOutline } from 'react-ionicons';
 import styled from 'styled-components';
-import BackLogoImage from '../components/BackLogoImage';
-import NavBar from '../components/Nav';
 
 interface title {
   title: string;
@@ -11,56 +9,39 @@ interface title {
 export default function PaymentDone(title:title){
   return(
     <>
-      <NavBar title={title.title}/>
-      <Container>
-        <HelmetProvider>
-          <Helmet title={title.title}/>
-        </HelmetProvider>
-        <BackLogoImage/>
-        <Box>
-          <TopTitle>결제 완료</TopTitle>
-          <TopTitleLine/>
-          <TitleText>결제가 완료 되었습니다.</TitleText>
-          <img src="/images/logo/CheckCircle.svg" alt="" />
-          <ProductName style={{marginTop: "44px"}}>
-            <div>결제 내역</div>
-            <div>11,000원(VAT포함)</div>
-          </ProductName>
-          <ProductName>
-            <div>결제 방법</div>
-            <div>신용카드</div>
-          </ProductName>
-          <ProductName>
-            <div>결제 아이디</div>
-            <div>moon@storicha.in</div>
-          </ProductName>
-          <button>나의 캐시 지갑 보기</button>
-          <BackP>
-            <ChevronBackOutline
-              width={"20px"}
-              height={"20px"}
-              color={"#000000"}
-            />
-            돌아가기
-          </BackP>
-        </Box>
-      </Container>
+      <HelmetProvider>
+        <Helmet title={title.title}/>
+      </HelmetProvider>
+      <Box>
+        <TopTitle>결제 완료</TopTitle>
+        <TopTitleLine/>
+        <TitleText>결제가 완료 되었습니다.</TitleText>
+        <img src="/images/logo/CheckCircle.svg" alt="" />
+        <ProductName style={{marginTop: "44px"}}>
+          <div>결제 내역</div>
+          <div>11,000원(VAT포함)</div>
+        </ProductName>
+        <ProductName>
+          <div>결제 방법</div>
+          <div>신용카드</div>
+        </ProductName>
+        <ProductName>
+          <div>결제 아이디</div>
+          <div>moon@storicha.in</div>
+        </ProductName>
+        <button>나의 캐시 지갑 보기</button>
+        <BackP>
+          <ChevronBackOutline
+            width={"20px"}
+            height={"20px"}
+            color={"#000000"}
+          />
+          돌아가기
+        </BackP>
+      </Box>
     </>
   )
 }
-const Container = styled.div`
-  padding: 0px 20px 30px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media screen and (max-width: 500px) {
-    padding: 0px;
-    padding-bottom: 20px;
-  }
-`
 const Box = styled.div`
   box-sizing: border-box;
   min-width: 428px;

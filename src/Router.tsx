@@ -2,26 +2,33 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // Container
-import ContainerBox from './routes/container';
+import ContainerBox from './components/cash/container';
 
 // HOME
-import Home from './routes/Home';
+import Home from './routes/home';
 
 // CASH
+import Topup from './routes/cash/topup';
 import Checkout from './routes/cash/checkout';
+import PaymentDone from './routes/cash/paymentdone';
+import CashWallet from './routes/cash/cashwallet';
 
 // ADMIN
 import AdminBox from './components/admin/box';
+import AdminExamin from './routes/admin/examin';
+import AdminSettlementList from './routes/admin/settlementlist';
 
-import CashWallet from './routes/CashWallet';
-import PaymentDone from './routes/PaymentDone';
-import Topup from './routes/cash/topup';
-import Series from './routes/Series';
-import SaleEpisode from './routes/sale/Episode';
-import SalesExamin from './routes/admin/SalesExamin';
-import SalesSettlementList from './routes/admin/SalesSettlementList';
-import SalePolicy from './routes/sale/Policy';
+
+// SALE
 import SaleBox from './components/sale/box';
+import SaleEpisode from './routes/sale/Episode';
+import SalePolicy from './routes/sale/Policy';
+
+// OTHER
+import Series from './routes/series';
+
+
+import CashWalletTest from './routes/cash/cashwallet2';
 
 function Router({}){
   return(
@@ -32,12 +39,12 @@ function Router({}){
 
         {/* CASH */}
         <Route path='/cash' element={<ContainerBox/>}>
-          <Route path='topup' element={<Topup title={'TORI CASH TOPUP'}/>}/>
-          <Route path='checkout' element={<Checkout title={'Checkout'}/>}/>
+          <Route path='topup' element={<Topup title={'토리캐시 충전'}/>}/>
+          <Route path='checkout' element={<Checkout title={'결제 확인'}/>}/>
+          <Route path='paymentdone' element={<PaymentDone title={'결제완료'}/>}/>
+          <Route path='cashwallet' element={<CashWallet title={"나의 지갑"}/>}/>
+          {/* <Route path='cashWallet2' element={<CashWalletTest title={"내 지갑"}/>}/> */}
         </Route>
-        <Route path='/paymentdone' element={<PaymentDone title={"PAYMENTDONE"}/>}/>
-        <Route path='/cashWallet' element={<CashWallet title={"결제완료"}/>}/>
-        <Route path='/series' element={<Series title={"SERIES"}/>}/>
 
         {/* SALE */}
         <Route path='/sale' element={<SaleBox/>}>
@@ -47,9 +54,11 @@ function Router({}){
 
         {/* ADMIN */}
         <Route path='/admin' element={<AdminBox/>}>
-          <Route path='examin' element={<SalesExamin title={"SALESEXAMIN"}/>}/>
-          <Route path='settlementlist' element={<SalesSettlementList title={"SALESEXAMIN"}/>}/>
+          <Route path='examin' element={<AdminExamin title={"판매 심사"}/>}/>
+          <Route path='settlementlist' element={<AdminSettlementList title={"판매 정산"}/>}/>
         </Route>
+
+        <Route path='series' element={<Series title={"시리즈"}/>}/>
       </Routes>
     </BrowserRouter>
   )

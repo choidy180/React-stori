@@ -21,7 +21,7 @@ interface modalDataInterface {
   ownSalePrice: number;
   auditState: number;
 }
-export default function SalesExamin({title}:title){
+export default function AdminExamin({title}:title){
   const getData = [
     {
       auditRequest: "IDX 01500", 

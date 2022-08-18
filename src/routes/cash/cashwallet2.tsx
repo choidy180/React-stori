@@ -2,12 +2,11 @@ import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { ChevronDownOutline } from 'react-ionicons';
 import styled from 'styled-components';
-import NavBar from '../components/Nav';
 
 interface title {
   title: string;
 }
-export default function CashWallet(title:title){
+export default function CashWalletTest(title:title){
   const focusChange = (event:any) => {
     if(event.currentTarget.id === "non_focus"){
       document.getElementById("focus")!.id = "non_focus";
@@ -24,171 +23,168 @@ export default function CashWallet(title:title){
   }
   return(
     <>
-      <NavBar title={title.title}/>
-      <Container>
-        <HelmetProvider>
-          <Helmet title={title.title}/>
-        </HelmetProvider>
-        <Box>
-          <TopTitle>보유 CASH</TopTitle>
-          <TopTitleLine/>
-          <HaveCash>1,000,000 TC</HaveCash>
+      <HelmetProvider>
+        <Helmet title={title.title}/>
+      </HelmetProvider>
+      <Box>
+        <TopTitle>보유 CASH</TopTitle>
+        <TopTitleLine/>
+        <HaveCash>1,000,000 TC</HaveCash>
 
-          <PaymentDetail>
-            <Detail>
-              <img src="images/icons/won.svg" alt=""/>
-              <p style={{marginTop: "2px"}}>충전액 &gt;</p>
-              <p><b>10</b>TC</p>
-            </Detail>
-            <Detail>
-              <img id="cash_icon" src="images/icons/coinplus.svg" alt=""/>
-              <p style={{marginTop: "-7px"}}>월구독액 &gt;</p>
-              <p style={{marginTop: "-2px"}}><b>10</b>TC</p>
-              <span>30일뒤 소멸 예정</span>
-            </Detail>
-            <Detail>
-              <img id="cash_icon2" src="images/icons/CoinPlus2.svg" alt=""/>
-              <p>적립액 &gt;</p>
-              <p><b>10</b>TC</p>
-            </Detail>
-          </PaymentDetail>
+        <PaymentDetail>
+          <Detail>
+            <img src="images/icons/won.svg" alt=""/>
+            <p style={{marginTop: "2px"}}>충전액 &gt;</p>
+            <p><b>10</b>TC</p>
+          </Detail>
+          <Detail>
+            <img id="cash_icon" src="images/icons/coinplus.svg" alt=""/>
+            <p style={{marginTop: "-7px"}}>월구독액 &gt;</p>
+            <p style={{marginTop: "-2px"}}><b>10</b>TC</p>
+            <span>30일뒤 소멸 예정</span>
+          </Detail>
+          <Detail>
+            <img id="cash_icon2" src="images/icons/CoinPlus2.svg" alt=""/>
+            <p>적립액 &gt;</p>
+            <p><b>10</b>TC</p>
+          </Detail>
+        </PaymentDetail>
 
-          <BreakDown>
-            <BreakDownPayment id='breakDownPayment'>
-              <div>
-                <BreakDownHead id="focus" onClick={focusChange}>
-                  <p>결제 내역</p>
-                </BreakDownHead>
-                <BreakDownHead id="non_focus" onClick={focusChange}>
-                  <p>사용 내역</p>
-                </BreakDownHead>
+        <BreakDown>
+          <BreakDownPayment id='breakDownPayment'>
+            <div>
+              <BreakDownHead id="focus" onClick={focusChange}>
+                <p>결제 내역</p>
+              </BreakDownHead>
+              <BreakDownHead id="non_focus" onClick={focusChange}>
+                <p>사용 내역</p>
+              </BreakDownHead>
+            </div>
+            <Receipt id="focus_receipt">
+              <div className="date">
+                <HeadTitle>결제 일시</HeadTitle>
+                <p>22.05.31. 16:00</p>
+                <p>22.05.31. 16:00</p>
+                <p>22.05.31. 16:00</p>
+                <p>22.05.31. 16:00</p>
               </div>
-              <Receipt id="focus_receipt">
-                <div className="date">
-                  <HeadTitle>결제 일시</HeadTitle>
-                  <p>22.05.31. 16:00</p>
-                  <p>22.05.31. 16:00</p>
-                  <p>22.05.31. 16:00</p>
-                  <p>22.05.31. 16:00</p>
+              <div className="price">
+                <HeadTitle>결제 금액</HeadTitle>
+                <p>13,200</p>
+                <p>13,200</p>
+                <p>13,200</p>
+                <p>13,200</p>
+              </div>
+              <div className="way">
+                <HeadTitle>방식</HeadTitle>
+                <p>신용카드</p>
+                <p>계좌이체</p>
+                <p>보너스지급</p>
+                <p>토스</p>
+              </div>
+              <div className="charging">
+                <HeadTitle>충전액</HeadTitle>
+                <p>155</p>
+                <p>155</p>
+                <p>155</p>
+                <p>155</p>
+              </div>
+            </Receipt>
+            <Receipt id="non_focus_receipt" style={{flexDirection: "column"}}>
+              <ContentBox className='box2'>
+                <div className="div1">
+                  <div>22.07.31 13:31</div>
+                  <div>사용</div>
                 </div>
-                <div className="price">
-                  <HeadTitle>결제 금액</HeadTitle>
-                  <p>13,200</p>
-                  <p>13,200</p>
-                  <p>13,200</p>
-                  <p>13,200</p>
+                <div className="div2">
                 </div>
-                <div className="way">
-                  <HeadTitle>방식</HeadTitle>
-                  <p>신용카드</p>
-                  <p>계좌이체</p>
-                  <p>보너스지급</p>
-                  <p>토스</p>
+                <div className="div3">
+                  <div className="storyName">만료</div>
+                  <div className="div3Coin">-210 TC</div>
                 </div>
-                <div className="charging">
-                  <HeadTitle>충전액</HeadTitle>
-                  <p>155</p>
-                  <p>155</p>
-                  <p>155</p>
-                  <p>155</p>
+                <div className="div4">
+                  <div className="episode">미 사용분 자동 소멸</div>
+                  <div className="totalCoin"><b>잔액</b>200,000,000,000TC</div>
                 </div>
-              </Receipt>
-              <Receipt id="non_focus_receipt" style={{flexDirection: "column"}}>
-                <ContentBox className='box2'>
-                  <div className="div1">
-                    <div>22.07.31 13:31</div>
-                    <div>사용</div>
-                  </div>
-                  <div className="div2">
-                  </div>
-                  <div className="div3">
-                    <div className="storyName">만료</div>
-                    <div className="div3Coin">-210 TC</div>
-                  </div>
-                  <div className="div4">
-                    <div className="episode">미 사용분 자동 소멸</div>
-                    <div className="totalCoin"><b>잔액</b>200,000,000,000TC</div>
-                  </div>
-                </ContentBox>
-                <ContentBox>
-                  <div className="div1">
-                    <div>22.07.31 13:31</div>
-                    <div>사용</div>
-                  </div>
-                  <div className="div2">
-                  </div>
-                  <div className="div3">
-                    <div className="storyName">렌탈그녀</div>
-                    <div className="div3Coin">-12 TC</div>
-                  </div>
-                  <div className="div4">
-                    <div className="episode">1부-소장-울지 못해서 운다</div>
-                    <div className="totalCoin"><b>잔액</b>203TC</div>
-                  </div>
-                </ContentBox>
-                <ContentBox>
-                  <div className="div1">
-                    <div>22.06.09 18:00</div>
-                    <div>사용</div>
-                  </div>
-                  <div className="div2">
-                  </div>
-                  <div className="div3">
-                    <div className="storyName">렌탈그녀</div>
-                    <div className="div3Coin">-6 TC</div>
-                  </div>
-                  <div className="div4">
-                    <div className="episode">1부-대여-울지 못해서 운다</div>
-                    <div className="totalCoin"><b>잔액</b>20,312TC</div>
-                  </div>
-                </ContentBox>
-                <ContentBox>
-                  <div className="div1">
-                    <div>22.06.05 14:00</div>
-                    <div>사용</div>
-                  </div>
-                  <div className="div2">
-                  </div>
-                  <div className="div3">
-                    <div className="storyName">보너스</div>
-                    <div className="div3Coin" id="addCoin">+100 TC</div>
-                  </div>
-                  <div className="div4">
-                    <div className="episode">운영자 감사의 의미</div>
-                    <div className="totalCoin"><b>잔액</b>20,312TC</div>
-                  </div>
-                </ContentBox>
-                <ContentBox>
-                  <div className="div1">
-                    <div>22.06.01 19:00</div>
-                    <div>사용</div>
-                  </div>
-                  <div className="div2">
-                    <div className="chargeDetail">충전(신용카드)</div>
-                    <div></div>
-                  </div>
-                  <div className="div3">
-                    <div className="storyName">보너스</div>
-                    <div className="div3Coin" id="addCoin">+210 TC</div>
-                  </div>
-                  <div className="div4">
-                    <div className="episode">월 자동구매</div>
-                    <div className="totalCoin"><b>잔액</b>20,210TC</div>
-                  </div>
-                </ContentBox>
-              </Receipt>
-            </BreakDownPayment>
-            <MoreView>
-              <p>결제내역 더보기</p>
-              <ChevronDownOutline
-                width={"24px"}
-                height={"24px"}
-                color={"A0A0A0"}
-              />
-            </MoreView>
-          </BreakDown>
-        </Box>
-      </Container>
+              </ContentBox>
+              <ContentBox>
+                <div className="div1">
+                  <div>22.07.31 13:31</div>
+                  <div>사용</div>
+                </div>
+                <div className="div2">
+                </div>
+                <div className="div3">
+                  <div className="storyName">렌탈그녀</div>
+                  <div className="div3Coin">-12 TC</div>
+                </div>
+                <div className="div4">
+                  <div className="episode">1부-소장-울지 못해서 운다</div>
+                  <div className="totalCoin"><b>잔액</b>203TC</div>
+                </div>
+              </ContentBox>
+              <ContentBox>
+                <div className="div1">
+                  <div>22.06.09 18:00</div>
+                  <div>사용</div>
+                </div>
+                <div className="div2">
+                </div>
+                <div className="div3">
+                  <div className="storyName">렌탈그녀</div>
+                  <div className="div3Coin">-6 TC</div>
+                </div>
+                <div className="div4">
+                  <div className="episode">1부-대여-울지 못해서 운다</div>
+                  <div className="totalCoin"><b>잔액</b>20,312TC</div>
+                </div>
+              </ContentBox>
+              <ContentBox>
+                <div className="div1">
+                  <div>22.06.05 14:00</div>
+                  <div>사용</div>
+                </div>
+                <div className="div2">
+                </div>
+                <div className="div3">
+                  <div className="storyName">보너스</div>
+                  <div className="div3Coin" id="addCoin">+100 TC</div>
+                </div>
+                <div className="div4">
+                  <div className="episode">운영자 감사의 의미</div>
+                  <div className="totalCoin"><b>잔액</b>20,312TC</div>
+                </div>
+              </ContentBox>
+              <ContentBox>
+                <div className="div1">
+                  <div>22.06.01 19:00</div>
+                  <div>사용</div>
+                </div>
+                <div className="div2">
+                  <div className="chargeDetail">충전(신용카드)</div>
+                  <div></div>
+                </div>
+                <div className="div3">
+                  <div className="storyName">보너스</div>
+                  <div className="div3Coin" id="addCoin">+210 TC</div>
+                </div>
+                <div className="div4">
+                  <div className="episode">월 자동구매</div>
+                  <div className="totalCoin"><b>잔액</b>20,210TC</div>
+                </div>
+              </ContentBox>
+            </Receipt>
+          </BreakDownPayment>
+          <MoreView>
+            <p>결제내역 더보기</p>
+            <ChevronDownOutline
+              width={"24px"}
+              height={"24px"}
+              color={"A0A0A0"}
+            />
+          </MoreView>
+        </BreakDown>
+      </Box>
     </>
   )
 }

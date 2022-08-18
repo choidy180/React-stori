@@ -32,7 +32,7 @@ interface listData {
   salesAppStatus: boolean;
 }
 
-export default function SalesSettlementList({title}:title){
+export default function AdminSettlementList({title}:title){
   // 정산정책
   const calcPolicy:calcCycle = {
     cycle : '매월 1일',
