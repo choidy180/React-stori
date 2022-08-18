@@ -29,14 +29,15 @@ export default function NavBar({title}:titleProps){
       </Center>
       <Right>
         <UserImage>
-          <img src="images/F6CB11C6-6E14-4B87-BE43-AF2493348A20_1_105_c.png" alt="" />
+          <img src="/images/F6CB11C6-6E14-4B87-BE43-AF2493348A20_1_105_c.png" alt="" />
         </UserImage>
         <UserEmail onClick={()=> setViewBox((e) => !e)}>
           minseok@storicha.in
           <ChevronDownOutline
             color={theme.textColor}
-            width={"20px"}
-            height={"20px"}
+            width={"26px"}
+            height={"26px"}
+            style={{marginLeft: '4px'}}
             cssClasses={viewBox ? "viewOn" : ""}
           />
         </UserEmail>
@@ -185,7 +186,7 @@ const UserImage = styled.div`
   }
 `
 const UserEmail = styled.p`
-  font-size: 1rem;
+  font-size: 20px;
   margin-right: 4px;
   @media screen and (max-width: 768px) {
     font-size: .8rem;

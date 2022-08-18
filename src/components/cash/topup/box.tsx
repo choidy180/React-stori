@@ -1,27 +1,18 @@
 import React from 'react';
-import styled from "styled-components"
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import BackLogoImage from '../components/BackLogoImage';
-import NavBar from '../components/Nav';
+import styled from 'styled-components';
+import BackLogoImage from '../../BackLogoImage';
+import NavBar from '../../Nav';
 
-interface title {
-  title: string;
-}
-
-export default function Home(title:title){
+export default function CashTopupBox(){
   return (
     <>
-      <NavBar title={title.title}/>
+      <NavBar title={"타이틀"}/>
       <Container>
-        <HelmetProvider>
-          <Helmet title="홈페이지"/>
-        </HelmetProvider>
         <BackLogoImage/>
       </Container>
     </>
   )
 }
-
 const Container = styled.div`
   padding: 0px 20px 30px 20px;
   max-width: 1200px;
