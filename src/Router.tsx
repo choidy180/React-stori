@@ -7,10 +7,11 @@ import CashWallet from './routes/CashWallet';
 import PaymentDone from './routes/PaymentDone';
 import Topup from './routes/topup';
 import Series from './routes/Series';
-import SalePolicy from './routes/SalePolicy';
-import SaleEpisode from './routes/SaleEpisode';
+import SaleEpisode from './routes/sale/Episode';
 import SalesExamin from './routes/admin/SalesExamin';
 import SalesSettlementList from './routes/admin/SalesSettlementList';
+import SalePolicy from './routes/sale/Policy';
+import SaleBox from './components/sale/Box';
 
 interface IRouterProps{
 }
@@ -27,8 +28,14 @@ function Router({}: IRouterProps){
         <Route path='/paymentdone' element={<PaymentDone title={"PAYMENTDONE"}/>}/>
         <Route path='/cashWallet' element={<CashWallet title={"결제완료"}/>}/>
         <Route path='/series' element={<Series title={"SERIES"}/>}/>
-        <Route path='/salePolicy' element={<SalePolicy title={"SALEPOLICY"}/>}/>
-        <Route path='/saleEpisode' element={<SaleEpisode title={"SALEEPISODE"}/>}/>
+
+        {/* SALE */}
+        <Route path='/sale' element={<SaleBox/>}>
+          <Route path='episode' element={<SaleEpisode/>}/>
+          <Route path='policy' element={<SalePolicy/>}/>
+        </Route>
+
+        {/* ADMIN */}
         <Route path='/admin/sales_examin' element={<SalesExamin title={"SALESEXAMIN"}/>}/>
         <Route path='/admin/sales_settlement_list' element={<SalesSettlementList title={"SALESEXAMIN"}/>}/>
       </Routes>

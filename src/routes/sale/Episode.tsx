@@ -1,14 +1,8 @@
 import React from 'react';
 import { AddCircleOutline, ChevronBackOutline, ChevronDownOutline, ChevronForwardOutline, CopyOutline, ListOutline, SearchOutline } from 'react-ionicons';
 import styled from 'styled-components';
-import Swal from 'sweetalert2';
-import NavBar from '../components/Nav';
-import AddContentBox from '../components/sale/AddContentBox';
-import SaleTopBar from '../components/sale/saleTopBar';
+import AddContentBox from '../../components/sale/AddContentBox';
 
-interface title{
-  title: string;
-}
 interface StoryDataInterface{
   img: string; 
   idx: string; 
@@ -25,7 +19,7 @@ interface StoryDataInterface{
   characterCount: number;
 }
 
-export default function SaleEpisode(title:title){
+export default function SaleEpisode(){
   const addStory:StoryDataInterface[] = [
     // number: 에피소드 번호, title: 제목, policy: 판매정책, rent: 대여가, rentSale: 대여할인가, own: 소장가, ownSale: 소장할인가
     {img: "5a345987bf1dda7b5d93c2971f8f4975.png", idx: "f4e8fc25-7601-4846-8644-21bdbf17be3f", number: 0, title: "재니와의 만남", policy: 0, rent: 8, rentSale: 18, own: 18, ownSale: 18 ,textCount: 25112, artworkCount: 5, sceneCount: 2, characterCount: 10},
@@ -105,119 +99,113 @@ export default function SaleEpisode(title:title){
   }
   return(
     <>
-      <NavBar title={title.title}/>
-      <Container>
-        <SaleTopBar title={title.title}/>
-        <Box>
-          <TopBox>
-            <p className='title'>판매 할 에피소드로 추가한 스토리 ( {addStory.length} )</p>
-            <p className='subtitle'>에피소드 번호를 입력 해 주세요. 미 입력시 맨 마지막에 노출 됩니다.</p>
-            {addStory.map((content, i) => (
-              <AddContentBox {...content} key={i}/>
-            ))}
-            <p className='pagingList'>
-              <ChevronBackOutline
-                width={"22px"}
-                height={"22px"}
+      <TopBox>
+        <p className='title'>판매 할 에피소드로 추가한 스토리 ( {addStory.length} )</p>
+        <p className='subtitle'>에피소드 번호를 입력 해 주세요. 미 입력시 맨 마지막에 노출 됩니다.</p>
+        {addStory.map((content, i) => (
+          <AddContentBox {...content} key={i}/>
+        ))}
+        <p className='pagingList'>
+          <ChevronBackOutline
+            width={"22px"}
+            height={"22px"}
+          />
+          <b onClick={()=> alert("페이징처리")}>1</b>
+          <b onClick={()=> alert("페이징처리")}>2</b>
+          <b onClick={()=> alert("페이징처리")}>3</b>
+          <b onClick={()=> alert("페이징처리")}>4</b>
+          <b onClick={()=> alert("페이징처리")}>5</b>
+          <b onClick={()=> alert("페이징처리")}>6</b>
+          <b onClick={()=> alert("페이징처리")}>7</b>
+          <b onClick={()=> alert("페이징처리")}>8</b>
+          <b onClick={()=> alert("페이징처리")}>9</b>
+          <ChevronForwardOutline
+            width={"22px"}
+            height={"22px"}
+          />
+        </p>
+      </TopBox>
+      <ContentBox>
+        <p className='title'>내 책상의 스토리 전체목록</p>
+        <p className='subtitle'>에피소드로써 판매할 스토리를 이 시리즈에 추가 하세요. 추가(플러스 버튼)을 누르면 판매할 에피소드로 추가 됩니다.</p>
+        <div className='topLine'>
+          <span className='left'>
+            <b>전체 스토리</b> ( {storyList.length * 10 + 1} )
+          </span>
+          <div className='center'>
+            <input type="text" placeholder='스토리 찾기'/>
+            <SearchOutline
+              width={"24px"}
+              height={"24px"}
+            />
+          </div>
+          <span className='right'>
+            <ListOutline
+              width={"26px"}
+              height={"26px"}
+            />
+            최신순
+          </span>
+        </div>
+        {storyList.map((content, i) => (
+          <ContentLine key={i}>
+            <ContentLineBox>
+              <ContentImg>
+                <img src={`/images/Illustration/${content.img}`} alt="" />
+              </ContentImg>
+              <p className='title'>
+                {content.title.length > 10 ? content.title.slice(0,10)+"..." : content.title}&nbsp;
+                <span>
+                  {/* public: 0-공개 / 1-비공개 / 2-팔로워에게만공개 / 3-초대된사람만 */}
+                  {
+                    content.public === 0 ? "( 공개 )" :
+                    content.public === 1 ? "( 비공개 )" :
+                    content.public === 2 ? "( 팔로워에게만 공개 )" :
+                    content.public === 3 && "( 초대된 사람만 )"
+                  }
+                </span>
+              </p>
+            </ContentLineBox>
+            <ContentLineBox>
+              <span className='link'>{content.link}</span>
+              <CopyOutline
+                width={"24px"}
+                height={"24px"}
+                cssClasses={"copyOutline"}
+                onClick={copyLink}
               />
-              <b onClick={()=> alert("페이징처리")}>1</b>
-              <b onClick={()=> alert("페이징처리")}>2</b>
-              <b onClick={()=> alert("페이징처리")}>3</b>
-              <b onClick={()=> alert("페이징처리")}>4</b>
-              <b onClick={()=> alert("페이징처리")}>5</b>
-              <b onClick={()=> alert("페이징처리")}>6</b>
-              <b onClick={()=> alert("페이징처리")}>7</b>
-              <b onClick={()=> alert("페이징처리")}>8</b>
-              <b onClick={()=> alert("페이징처리")}>9</b>
-              <ChevronForwardOutline
-                width={"22px"}
-                height={"22px"}
+              <AddCircleOutline
+                width={"38px"}
+                height={"38px"}
+                cssClasses={"AddCircleOutline"}
               />
-            </p>
-          </TopBox>
-          <ContentBox>
-            <p className='title'>내 책상의 스토리 전체목록</p>
-            <p className='subtitle'>에피소드로써 판매할 스토리를 이 시리즈에 추가 하세요. 추가(플러스 버튼)을 누르면 판매할 에피소드로 추가 됩니다.</p>
-            <div className='topLine'>
-              <span className='left'>
-                <b>전체 스토리</b> ( {storyList.length * 10 + 1} )
-              </span>
-              <div className='center'>
-                <input type="text" placeholder='스토리 찾기'/>
-                <SearchOutline
-                  width={"24px"}
-                  height={"24px"}
-                />
-              </div>
-              <span className='right'>
-                <ListOutline
-                  width={"26px"}
-                  height={"26px"}
-                />
-                최신순
-              </span>
-            </div>
-            {storyList.map((content, i) => (
-              <ContentLine key={i}>
-                <ContentLineBox>
-                  <ContentImg>
-                    <img src={`/images/Illustration/${content.img}`} alt="" />
-                  </ContentImg>
-                  <p className='title'>
-                    {content.title.length > 10 ? content.title.slice(0,10)+"..." : content.title}&nbsp;
-                    <span>
-                      {/* public: 0-공개 / 1-비공개 / 2-팔로워에게만공개 / 3-초대된사람만 */}
-                      {
-                        content.public === 0 ? "( 공개 )" :
-                        content.public === 1 ? "( 비공개 )" :
-                        content.public === 2 ? "( 팔로워에게만 공개 )" :
-                        content.public === 3 && "( 초대된 사람만 )"
-                      }
-                    </span>
-                  </p>
-                </ContentLineBox>
-                <ContentLineBox>
-                  <span className='link'>{content.link}</span>
-                  <CopyOutline
-                    width={"24px"}
-                    height={"24px"}
-                    cssClasses={"copyOutline"}
-                    onClick={copyLink}
-                  />
-                  <AddCircleOutline
-                    width={"38px"}
-                    height={"38px"}
-                    cssClasses={"AddCircleOutline"}
-                  />
-                </ContentLineBox>
-              </ContentLine>
-            ))}
-            <p className='pagingList'>
-              <ChevronBackOutline
-                width={"22px"}
-                height={"22px"}
-              />
-              <b onClick={()=> alert("페이징처리")}>1</b>
-              <b onClick={()=> alert("페이징처리")}>2</b>
-              <b onClick={()=> alert("페이징처리")}>3</b>
-              <b onClick={()=> alert("페이징처리")}>4</b>
-              <b onClick={()=> alert("페이징처리")}>5</b>
-              <b onClick={()=> alert("페이징처리")}>6</b>
-              <b onClick={()=> alert("페이징처리")}>7</b>
-              <b onClick={()=> alert("페이징처리")}>8</b>
-              <b onClick={()=> alert("페이징처리")}>9</b>
-              <ChevronForwardOutline
-                width={"22px"}
-                height={"22px"}
-              />
-            </p>
-          </ContentBox>
-          <BottomBtnBox>
-            <button>가격 정책 관리로 가기</button>
-            <button>나의 책상으로 돌아가기</button>
-          </BottomBtnBox>
-        </Box>
-      </Container>
+            </ContentLineBox>
+          </ContentLine>
+        ))}
+        <p className='pagingList'>
+          <ChevronBackOutline
+            width={"22px"}
+            height={"22px"}
+          />
+          <b onClick={()=> alert("페이징처리")}>1</b>
+          <b onClick={()=> alert("페이징처리")}>2</b>
+          <b onClick={()=> alert("페이징처리")}>3</b>
+          <b onClick={()=> alert("페이징처리")}>4</b>
+          <b onClick={()=> alert("페이징처리")}>5</b>
+          <b onClick={()=> alert("페이징처리")}>6</b>
+          <b onClick={()=> alert("페이징처리")}>7</b>
+          <b onClick={()=> alert("페이징처리")}>8</b>
+          <b onClick={()=> alert("페이징처리")}>9</b>
+          <ChevronForwardOutline
+            width={"22px"}
+            height={"22px"}
+          />
+        </p>
+      </ContentBox>
+      <BottomBtnBox>
+        <button>가격 정책 관리로 가기</button>
+        <button>나의 책상으로 돌아가기</button>
+      </BottomBtnBox>
     </>
   )
 }

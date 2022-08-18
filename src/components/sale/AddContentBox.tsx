@@ -29,7 +29,7 @@ export default function AddContentBox(props:any){
     <AddContent>
       <div className='left'>
         <AddImageBox>
-          <img src={`images/Illustration/${props.img}`} alt="" />
+          <img src={`/images/Illustration/${props.img}`} alt="" />
         </AddImageBox>
         <span className='epText'>EP</span>
         <input type="text" placeholder={props.number !== 0 ? String(props.number) : "에피소드 번호"}/>

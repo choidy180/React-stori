@@ -1,20 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 
-interface title {
-  title: string;
-}
-
-export default function SaleTopBar({title}:title){
-  const router = title;
+export default function SaleTopBar(){
+  const router = useLocation();
+  const routerIndex = router.pathname.substring(router.pathname.lastIndexOf('/')+1);
   return(
     <TopBar>
-      <Link to={"/salePolicy"}>
-        <p className={router === "salePolicy" ? "focusRouter" : ""}>판매정책 관리</p>
+      <Link to={"/sale/policy"}>
+        <p className={routerIndex === "policy" ? "focusRouter" : ""}>판매정책 관리</p>
       </Link>
-      <Link to={"/SaleEpisode"}>
-        <p className={router === "SaleEpisode" ? "focusRouter" : ""}>판매 스토리 추가 관리</p>
+      <Link to={"/sale/episode"}>
+        <p className={routerIndex === "episode" ? "focusRouter" : ""}>판매 스토리 추가 관리</p>
       </Link>
     </TopBar>
   )

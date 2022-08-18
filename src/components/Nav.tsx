@@ -138,12 +138,11 @@ const Center = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'NEXON Lv1 Gothic OTF Bold';
   p {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 24px;
     line-height: 1.4rem;
   }
   @media screen and (max-width: 768px) {
