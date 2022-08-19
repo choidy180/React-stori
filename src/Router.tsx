@@ -43,7 +43,7 @@ function Router({}){
           <Route path='checkout' element={<Checkout title={'결제 확인'}/>}/>
           <Route path='paymentdone' element={<PaymentDone title={'결제완료'}/>}/>
           <Route path='cashwallet' element={<CashWallet title={"나의 지갑"}/>}/>
-          {/* <Route path='cashWallet2' element={<CashWalletTest title={"내 지갑"}/>}/> */}
+          <Route path='cashWallet2' element={<CashWalletTest title={"내 지갑"}/>}/>
         </Route>
 
         {/* SALE */}
@@ -57,7 +57,7 @@ function Router({}){
           <Route path='examin' element={<AdminExamin title={"판매 심사"}/>}/>
           <Route path='settlementlist' element={<AdminSettlementList title={"판매 정산"}/>}/>
         </Route>
-
+        
         <Route path='series' element={<Series title={"시리즈"}/>}/>
       </Routes>
     </BrowserRouter>

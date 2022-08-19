@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import styled from 'styled-components';
-import { AiOutlineRight } from '@react-icons/all-files/ai/AiOutlineRight'
+import AOS from 'aos';
+import "aos/dist/aos.css";
 
 interface title {
   title: string;
 }
-
 // interface cashwalletInterface {
 //   data: string;
 //   items: {
@@ -18,7 +18,11 @@ interface title {
 //   }[];
 // }[]
 export default function CashWallet(title:title){
-  const listItems = [
+  const [selectTab, setSelectTab] = useState("payment");
+  useEffect(()=> {
+    AOS.init();
+  },[])
+  const paymentListItems = [
     {
       date: "2022.07.31",
       items: [
@@ -72,6 +76,72 @@ export default function CashWallet(title:title){
       ]
     }
   ]
+  const useListItems = [
+    {
+      date: "2022.08.01",
+      items: [
+        {
+          number: 2022102201234,
+          date: "21:21",
+          transition: "minus",
+          title: "어느 겨울, 운명의 밤",
+          explain: "1부-소장: 겨울날, 마음이 머무는 곳",
+          count: 12,
+          balance: 36982,
+        },
+        {
+          number: 2022102201234,
+          date: "17:37",
+          transition: "minus",
+          title: "운명의밤",
+          explain: "2부-대여: 두 사람의 거리",
+          count: 6,
+          balance: 36994,
+        },
+        {
+          number: 2022102201234,
+          date: "16:13",
+          transition: "plus",
+          title: "충전(신용카드)+보너스",
+          explain: "월 자동구매",
+          count: 14000,
+          balance: 37000,
+        }
+      ]
+    },
+    {
+      date: "2022.07.31",
+      items: [
+        {
+          number: 2022102201234,
+          date: "19:23",
+          transition: "minus",
+          title: "만료",
+          explain: "미사용분 자동소멸",
+          count: 1000,
+          balance: 23000,
+        },
+        {
+          number: 2022102201234,
+          date: "17:37",
+          transition: "plus",
+          title: "보너스",
+          explain: "운영자 감사의 의미",
+          count: 1000,
+          balance: 24000,
+        },
+        {
+          number: 2022102201234,
+          date: "16:13",
+          transition: "plus",
+          title: "충전(신용카드)+보너스",
+          explain: "월 자동구매",
+          count: 14000,
+          balance: 23000,
+        }
+      ]
+    }
+  ]
   const commaNumber = (number:Number) => {
     return String(number).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -88,14 +158,14 @@ export default function CashWallet(title:title){
         <PaymentDetail>
           <Detail>
             <img src="images/icons/won.svg" alt=""/>
-            <p style={{marginTop: "2px"}}>충전액 &gt;</p>
+            <p>충전액 &gt;</p>
             <p><b>10</b>TC</p>
           </Detail>
           <Detail>
             <img id="cash_icon" src="images/icons/coinplus.svg" alt=""/>
-            <p style={{marginTop: "-7px"}}>월구독액 &gt;</p>
-            <p style={{marginTop: "-2px"}}><b>10</b>TC</p>
-            <span>30일뒤 소멸 예정</span>
+            <p>월구독액 &gt;</p>
+            <p><b>10</b>TC</p>
+            <span>소멸예정 D30</span>
           </Detail>
           <Detail>
             <img id="cash_icon2" src="images/icons/CoinPlus2.svg" alt=""/>
@@ -103,8 +173,12 @@ export default function CashWallet(title:title){
             <p><b>10</b>TC</p>
           </Detail>
         </PaymentDetail>
-        <List>
-          {listItems.map((content, i) => (
+        <Tab className={selectTab === "payment" ? "payment" : "use"}>
+          <TabBox className={selectTab === "payment" ? "active" : ""} onClick={()=>setSelectTab("payment")}>결제내역</TabBox>
+          <TabBox className={selectTab === "payment" ? "" : "active"} onClick={()=>setSelectTab("use")}>사용내역</TabBox>
+        </Tab>
+        <List className={selectTab === "payment" ? "" : "hide"}>
+          {paymentListItems.map((content, i) => (
             <ListItem key={i}>
               {/* <p className='head'>{content.date}<AiOutlineRight/></p> */}
               <p className='head'>{content.date}</p>
@@ -116,6 +190,25 @@ export default function CashWallet(title:title){
                   <div>
                     <p className='charge'>+{item.chargingAmount} TC</p>
                     <button>상세보기</button>
+                  </div>
+                </ItemBox>
+              ))}
+            </ListItem>
+          ))}
+        </List>
+        <List className={selectTab === "payment" ? "hide" : ""}>
+          {useListItems.map((content, i ) => (
+            <ListItem key={i}>
+              {/* <p className='head'>{content.date}<AiOutlineRight/></p> */}
+              <p className='head'>{content.date}</p>
+              {content.items.map((item, j) => (
+                <ItemBox key={j}>
+                  <p className='time'>{item.date}</p>
+                  <p className='useMethod'>{item.title}</p>
+                  <p className='useAmount'>{item.explain.length < 11 ? item.explain : item.explain.slice(0,11)+"..."}</p>
+                  <div>
+                    <p className='balancecount'style={item.transition === "plus" ? {color: '#E9446C'} : {color:'#889AF8'}} >{item.transition === "plus" ? "+" : "-"}{commaNumber(item.count)} TC</p>
+                    <p className='balance'>잔액 {commaNumber(item.balance)}TC</p>
                   </div>
                 </ItemBox>
               ))}
@@ -153,7 +246,7 @@ const Box = styled.div`
   }
 `
 const TopTitle = styled.span`
-  font-size: 18px;
+  font-size: 24px;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   position: absolute;
   top: 24px;
@@ -166,39 +259,41 @@ const TopTitle = styled.span`
   letter-spacing: -.6px;
 `
 const TopTitleLine = styled.div`
-  border-top: 1px solid #DCDCDC;
+  border-top: 1.8px solid #DCDCDC;
   position: absolute;
   width: calc(100% - 60px);
-  top: 33px;
+  top: 34px;
 `
 const HaveCash = styled.p`
-  font-size: 32px;
-  margin-top: 42px;
+  font-size: 36px;
+  margin-top: 24px;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   letter-spacing: -.4px;
   text-align: center;
 `
 const PaymentDetail = styled.div`
   position: relative;
-  padding: 10px 0;
+  padding: 20px 0;
   width: 100%;
   height: auto;
   background-color: #3B3B3B;
-  margin-top: 15px;
+  margin-top: 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
 `
 const Detail = styled.div`
   width: 100%;
   display: flex;
-  height: 100%;
+  height: 70px;
   flex-direction: column;
-  justify-content: flex-start !important;
+  justify-content: flex-start;
   align-items: center;
   color: #FFFFFF;
   gap: 6px;
-  font-size: 0.8rem;
+  p{
+    font-size: 18px;
+  }
   b{
     letter-spacing: -0.8px;
     font-size: 20px;
@@ -207,13 +302,49 @@ const Detail = styled.div`
     font-weight: 600;
   }
   span{
-    font-size: 12px;
-    margin-top: -2px;
+    font-size: 16px;
+    margin-top: 4px;
     color: #D7D7D7;
   }
 `
+const Tab = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-top: 16px;
+  padding-bottom: 8px;
+  &::after{
+    content: '';
+    position: absolute;
+    bottom:4px;
+    left: 0;
+    width: 50%;
+    height: 4px;
+    background-color: #E9446C;
+    transition: all .1s ease-in-out;
+  }
+  &.use::after{
+    transform: translateX(100%);
+  }
+`
+const TabBox = styled.div`
+  width: 100%;
+  padding: 12px 0;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+  &.active{
+    color: #E9446C;
+    cursor: auto;
+  }
+`
+
 const List = styled.div`
-  margin-top: 12px;
+  margin-top: 8px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -221,6 +352,9 @@ const List = styled.div`
   align-items: center;
   background-color: #F1F1F1;
   gap: 8px;
+  &.hide{
+    display: none;
+  }
 `
 const ListItem = styled.div`
   width: 100%;
@@ -262,8 +396,16 @@ const ItemBox = styled.div`
     font-size: 22px;
     font-weight: bold;
   }
+  .useMethod{
+    font-size: 20px;
+    font-weight: bold;
+  }
   .amount{
     font-size: 20px;
+  }
+  .useAmount{
+    font-size: 20px;
+    margin-top: 12px;
   }
   div{
     position: absolute;
@@ -275,7 +417,7 @@ const ItemBox = styled.div`
     align-items: flex-end;
     gap: 6px;
     .charge{
-      font-size: 20px;
+      font-size: 18px;
       color: #DD4C4C;
     }
     button{
@@ -285,6 +427,15 @@ const ItemBox = styled.div`
       font-size: 16px;
       background-color: transparent;
       cursor: pointer;
+    }
+    .balancecount{
+      font-size: 20px;
+      letter-spacing: -.4px;
+    }
+    .balance{
+      font-size: 20px;
+      margin-top: 12px;
+      letter-spacing: -.4px;
     }
   }
 `
