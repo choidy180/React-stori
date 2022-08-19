@@ -24,7 +24,7 @@ export default function CashWallet(title:title){
   },[])
   const paymentListItems = [
     {
-      date: "2022.07.31",
+      date: "2022.08.11",
       items: [
         {
           number: 2022102201234,        
@@ -399,6 +399,7 @@ const ItemBox = styled.div`
   .useMethod{
     font-size: 20px;
     font-weight: bold;
+    color: #a7a7a7;
   }
   .amount{
     font-size: 20px;
@@ -406,6 +407,7 @@ const ItemBox = styled.div`
   .useAmount{
     font-size: 20px;
     margin-top: 12px;
+    /* color: #a7a7a7; */
   }
   div{
     position: absolute;
