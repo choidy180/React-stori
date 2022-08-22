@@ -1,5 +1,7 @@
-import React, { InputHTMLAttributes, MouseEventHandler, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { BookmarkOutline, BookOutline, ChevronBackCircleOutline, ChevronDownOutline, ChevronForwardCircleOutline, ListOutline, MenuOutline, Star } from 'react-ionicons';
+import { IoMdCheckbox } from '@react-icons/all-files/io/IoMdCheckbox';
+import { IoMdSquareOutline } from '@react-icons/all-files/io/IoMdSquareOutline';
 import styled from 'styled-components';
 import HelmetPd from '../components/Helmet';
 import NavBar from "../components/Nav";
@@ -32,7 +34,6 @@ export default function Series(title: title){
   }
   // 체크 아이템 배열
   const [checkItems, setCheckItems] = useState([]);
-
   // 체크박스 전체 선택
   const handleAllCheck = (checked:Boolean) => {
     if(checked){
@@ -53,20 +54,21 @@ export default function Series(title: title){
       setCheckItems(checkItems.filter((el) => el !== idx));
     }
   };
-  const sortSelect = (content:string) => {
+  const SortSelect = (content:string) => {
+    setListOn((e) => !e);
     setSort(content);
   }
   const data = [
-    {idx: "e1894d49-8483-4dcf-8436-aefb3449f9ce", episode: 1, title: "사랑과 악마", score: 4.8, date: "22.06.22", free: true},
-    {idx: "189bccc4-1845-45b0-a596-6b12e4786b4d", episode: 2, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22", free: true},
-    {idx: "710d58f5-948f-414f-9775-ba27be29399a", episode: 3, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
-    {idx: "74a3edf5-13db-43ed-8210-74c5393c054c", episode: 4, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
-    {idx: "e9d9e6b7-66ff-46e2-81c8-a2bdc73afd24", episode: 5, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
-    {idx: "f1f426cb-32af-4d49-96d4-c72e352dedd3", episode: 6, title: "사랑과 악마", score: 4.8, date: "22.06.22", free: false},
-    {idx: "b1ce70a8-986e-4ea4-b883-2f5d8a0a0ca5", episode: 7, title: "검의 무게를 견뎌내는 자, 욕망을 다스리는 자", score: 4.8, date: "22.06.22", free: false},
-    {idx: "c680891e-2c65-4287-944a-595f5c5617d8", episode: 8, title: "용의 눈물을 다시 머금고서 ", score: 4.8, date: "22.06.22", free: false},
-    {idx: "6539a18a-5705-4f64-bb39-06925c9f63c4", episode: 9, title: "사선의 끝에서 찾아낸 아내의 시체", score: 4.8, date: "22.06.22", free: false},
-    {idx: "4f310282-584f-4718-92ce-f3f56cf3eee0", episode: 10, title: "Like a bird calls on the tree branch throughout my garden in the morning", score: 4.8, date: "22.06.22", free: false},
+    {idx: "e1894d49-8483-4dcf-8436-aefb3449f9ce", episode: 1, title: "어느 겨울, 운명의 밤", score: 4.8, date: "22.06.22", free: true},
+    {idx: "189bccc4-1845-45b0-a596-6b12e4786b4d", episode: 2, title: "개막의 시각", score: 4.8, date: "22.06.22", free: true},
+    {idx: "710d58f5-948f-414f-9775-ba27be29399a", episode: 3, title: "전의의 소재", score: 4.8, date: "22.06.22", free: false},
+    {idx: "74a3edf5-13db-43ed-8210-74c5393c054c", episode: 4, title: "방과 후에 추는 춤", score: 4.8, date: "22.06.22", free: false},
+    {idx: "e9d9e6b7-66ff-46e2-81c8-a2bdc73afd24", episode: 5, title: "어느 겨울날, 마음이 머무는 곳", score: 4.8, date: "22.06.22", free: false},
+    {idx: "f1f426cb-32af-4d49-96d4-c72e352dedd3", episode: 6, title: "두 사람의 거리", score: 4.8, date: "22.06.22", free: false},
+    {idx: "b1ce70a8-986e-4ea4-b883-2f5d8a0a0ca5", episode: 7, title: "살며시 다가온 방문자", score: 4.8, date: "22.06.22", free: false},
+    {idx: "c680891e-2c65-4287-944a-595f5c5617d8", episode: 8, title: "어느 겨울날, 소원의 형태", score: 4.8, date: "22.06.22", free: false},
+    {idx: "6539a18a-5705-4f64-bb39-06925c9f63c4", episode: 9, title: "그 운명의 시작으로", score: 4.8, date: "22.06.22", free: false},
+    {idx: "4f310282-584f-4718-92ce-f3f56cf3eee0", episode: 10, title: "어느 겨울 날, 머나먼 귀로", score: 4.8, date: "22.06.22", free: false},
   ]
   const otherData = [
     {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 1", genre: "판타지, 멜로"},
@@ -95,10 +97,7 @@ export default function Series(title: title){
             </TitleImg>
             <SubBox>
               <p className='firstEpisode'>
-                <BookOutline
-                  width={"20px"}
-                  height={"20px"}
-                />
+                <BookOutline/>
                 첫화 보기
               </p>
             </SubBox>
@@ -148,13 +147,20 @@ export default function Series(title: title){
               ))}
             </SelectTab>
             <ListTop>
-              <input 
-                id='allSelect' 
-                type="checkbox"
-                onChange={(e) => handleAllCheck(e.target.checked)}
-                checked={checkItems.length === data.length ? true : false}
-              />
-              <label htmlFor="allSelect">전체선택</label>
+              <label htmlFor="allSelect">
+                {checkItems.length === data.length ? 
+                  <IoMdCheckbox className='ckbox'/>
+                :
+                  <IoMdSquareOutline className='ckbox'/>
+                }
+                <input 
+                  id='allSelect' 
+                  type="checkbox"
+                  onChange={(e) => handleAllCheck(e.target.checked)}
+                  checked={checkItems.length === data.length ? true : false}
+                />
+              전체선택</label>
+              {/* <label htmlFor="allSelect">전체선택</label> */}
               <p className='sortList' onClick={()=> setListOn((e) => !e)}>
                 <ListOutline
                   width={"28px"}
@@ -162,13 +168,16 @@ export default function Series(title: title){
                 />
                 <span>{sort}</span>
               </p>
-              <SortBox>
+              <SortBox 
+                style={
+                  setListOn ? 
+                  {border: `2px solid white`} : 
+                  {border: `none`}
+                }
+              >
                 {listOn && 
                   ListSort.map((content, i) => (
-                    <p key={i} onClick={()=> {
-                      setListOn((e) => !e);
-                      sortSelect(content);
-                    }}>{content}</p>
+                    <p key={i} onClick={()=>SortSelect(content)}>{content}</p>
                   ))
                 }
               </SortBox>
@@ -176,31 +185,45 @@ export default function Series(title: title){
             <ContentBox className={moreView ? "moreView" : ""}>
               {data.map((content,i)=>(
                 <ContentLine key={i}>
+                  { checkItems.includes(content.idx) ? 
+                    <label htmlFor={`selectBox${i}`}>
+                      <IoMdCheckbox 
+                        className='ckbox'
+                      /> 
+                    </label>
+                    : 
+                    <label htmlFor={`selectBox${i}`}>
+                      <IoMdSquareOutline 
+                        className='ckbox'
+                      /> 
+                    </label>
+                  }
                   <input 
                     id={`selectBox${i}`} 
                     type="checkbox" 
                     onChange={(e)=>handleSingleCheck(e.target.checked, content.idx)}
                     checked={checkItems.includes(content.idx) ? true : false}
                   />
-                  <label htmlFor={`selectBox${i}`}></label>
                   <ContentImageBox>
                     <img src="images/Illustration/5a345987bf1dda7b5d93c2971f8f4975.png" alt="" />
                   </ContentImageBox>
-                  <p className='ep'><b>EP</b>{content.episode}</p>
-                  <p className='epTitle'>{content.title.length < 10 ? content.title : content.title}</p>
-                  <p className='scoreDate'>
-                    <Star
-                      width={"20px"}
-                      height={"20px"}
-                    />
-                    {content.score}&nbsp;&nbsp;&nbsp;&nbsp;{content.date}
-                  </p>
-                  <button 
-                    className={content.free ? "freeBtn" : ""}
-                    onClick={()=>console.log(checkItems)}
-                  >
-                    {content.free ? "무료보기" : "대여하기"}
-                  </button>
+                  <ContentTextLine>
+                    <p className='ep'><b>EP</b>{content.episode}</p>
+                    <p className='epTitle'>{content.title.length < 10 ? content.title : content.title}</p>
+                    <p className='scoreDate'>
+                      <Star
+                        width={"20px"}
+                        height={"20px"}
+                      />
+                      {content.score}&nbsp;&nbsp;&nbsp;&nbsp;{content.date}
+                    </p>
+                    <button 
+                      className={content.free ? "freeBtn" : ""}
+                      onClick={()=>console.log(checkItems)}
+                    >
+                      {content.free ? "무료보기" : "대여하기"}
+                    </button>
+                  </ContentTextLine>
                 </ContentLine>
               ))}
             </ContentBox>
@@ -275,9 +298,8 @@ const Container = styled.div`
   align-items: center;
   gap: 12px;
   z-index: 5;
-  @media screen and (max-width: 500px) {
-    padding: 0px;
-    padding-bottom: 20px;
+  @media screen and (max-width: 1000px) {
+    min-width: 400px;
   }
 `
 const TopupBox = styled.div`
@@ -301,6 +323,12 @@ const Box = styled.div`
   padding: 20px 30px 370px 350px;
   background-color: ${props => props.theme.boxColor};
   border-radius: 15px;
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+  }
 `
 
 const Left = styled.div`
@@ -311,6 +339,11 @@ const Left = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 1000px) {
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
 `
 
 const TitleImg = styled.div`
@@ -349,6 +382,7 @@ const SubBox = styled.div`
     svg{
       color: ${props => props.theme.textColor};
       margin-right: 6px;
+      margin-top: 4px;
     }
   }
   .publicTitle{
@@ -365,18 +399,36 @@ const SubBox = styled.div`
     color: #6C6C6C;
     line-height: 22px;
   }
+  @media screen and (max-width: 1000px) {
+    font-size: 22px;
+    padding: 14px 20px;
+    margin-top: 28px;
+    .publicTitle{
+      font-size: 22px;
+    }
+    .public{
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
 `
 const TitleHead = styled.p`
   width: 100%;
   margin-top: 32px;
   font-size: 18px;
   font-weight: bold;
+  @media screen and (max-width: 1000px) {
+    font-size: 22px;
+  }
 `
 const TitleSubText = styled.p`
   width: 100%;
   font-size: 16px;
   margin-top: 18px;
   line-height: 26px;
+  @media screen and (max-width: 1000px) {
+    font-size: 20px;
+  }
 `
 
 const WriterImg = styled.div`
@@ -466,6 +518,9 @@ const BookMark = styled.p`
     color: ${props => props.theme.textColor};
     margin-right: 4px;
   }
+  @media screen and (max-width: 1000px) {
+    margin-top: 36px;
+  }
 `
 const InfoBox = styled.div`
   width: 100%;
@@ -492,6 +547,9 @@ const InfoBox = styled.div`
   }
   div :nth-child(2){
     font-size: 18px;
+  }
+  @media screen and (max-width: 1000px) {
+    padding: 20px;
   }
 `
 const SelectTab = styled.div`
@@ -527,7 +585,21 @@ const ListTop = styled.div`
   #allSelect{
     display: none;
   }
-  input[type="checkbox"] + label{
+  label{
+    left: 12px;
+    width: 200px;
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+  }
+  .ckbox{
+    width: 32px;
+    height: 32px;
+    color: #E9446C;
+  }
+  /* input[type="checkbox"] + label{
     display: block;
     padding-left: 48px;
     cursor: pointer;
@@ -562,17 +634,12 @@ const ListTop = styled.div`
     height: 16px;
     border-radius: 0.2em;
     background: transparent;
-    /* box-shadow: inset 0px 0px 0px 3px var(--box2); */
     box-shadow: inset 0px 0px 0px 3px #E9446C;
     background-color: #E9446C;
   }
   input[type="checkbox"]{
     transform: translateY(-2px) scale(2);
-  }
-  label{
-    width: auto;
-    padding-left: 12px;
-  }
+  } */
   .sortList{
     position: absolute;
     right: 12px;
@@ -583,10 +650,13 @@ const ListTop = styled.div`
     align-items: center;
     cursor: pointer;
     font-size: 18px;
-  }
-  .sortList svg{
-    color: ${props => props.theme.textColor};
-    margin-right: 4px;
+    svg {
+      margin-top: 4px;
+      color: ${props => props.theme.textColor};
+      margin-right: 4px;
+    }
+    span {
+    }
   }
 `
 const SortBox = styled.div`
@@ -599,6 +669,7 @@ const SortBox = styled.div`
   background-color: ${props => props.theme.bgColor};
   color: ${props=> props.theme.textColor};
   border-radius: 12px;
+  z-index: 999999;
   p{
     padding: 14.5px 18px;
     cursor: pointer;
@@ -622,18 +693,21 @@ const ContentBox = styled.div`
   div:last-child{
     border: none;
   }
+  @media screen and (max-width: 1000px) {
+    height: auto;
+  }
 `
 const ContentLine = styled.div`
   width: 100%;
   height: 222px;
-  padding: 20px 0;
+  padding: 20px 0 20px 54px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   input[type="checkbox"]{
     display: none;
   }
-  input[type="checkbox"] + label{
+  /* input[type="checkbox"] + label{
     display: block;
     padding-left: 48px;
     cursor: pointer;
@@ -668,18 +742,29 @@ const ContentLine = styled.div`
     height: 16px;
     border-radius: 0.2em;
     background: transparent;
-    /* box-shadow: inset 0px 0px 0px 3px var(--box2); */
     box-shadow: inset 0px 0px 0px 3px #E9446C;
     background-color: #E9446C;
   }
   input[type="checkbox"]{
     transform: translateY(-2px) scale(2);
-  }
+  } */
   label{
-    width: auto;
-    padding-left: 12px;
+    position: absolute;
+    left: 4px;
+    width: 32px;
+    height: 100%;
+    .ckbox{
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      color: #E9446C;
+      cursor: pointer;
+    }
   }
-  .ep{
+  /* .ep{
     position: absolute;
     font-size: 22px;
     top: 32px;
@@ -688,6 +773,12 @@ const ContentLine = styled.div`
       color: ${props => props.theme.textColor2};
       font-weight: bold;
       margin-right: 4px;
+    }
+    @media screen and (max-width: 1000px) {
+      position: relative;
+      left: auto;
+      top: auto;
+      margin-left: 12px;
     }
   }
   .epTitle{
@@ -698,6 +789,12 @@ const ContentLine = styled.div`
     left: 200px;
     font-weight: bold;
     line-height: 24px;
+    @media screen and (max-width: 1000px) {
+      position: relative;
+      left: auto;
+      top: auto;
+      margin-left: 12px;
+    }
   }
   .scoreDate{
     position: absolute;
@@ -710,6 +807,12 @@ const ContentLine = styled.div`
       color: ${props => props.theme.textColor};
       fill: ${props => props.theme.textColor};
       margin-right: 4px;
+    }
+    @media screen and (max-width: 1000px) {
+      position: relative;
+      left: auto;
+      bottom: auto;
+      margin-left: 12px;
     }
   }
   button{
@@ -735,8 +838,91 @@ const ContentLine = styled.div`
   .freeBtn:hover{
     color: #E9446C;
     background-color: transparent;
+  } */
+`
+const ContentTextLine = styled.div`
+  width: calc(100% - 140px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  .ep{
+    font-size: 22px;
+    b{
+      color: ${props => props.theme.textColor2};
+      font-weight: bold;
+      margin-right: 4px;
+    }
+    @media screen and (max-width: 1000px) {
+      position: relative;
+      left: auto;
+      top: auto;
+      margin-left: 12px;
+    }
+  }
+  .epTitle{
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 24px;
+    margin-top: 8px;
+    @media screen and (max-width: 1000px) {
+      position: relative;
+      left: auto;
+      top: auto;
+      margin-left: 12px;
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+  .scoreDate{
+    position: absolute;
+    bottom: 0;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    svg {
+      color: ${props => props.theme.textColor};
+      fill: ${props => props.theme.textColor};
+      margin-right: 4px;
+    }
+    @media screen and (max-width: 1000px) {
+      position: relative;
+      left: auto;
+      bottom: auto;
+      margin-left: 12px;
+      margin-top: 8px;
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 18px;
+    }
+  }
+  button{
+    position: absolute;
+    padding: 8px 24px;
+    right: 8px;
+    bottom: 0px;
+    border-radius: 28px;
+    outline: none;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid ${props => props.theme.bgColor};
+    background-color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.textColor};
+    cursor: pointer;
+    transition: all .15s ease-in-out;
+  }
+  .freeBtn{
+    border: 2px solid #E9446C;
+    background-color: #E9446C;
+    color: #ffffff;
+  }
+  .freeBtn:hover{
+    color: #E9446C;
+    background-color: transparent;
   }
 `
+
 const ContentImageBox = styled.div`
   width: 135px;
   height: 180px;
@@ -770,6 +956,9 @@ const MoreViewBtn = styled.div`
     fill: ${props => props.theme.textColor};
     margin-right: 4px;
   }
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 `
 const ResultBox = styled.div`
   position: fixed;
@@ -786,7 +975,7 @@ const ResultBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 999 !important;
   transition: all .45s ease-in-out;
   .top{
     width: 100%;
@@ -817,27 +1006,28 @@ const ResultBox = styled.div`
     color: #FFFFFF;
     cursor: pointer;
   }
-  &::before{
+  &::after{
     position: absolute;
     content: "";
-    top: -52px;
+    top: -32px;
     width: 200px;
-    height: 50px;
+    height: 30px;
     background-color: ${props => props.theme.bgColor};
     border: 2px solid #D7D7D7;
-    border-top-left-radius: 42px;
-    border-top-right-radius: 42px;
-    z-index: 9;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
     border-bottom: none;
+    z-index: 99 !important;
   }
   .menuOutline {
     position: absolute;
-    bottom: 150px;
+    bottom: 140px;
     left: 50%;
     transform: translateX(-50%);
     color: #FFFFFF;
     fill: #FFFFFF;
     z-index: 99999;
+    cursor: pointer;
   }
   &.showResult{
     bottom: -500px;
@@ -857,6 +1047,13 @@ const OtherBox = styled.div`
   .title{
     font-size: 20px;
     font-weight: bold;
+  }
+  @media screen and (max-width: 1000px) {
+    position: relative;
+    margin-top: 36px;
+    .title{
+      font-size: 24px;
+    }
   }
 `
 const OtherContentBox = styled.div`
@@ -887,11 +1084,23 @@ const OtherContentBox = styled.div`
   span:nth-child(2){
     right: 18px;
   }
+  @media screen and (max-width: 1000px) {
+    position: relative;
+    margin-top: 16px;
+    padding: 0;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: auto;
+    svg{
+      display: none;
+    }
+  }
 `
 const OtherLine = styled.div`
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  height: auto;
 `
 const OtherWrapper = styled.div`
   width: 999%;
@@ -901,6 +1110,14 @@ const OtherWrapper = styled.div`
   align-items: center;
   flex-wrap: nowrap;
   transition: all .3s ease-in-out;
+  @media screen and (max-width: 1000px) {
+    width: 100% !important;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+    height: auto !important;
+  }
 `
 const listStyled = {
   width: "200%",
@@ -919,6 +1136,10 @@ const OtherContent = styled.div`
   background-color: ${props => props.theme.boxColor};
   cursor: pointer;
   margin-right: 18px;
+  @media screen and (max-width: 1000px) {
+    width: 30%;
+    min-width: 200px;
+  }
 `
 const OtherImage = styled.div`
   width: 100%;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AddCircleOutline, ChevronDownOutline } from 'react-ionicons';
+import { ChevronDownOutline, RemoveCircleOutline } from 'react-ionicons';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 
@@ -58,7 +58,7 @@ export default function AddContentBox(props:any){
         </div>
       </div>
       <AddCircle>
-        <AddCircleOutline
+        <RemoveCircleOutline
           width={"36px"}
           height={"36px"}
           cssClasses={"removeBtn"}
@@ -163,7 +163,7 @@ const AddContent = styled.div`
     position: absolute;
     right: -4px;
     top:50%;
-    transform: translateY(-50%) rotate(45deg);
+    transform: translateY(-50%);
     color: ${props=>props.theme.textColor};
     fill: ${props=>props.theme.textColor};
     cursor: pointer;

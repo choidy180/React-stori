@@ -20,7 +20,7 @@ export default function SalePolicyBox({kind}:kind){
             기본 가격 판매정책
           </Title>
           <SubTitle>본 세트에 포함 되는 모든 에피소드를 단일한 가격으로 설정 합니다. 예외로 가격을 달리하고 싶은 에피소드가 있을 경우 아래 예외 가격 판매 정책에서 설정 하실 수 있습니다.</SubTitle>
-          {kind === "basic" ? (
+          {/* {kind === "basic" ? (
             <ExceptionSelect>
               <p>특정 에피소드만 예외가격으로 적용하고 싶나요?</p>
               <label className='toggler-wrapper style-1'>
@@ -30,7 +30,7 @@ export default function SalePolicyBox({kind}:kind){
                 </div>
               </label>
             </ExceptionSelect>
-          ) : ""}
+          ) : ""} */}
           <BoundaryLine/>
           <AddPolicy>
             판매 정책 추가
@@ -124,6 +124,17 @@ export default function SalePolicyBox({kind}:kind){
                 <p>2022-06-31</p>
               </div>
             </div>
+            {kind === "basic" ? (
+              <ExceptionSelect>
+                <p>특정 에피소드만 예외가격으로 적용하고 싶나요?</p>
+                <label className='toggler-wrapper style-1'>
+                  <input type="checkbox" onChange={()=> setException((e) => !e)} />
+                  <div className="toggler-slider">
+                    <div className="toggler-knob"></div>
+                  </div>
+                </label>
+              </ExceptionSelect>
+            ) : ""}
             <BtnLine>
               <FiEdit onClick={()=>{
                 setOnModify((e)=>!e);
@@ -288,7 +299,6 @@ const ExceptionSelect = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 18px;
   font-size: 18px;
   .toggler-wrapper {
     display: block;

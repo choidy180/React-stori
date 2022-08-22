@@ -199,7 +199,6 @@ export default function CashWallet(title:title){
         <List className={selectTab === "payment" ? "hide" : ""}>
           {useListItems.map((content, i ) => (
             <ListItem key={i}>
-              {/* <p className='head'>{content.date}<AiOutlineRight/></p> */}
               <p className='head'>{content.date}</p>
               {content.items.map((item, j) => (
                 <ItemBox key={j}>

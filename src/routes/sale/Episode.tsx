@@ -1,5 +1,5 @@
 import React from 'react';
-import { AddCircleOutline, ChevronBackOutline, ChevronDownOutline, ChevronForwardOutline, CopyOutline, ListOutline, SearchOutline } from 'react-ionicons';
+import { AddCircleOutline, ChevronBackOutline, ChevronForwardOutline, CopyOutline, ListOutline, SearchOutline } from 'react-ionicons';
 import styled from 'styled-components';
 import AddContentBox from '../../components/sale/AddContentBox';
 

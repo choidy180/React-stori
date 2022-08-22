@@ -32,12 +32,11 @@ export default function NavBar({title}:titleProps){
           <img src="/images/F6CB11C6-6E14-4B87-BE43-AF2493348A20_1_105_c.png" alt="" />
         </UserImage>
         <UserEmail onClick={()=> setViewBox((e) => !e)}>
-          minseok@storicha.in
+          @minseok
           <ChevronDownOutline
             color={theme.textColor}
             width={"26px"}
             height={"26px"}
-            style={{marginLeft: '4px'}}
             cssClasses={viewBox ? "viewOn" : ""}
           />
         </UserEmail>
