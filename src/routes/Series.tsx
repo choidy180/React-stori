@@ -173,16 +173,12 @@ export default function Series(title: title){
                 />
                 <span>{sort}</span>
               </p>
-              <SortBox 
-                style={
-                  setListOn ? 
-                  {border: `2px solid white`} : 
-                  {border: `none`}
-                }
-              >
+              <SortBox className={listOn ? "sortListView" : ""}>
                 {listOn && 
                   ListSort.map((content, i) => (
-                    <p key={i} onClick={()=>SortSelect(content)}>{content}</p>
+                    <p key={i} onClick={()=>{
+                      SortSelect(content);
+                    }}>{content}</p>
                   ))
                 }
               </SortBox>
@@ -212,7 +208,7 @@ export default function Series(title: title){
                   <ContentImageBox>
                     <img src="images/Illustration/5a345987bf1dda7b5d93c2971f8f4975.png" alt="" />
                   </ContentImageBox>
-                  <ContentTextLine>
+                  <ContentTextLine className='mobileBoxCon'>
                     <p className='ep'><b>EP</b>{content.episode}</p>
                     <p className='epTitle'>{content.title.length < 10 ? content.title : content.title}</p>
                     <p className='scoreDate'>
@@ -305,6 +301,8 @@ const Container = styled.div`
   z-index: 5;
   @media screen and (max-width: 1000px) {
     min-width: 400px;
+    padding: 0px 0px 30px 0px;
+    gap: 0;
   }
 `
 const TopupBox = styled.div`
@@ -319,6 +317,9 @@ const TopupBox = styled.div`
     font-size: 24px;
     font-weight: bold;
   }
+  @media screen and (max-width: 1000px) {
+    border-radius: 0px;
+  }
 `
 const Box = styled.div`
   width: 100%;
@@ -329,10 +330,14 @@ const Box = styled.div`
   background-color: ${props => props.theme.boxColor};
   border-radius: 15px;
   @media screen and (max-width: 1000px) {
-    width: 100%;
+    width: calc(100% - 8px);
     flex-direction: column;
     justify-content: center;
-    padding: 20px;
+    padding: 18px;
+    border-radius: 0px;
+  }
+  @media screen and (max-width: 500px) {
+    padding: 8px;
   }
 `
 
@@ -406,10 +411,11 @@ const SubBox = styled.div`
   }
   @media screen and (max-width: 1000px) {
     font-size: 22px;
-    padding: 14px 20px;
+    padding: 10.5px 20px;
     margin-top: 28px;
     .publicTitle{
       font-size: 22px;
+      margin-top: 6px;
     }
     .public{
       font-size: 20px;
@@ -556,6 +562,9 @@ const InfoBox = styled.div`
   @media screen and (max-width: 1000px) {
     padding: 20px;
   }
+  @media screen and (max-width: 500px) {
+    padding: 12px;
+  }
 `
 const SelectTab = styled.div`
   width: 100%;
@@ -580,6 +589,11 @@ const SelectTab = styled.div`
   .tabChoice{
     border-bottom: 3px solid #E9446C;
   }
+  @media screen and (max-width: 1000px) {
+    p{
+      font-size: 20px;
+    }
+  }
 `
 const ListTop = styled.div`
   width: 100%;
@@ -598,53 +612,19 @@ const ListTop = styled.div`
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    @media screen and (max-width: 500px) {
+      font-size: 18px;
+      padding-left: 4px;
+    }
+    svg{
+      margin-right: 6px;
+    }
   }
   .ckbox{
     width: 32px;
     height: 32px;
     color: #E9446C;
   }
-  /* input[type="checkbox"] + label{
-    display: block;
-    padding-left: 48px;
-    cursor: pointer;
-  }
-  input[type="checkbox"]:hover + label::before{
-    border : 2px solid #E9446C;
-  }
-  input[type="checkbox"] + label:last-child {
-    margin-bottom: 0;
-  }
-  input[type="checkbox"] + label:before {
-    content: "";
-    display: block;
-    width: 21px;
-    height: 21px;
-    border: 2px solid #E9446C;
-    border-radius: 0.2em;
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    -webkit-transition: all 0.2s, background 0.2s ease-in-out;
-    transition: all 0.2s, background 0.2s ease-in-out;
-    background: transparent;
-    transform: translateY(-50%);
-  }
-  input[type="checkbox"]:checked + label:before {
-    content: "✓";
-    font-size: 20px;
-    color: #fff;
-    padding: 2px 2.5px 2px 3.5px;
-    width: 16px;
-    height: 16px;
-    border-radius: 0.2em;
-    background: transparent;
-    box-shadow: inset 0px 0px 0px 3px #E9446C;
-    background-color: #E9446C;
-  }
-  input[type="checkbox"]{
-    transform: translateY(-2px) scale(2);
-  } */
   .sortList{
     position: absolute;
     right: 12px;
@@ -659,9 +639,19 @@ const ListTop = styled.div`
       margin-top: 4px;
       color: ${props => props.theme.textColor};
       margin-right: 4px;
+      @media screen and (max-width: 500px) {
+        width: 20px;
+        margin-right: 2px;
+      }
     }
     span {
+      @media screen and (max-width: 500px) {
+        font-size: 16px;
+      }
     }
+  }
+  @media screen and (max-width: 500px) {
+    padding: 6px 0;
   }
 `
 const SortBox = styled.div`
@@ -683,6 +673,9 @@ const SortBox = styled.div`
   p:hover{
     color: #E9446C;
   }
+  &.sortListView{
+    border: 2px solid ${props => props.theme.textColor};
+  }
 `
 const ContentBox = styled.div`
   width: 100%;
@@ -700,6 +693,14 @@ const ContentBox = styled.div`
   }
   @media screen and (max-width: 1000px) {
     height: auto;
+    div{
+      border-bottom: 1.4px solid ${props => props.theme.textColor2};
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .mobileBoxCon{
+      width: calc(100% - 100px);
+    }
   }
 `
 const ContentLine = styled.div`
@@ -712,47 +713,6 @@ const ContentLine = styled.div`
   input[type="checkbox"]{
     display: none;
   }
-  /* input[type="checkbox"] + label{
-    display: block;
-    padding-left: 48px;
-    cursor: pointer;
-  }
-  input[type="checkbox"]:hover + label::before{
-    border : 2px solid #E9446C;
-  }
-  input[type="checkbox"] + label:last-child {
-    margin-bottom: 0;
-  }
-  input[type="checkbox"] + label:before {
-    content: "";
-    display: block;
-    width: 21px;
-    height: 21px;
-    border: 2px solid #E9446C;
-    border-radius: 0.2em;
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    -webkit-transition: all 0.2s, background 0.2s ease-in-out;
-    transition: all 0.2s, background 0.2s ease-in-out;
-    background: transparent;
-    transform: translateY(-50%);
-  }
-  input[type="checkbox"]:checked + label:before {
-    content: "✓";
-    font-size: 20px;
-    color: #fff;
-    padding: 2px 2.5px 2px 3.5px;
-    width: 16px;
-    height: 16px;
-    border-radius: 0.2em;
-    background: transparent;
-    box-shadow: inset 0px 0px 0px 3px #E9446C;
-    background-color: #E9446C;
-  }
-  input[type="checkbox"]{
-    transform: translateY(-2px) scale(2);
-  } */
   label{
     position: absolute;
     left: 4px;
@@ -769,81 +729,10 @@ const ContentLine = styled.div`
       cursor: pointer;
     }
   }
-  /* .ep{
-    position: absolute;
-    font-size: 22px;
-    top: 32px;
-    left: 200px;
-    b{
-      color: ${props => props.theme.textColor2};
-      font-weight: bold;
-      margin-right: 4px;
-    }
-    @media screen and (max-width: 1000px) {
-      position: relative;
-      left: auto;
-      top: auto;
-      margin-left: 12px;
-    }
+  @media screen and (max-width: 500px) {
+    height: 160px;
+    padding: 12px 0 12px 54px;
   }
-  .epTitle{
-    max-width: 280px;
-    position: absolute;
-    font-size: 20px;
-    top: 64px;
-    left: 200px;
-    font-weight: bold;
-    line-height: 24px;
-    @media screen and (max-width: 1000px) {
-      position: relative;
-      left: auto;
-      top: auto;
-      margin-left: 12px;
-    }
-  }
-  .scoreDate{
-    position: absolute;
-    left: 200px;
-    bottom: 20px;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    svg {
-      color: ${props => props.theme.textColor};
-      fill: ${props => props.theme.textColor};
-      margin-right: 4px;
-    }
-    @media screen and (max-width: 1000px) {
-      position: relative;
-      left: auto;
-      bottom: auto;
-      margin-left: 12px;
-    }
-  }
-  button{
-    position: absolute;
-    padding: 8px 24px;
-    right: 8px;
-    bottom: 20px;
-    border-radius: 28px;
-    outline: none;
-    font-size: 16px;
-    font-weight: bold;
-    border: 2px solid ${props => props.theme.bgColor};
-    background-color: ${props => props.theme.bgColor};
-    color: ${props => props.theme.textColor};
-    cursor: pointer;
-    transition: all .15s ease-in-out;
-  }
-  .freeBtn{
-    border: 2px solid #E9446C;
-    background-color: #E9446C;
-    color: #ffffff;
-  }
-  .freeBtn:hover{
-    color: #E9446C;
-    background-color: transparent;
-  } */
 `
 const ContentTextLine = styled.div`
   width: calc(100% - 140px);
@@ -864,6 +753,9 @@ const ContentTextLine = styled.div`
       top: auto;
       margin-left: 12px;
     }
+    @media screen and (max-width: 500px) {
+      font-size: 18px;
+    }
   }
   .epTitle{
     font-size: 24px;
@@ -878,6 +770,10 @@ const ContentTextLine = styled.div`
     }
     @media screen and (max-width: 768px) {
       font-size: 20px;
+    }
+    @media screen and (max-width: 500px) {
+      margin-top: 4px;
+      font-size: 16px;
     }
   }
   .scoreDate{
@@ -901,6 +797,10 @@ const ContentTextLine = styled.div`
     @media screen and (max-width: 768px) {
       font-size: 18px;
     }
+    @media screen and (max-width: 500px) {
+      margin-top: 0px;
+      font-size: 14px;
+    }
   }
   button{
     position: absolute;
@@ -916,6 +816,10 @@ const ContentTextLine = styled.div`
     color: ${props => props.theme.textColor};
     cursor: pointer;
     transition: all .15s ease-in-out;
+    @media screen and (max-width: 500px) {
+      padding: 4px 14px;
+      font-size: 14px;
+    }
   }
   .freeBtn{
     border: 2px solid #E9446C;
@@ -941,6 +845,10 @@ const ContentImageBox = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  @media screen and (max-width: 500px) {
+    height: 140px;
+    width: 104px;
   }
 `
 
@@ -968,8 +876,8 @@ const MoreViewBtn = styled.div`
 const ResultBox = styled.div`
   position: fixed;
   left: 0;
-  bottom: -80px;
-  padding: 52px 40px 100px 20px;
+  bottom: 0px;
+  padding: 24px 20px 22px 20px;
   background-color: ${props => props.theme.bgColor};
   width: 100%;
   border: 2px solid #D7D7D7;
@@ -1010,6 +918,10 @@ const ResultBox = styled.div`
     outline: none;
     color: #FFFFFF;
     cursor: pointer;
+    @media screen and (max-width: 500px) {
+      width: 100%;
+      padding: 12px 0;
+    }
   }
   &::after{
     position: absolute;
@@ -1023,10 +935,12 @@ const ResultBox = styled.div`
     border-top-right-radius: 24px;
     border-bottom: none;
     z-index: 99 !important;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .menuOutline {
     position: absolute;
-    bottom: 140px;
+    bottom: 110px;
     left: 50%;
     transform: translateX(-50%);
     color: #FFFFFF;
@@ -1036,6 +950,16 @@ const ResultBox = styled.div`
   }
   &.showResult{
     bottom: -500px;
+  }
+  @media screen and (max-width: 1000px) {
+    padding: 24px 20px;
+    .menuOutline{
+      bottom: 106px;
+    }
+    button{
+      padding: 8px 120px;
+      font-size: 20px;
+    }
   }
 `
 
@@ -1055,7 +979,8 @@ const OtherBox = styled.div`
   }
   @media screen and (max-width: 1000px) {
     position: relative;
-    margin-top: 36px;
+    margin-top: 54px;
+    width: 100%;
     .title{
       font-size: 24px;
     }
@@ -1116,6 +1041,7 @@ const OtherWrapper = styled.div`
   align-items: center;
   flex-wrap: nowrap;
   transition: all .3s ease-in-out;
+  row-gap: 8px;
   @media screen and (max-width: 1000px) {
     width: 100% !important;
     display: flex;
@@ -1123,7 +1049,8 @@ const OtherWrapper = styled.div`
     flex-wrap: wrap;
     overflow-y: hidden;
     height: auto !important;
-  }
+    background-color: ${props => props.theme.boxColor};
+    }
 `
 const listStyled = {
   width: "200%",
@@ -1143,9 +1070,13 @@ const OtherContent = styled.div`
   cursor: pointer;
   margin-right: 18px;
   @media screen and (max-width: 1000px) {
-    width: calc(33% - 1px);
+    width: calc(33% - 4px);
     margin-right: 0px;
     border-radius: 0;
+    background-color: ${props => props.theme.bgColor};
+  }
+  @media screen and (max-width: 500px) {
+    width: calc(50% - 4px);
   }
 `
 const OtherImage = styled.div`
@@ -1162,6 +1093,9 @@ const OtherTitle = styled.p`
   padding-left: 8px;
   margin-top: 12px;
   font-size: 16px;
+  @media screen and (max-width: 1000px) {
+    font-size: 18px;
+  }
 `
 const OtherGenre = styled.p`
   font-size: 14px;
@@ -1169,6 +1103,7 @@ const OtherGenre = styled.p`
   padding-left: 8px;
   margin-top: 8px;
   @media screen and (max-width: 1000px) {
-    margin-bottom: 18px;
+    font-size: 16px;
+    margin-bottom: 12px;
   }
 `
