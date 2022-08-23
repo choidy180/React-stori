@@ -1,10 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BookmarkOutline, BookOutline, ChevronBackCircleOutline, ChevronDownOutline, ChevronForwardCircleOutline, ListOutline, MenuOutline, Star } from 'react-ionicons';
 import { IoMdCheckbox } from '@react-icons/all-files/io/IoMdCheckbox';
 import { IoMdSquareOutline } from '@react-icons/all-files/io/IoMdSquareOutline';
 import styled from 'styled-components';
 import HelmetPd from '../components/Helmet';
 import NavBar from "../components/Nav";
+import AOS from 'aos';
+import "aos/dist/aos.css";
 
 interface title {
   title: string;
@@ -82,6 +84,9 @@ export default function Series(title: title){
     {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 9", genre: "판타지, 멜로"},
     {image: "255EA54B57636A8102.png", title: "천재 뱀파이어 10", genre: "판타지, 멜로"},
   ]
+  useEffect(()=>{
+    AOS.init();
+  },[]);
   return(
     <>
       <NavBar title={title.title}/>
@@ -184,7 +189,7 @@ export default function Series(title: title){
             </ListTop>
             <ContentBox className={moreView ? "moreView" : ""}>
               {data.map((content,i)=>(
-                <ContentLine key={i}>
+                <ContentLine key={i} data-aos="fade-up">
                   { checkItems.includes(content.idx) ? 
                     <label htmlFor={`selectBox${i}`}>
                       <IoMdCheckbox 
@@ -253,7 +258,7 @@ export default function Series(title: title){
               <OtherLine>
                 <OtherWrapper className='slideRef' ref={slideRef} style={listStyled}>
                   {otherData.map((content, i) => (
-                    <OtherContent key={i}>
+                    <OtherContent key={i} data-aos="fade-up">
                       <OtherImage>
                         <img src={`images/Illustration/${content.image}`} alt=""/>
                       </OtherImage>
@@ -1091,6 +1096,7 @@ const OtherContentBox = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
     height: auto;
+    border-radius: 0;
     svg{
       display: none;
     }
@@ -1137,8 +1143,9 @@ const OtherContent = styled.div`
   cursor: pointer;
   margin-right: 18px;
   @media screen and (max-width: 1000px) {
-    width: 30%;
-    min-width: 200px;
+    width: calc(33% - 1px);
+    margin-right: 0px;
+    border-radius: 0;
   }
 `
 const OtherImage = styled.div`
@@ -1161,4 +1168,7 @@ const OtherGenre = styled.p`
   width: 100%;
   padding-left: 8px;
   margin-top: 8px;
+  @media screen and (max-width: 1000px) {
+    margin-bottom: 18px;
+  }
 `

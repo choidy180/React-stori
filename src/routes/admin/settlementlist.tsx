@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import NavBar from '../../components/Nav';
 import { HiSortDescending } from '@react-icons/all-files/hi/HiSortDescending';
 
 interface title {
