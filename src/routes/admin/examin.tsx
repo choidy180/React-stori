@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddOutline, CopyOutline, Ellipse, EllipseOutline } from 'react-ionicons';
 import styled from 'styled-components';
-import NavBar from '../../components/Nav';
+import AOS from 'aos';
+import "aos/dist/aos.css";
+
 
 interface title {
   title: string;
@@ -22,6 +24,9 @@ interface modalDataInterface {
   auditState: number;
 }
 export default function AdminExamin({title}:title){
+  useEffect(()=>{
+    AOS.init();
+  },[]);
   const getData = [
     {
       auditRequest: "IDX 01500", 
@@ -197,7 +202,7 @@ export default function AdminExamin({title}:title){
           </div>
         </HeadBox>
         {getData.map((content, i) => (
-          <ContentLine key={i}>
+          <ContentLine key={i} data-aos="flip-left">
             <div className='topBox'>
               <p className='requestAudit'>( {content.auditRequest} )</p>
             </div>
@@ -413,6 +418,9 @@ const HeadBox = styled.div`
     font-weight: bold;
     color: ${props => props.theme.textColor};
   }
+  @media screen and (max-width: 846px) {
+    display: none !important;
+  }
 `
 const ContentLine = styled.div`
   margin-top: 6px;
@@ -437,7 +445,7 @@ const ContentLine = styled.div`
     button {
       border: none;
       outline: none;
-      border-radius: 24px;
+      border-radius: 32px;
       margin-left: 8px;
     }
   }
@@ -501,6 +509,69 @@ const ContentLine = styled.div`
     font-size: 16px;
     cursor: pointer;
   }
+  div:nth-child(6){
+    button{
+      transition: all .15s ease-in-out;
+      &:hover{
+        background-color: #E9446C;
+      }
+    }
+  }
+  @media screen and (max-width: 846px) {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 12px;
+    gap: 8px;
+    div{
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    p{
+      width: 100%;
+      text-align: left;
+    }
+    .requestAudit{
+      font-size: 18px;
+    }
+    div:nth-child(2){
+      margin-top: 18px;
+    }
+    .title {
+      width: auto;
+      font-size: 26px;
+      margin-right: 4px;
+    }
+    div:nth-child(3){
+      margin-top: 18px;
+    }
+    .requestDate, .reviseDate{
+      width: auto;
+      font-size: 20px;
+    }
+    .state {
+      margin-top: 14px;
+    }
+    div:nth-child(5){
+      img{
+        width: 24px;
+        height: 24px;
+      }
+      span{
+        font-size: 24px;
+      }
+    }
+    div:nth-child(6){
+      button{
+        margin-top: 24px;
+        font-size: 20px;
+        padding: 6px 24px;
+      }
+    }
+  }
 `
 const BlackBox = styled.div`
   position: fixed;
@@ -526,7 +597,7 @@ const RightModal = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: ${props => props.theme.boxColor};
-  border-left: 2px solid ${props => props.theme.textColor};
+  /* border-left: 2px solid ${props => props.theme.textColor}; */
   width: 400px;
   min-height: 100vh;
   transition: all .2s ease-in-out;
@@ -535,6 +606,10 @@ const RightModal = styled.div`
   &.on{
     right: 0px;
   }
+  @media screen and (max-width: 846px) {
+    right: -1000px;
+    width: 100vw;
+  }
 `
 
 const Modalhead = styled.div`
@@ -542,7 +617,7 @@ const Modalhead = styled.div`
   padding: 18px 24px;
   font-size: 22px;
   font-weight: bold;
-  border-bottom: 2px solid ${props => props.theme.textColor2};
+  /* border-bottom: 2px solid ${props => props.theme.textColor2}; */
   span {
     position: absolute;
     right: 20px;
@@ -553,12 +628,18 @@ const Modalhead = styled.div`
       color: ${props => props.theme.textColor};
     }
   }
+  @media screen and (max-width: 846px) {
+    font-size: 28px;
+    svg{
+      transform: scale(1.5);
+    }
+  }
 `
 
 const ModalHeadInfo = styled.div`
   width: 100%;
   padding: 18px 24px;
-  border-bottom: 2px solid ${props => props.theme.textColor2};
+  /* border-bottom: 2px solid ${props => props.theme.textColor2}; */
   p {
     width: 100%;
     font-size: 14px;
@@ -578,6 +659,18 @@ const ModalHeadInfo = styled.div`
       color: ${props => props.theme.textColor2};
     }
   }
+  @media screen and (max-width: 846px) {
+    p{
+      font-size: 20px;
+      span {
+        position: relative;
+        right: -8px;
+        svg{
+          transform: scale(1.24);
+        }
+      }
+    }
+  }
 `
 const ModalEpisodeInfo = styled.div`
   width: 100%;
@@ -586,7 +679,7 @@ const ModalEpisodeInfo = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  border-bottom: 2px solid ${props => props.theme.textColor2};
+  /* border-bottom: 2px solid ${props => props.theme.textColor2}; */
   p {
     width: 100%;
     font-size: 16px;
@@ -598,6 +691,9 @@ const ModalEpisodeInfo = styled.div`
     align-items: center;
     padding-top: 18px;
   }
+  @media screen and (max-width: 846px) {
+    font-size: 20px;
+  }
 `
 const ModalBtn = styled.div`
   width: 100%;
@@ -607,7 +703,7 @@ const ModalBtn = styled.div`
   align-items: center;
   padding: 18px 0;
   gap: 18px;
-  border-bottom: 2px solid ${props => props.theme.textColor2};
+  /* border-bottom: 2px solid ${props => props.theme.textColor2}; */
   button {
     width: 150px;
     padding: 8px 0;

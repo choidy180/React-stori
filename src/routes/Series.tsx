@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BookmarkOutline, BookOutline, ChevronBackCircleOutline, ChevronDownOutline, ChevronForwardCircleOutline, ListOutline, MenuOutline, Star } from 'react-ionicons';
+import { BookmarkOutline, BookOutline, ChevronBackCircleOutline, ChevronDownOutline, ChevronForwardCircleOutline, ListOutline, MenuOutline, Star, StarOutline } from 'react-ionicons';
 import { IoMdCheckbox } from '@react-icons/all-files/io/IoMdCheckbox';
 import { IoMdSquareOutline } from '@react-icons/all-files/io/IoMdSquareOutline';
 import styled from 'styled-components';
@@ -99,6 +99,19 @@ export default function Series(title: title){
           <Left>
             <TitleImg>
               <img src="images/Illustration/011454884a20ebe329565d653639090d.png" alt="" />
+              <div className='mobileHead'>
+                <p className='mobileTitle'>양과 여우들의 밤</p>
+                <p className='moblieSubTitle'>
+                  <span>
+                    <StarOutline/>
+                    4.3
+                  </span>
+                  <span>
+                    <BookmarkOutline cssClasses={"bookMark"}/>
+                    10,262
+                  </span>
+                </p>
+              </div>
             </TitleImg>
             <SubBox>
               <p className='firstEpisode'>
@@ -146,6 +159,14 @@ export default function Series(title: title){
                 <p>웹소설, 시나리오, 드라마대본</p>
               </div>
             </InfoBox>
+            <MoblieStory>
+              <p>「패왕을 보았다」의 작가 추공. 이번에는 레이드의 진수를 보여준다! 『나 혼자만 레벨업』 재능 없는 만년 E급의 헌터, 성진우. 기이한 던전에서 죽음을 목전에 두지만 위기는 언제나 기회와 함께 찾아오는 법! [플레이어가 되실 자격을 획득하셨습니다.] “플레이어? 내가 레벨업을 할 수 있다고?” 전 세계 헌터 중 유일무이, 전무후무 시스템과 레벨업 능력을 각성한 진우. 세상을 향해 자유를 선포한다!</p>
+            </MoblieStory>
+            <MobileFirstView>
+              <button>
+                <BookOutline/>첫화 보기
+              </button>
+            </MobileFirstView>
             <SelectTab>
               {tabTitle.map((title, i)=>(
                 <p key={i} className={tabState === Number(i) ? "tabChoice" : ""} onClick={() => setTabState(i)}>{title}</p>
@@ -265,6 +286,9 @@ export default function Series(title: title){
                 </OtherWrapper>
               </OtherLine>
             </OtherContentBox>
+            <ListBackBtn>
+              <button><img src="/images/icons/backListBtn.svg" alt="" /> 목록으로</button>
+            </ListBackBtn>
           </OtherBox>
         </Box>
         <ResultBox
@@ -318,7 +342,7 @@ const TopupBox = styled.div`
     font-weight: bold;
   }
   @media screen and (max-width: 1000px) {
-    border-radius: 0px;
+    display: none;
   }
 `
 const Box = styled.div`
@@ -330,11 +354,11 @@ const Box = styled.div`
   background-color: ${props => props.theme.boxColor};
   border-radius: 15px;
   @media screen and (max-width: 1000px) {
-    width: calc(100% - 8px);
+    width: 100%;
     flex-direction: column;
     justify-content: center;
-    padding: 18px;
     border-radius: 0px;
+    padding: 0;
   }
   @media screen and (max-width: 500px) {
     padding: 8px;
@@ -365,9 +389,55 @@ const TitleImg = styled.div`
   overflow: hidden;
   border-radius: 8px;
   img{
+    position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  .mobileHead{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: transparent;
+    background-image: linear-gradient(
+      180deg, 
+      transparent 0%, 
+      ${props => props.theme.boxColor} 100%
+    );
+    p{
+      left: 20px;
+    }
+    .mobileTitle{
+      position: absolute;
+      bottom: 50px;
+      font-size: 36px;
+      letter-spacing: -.8px;
+    }
+    .moblieSubTitle{
+      position: absolute;
+      bottom: 12px;
+      font-size: 24px;
+      display: flex;
+      gap: 16px;
+      span{
+        display: flex;
+        align-items: center;
+        .bookMark{
+          color: #E9446C;
+        }
+      }
+      svg{
+        color: ${props => props.theme.textColor};
+      }
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    border-radius: 0;
+    height: 540px;
+    .mobileHead{
+      display: flex;
+    }
   }
 `
 
@@ -410,17 +480,7 @@ const SubBox = styled.div`
     line-height: 22px;
   }
   @media screen and (max-width: 1000px) {
-    font-size: 22px;
-    padding: 10.5px 20px;
-    margin-top: 28px;
-    .publicTitle{
-      font-size: 22px;
-      margin-top: 6px;
-    }
-    .public{
-      font-size: 20px;
-      line-height: 24px;
-    }
+    display: none;
   }
 `
 const TitleHead = styled.p`
@@ -429,7 +489,7 @@ const TitleHead = styled.p`
   font-size: 18px;
   font-weight: bold;
   @media screen and (max-width: 1000px) {
-    font-size: 22px;
+    display: none;
   }
 `
 const TitleSubText = styled.p`
@@ -438,7 +498,7 @@ const TitleSubText = styled.p`
   margin-top: 18px;
   line-height: 26px;
   @media screen and (max-width: 1000px) {
-    font-size: 20px;
+    display: none;
   }
 `
 
@@ -530,7 +590,7 @@ const BookMark = styled.p`
     margin-right: 4px;
   }
   @media screen and (max-width: 1000px) {
-    margin-top: 36px;
+    display: none;
   }
 `
 const InfoBox = styled.div`
@@ -560,10 +620,56 @@ const InfoBox = styled.div`
     font-size: 18px;
   }
   @media screen and (max-width: 1000px) {
+    margin-top: 8px;
+    width: calc(100% - 24px);
     padding: 20px;
   }
   @media screen and (max-width: 500px) {
     padding: 12px;
+  }
+`
+const MoblieStory = styled.div`
+  width: calc(100% - 32px);
+  display: none;
+  p{
+    width: 100%;
+    color: ${props => props.theme.textColor};
+    font-size: 20px;
+    margin-top: 12px;
+    line-height: 26px;
+  }
+  @media screen and (max-width: 1000px) {
+    display: flex;
+  }
+`
+const MobileFirstView = styled.div`
+  display: none;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+  button{
+    width: 400px;
+    background-color: ${props => props.theme.bgColor};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8.5px 0;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 28px;
+    svg{
+      color: ${props => props.theme.textColor};
+      margin-right: 8px;
+      margin-top: 4px ;
+    }
+    color: ${props => props.theme.textColor};
+    font-size: 20px;
+  }
+  @media screen and (max-width: 1000px) {
+    display: flex;
   }
 `
 const SelectTab = styled.div`
@@ -590,6 +696,7 @@ const SelectTab = styled.div`
     border-bottom: 3px solid #E9446C;
   }
   @media screen and (max-width: 1000px) {
+    margin-top: 14px;
     p{
       font-size: 20px;
     }
@@ -1105,5 +1212,32 @@ const OtherGenre = styled.p`
   @media screen and (max-width: 1000px) {
     font-size: 16px;
     margin-bottom: 12px;
+  }
+`
+const ListBackBtn = styled.div`
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    padding: 8px;
+    img{
+      margin-right: 12px;
+      width: 20px;
+    }
+    font-size: 20px;
+    border-radius: 28px;
+    background-color: ${props => props.theme.bgColor};
+    outline: none;
+    border: none;
+    color: ${props => props.theme.textColor};
+  }
+  @media screen and (max-width: 1000px) {
+    margin-top: 18px;
   }
 `
