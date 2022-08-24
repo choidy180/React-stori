@@ -117,12 +117,7 @@ export default function AdminSettlementList({title}:title){
         </CalcBox>
         <ListBox>
           <List style={{
-            marginBottom: '12px', 
             marginTop: '48px',
-            boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
-            fontFamily: 'Pretendard-Medium',
-            fontSize: '20px',
-            padding: '18px 0 12.5px 0',
           }}>
             <div className='number head'>No</div>
             <div className='head'>정산신청일</div>
@@ -137,7 +132,7 @@ export default function AdminSettlementList({title}:title){
               <HiSortDescending/>
               <span>{criterion}</span>
             </p>
-            <div style={!viewSort ? {display:"none"} : {display: "flex"}}>
+            <div className="sortSelectBox" style={!viewSort ? {display:"none"} : {display: "flex"}}>
               <p onClick={()=> sortCriterion("정산신청일순")}>정산신청일순</p>
               <p onClick={()=> sortCriterion("정산 완료만")}>정산 완료만</p>
               <p onClick={()=> sortCriterion("정산 신청만")}>정산 신청만</p>
@@ -188,6 +183,10 @@ const TopBar = styled.div`
     width: 100%;
     font-size: 24px;
   }
+  @media screen and (max-width: 1024px) {
+    padding: 20px;
+    border-radius: 0px;
+  }
 `
 const Box = styled.div`
   width: 100%;
@@ -198,6 +197,10 @@ const Box = styled.div`
   align-items: flex-start;
   background-color: ${props => props.theme.boxColor};
   border-radius: 15px;
+  @media screen and (max-width: 1024px) {
+    padding: 20px;
+    border-radius: 0px;
+  }
 `
 const CalcBox = styled.div`
   width: 100%;
@@ -229,9 +232,6 @@ const CalcBox = styled.div`
       top: 50%;
       transform: translateY(-50%);
       color: ${props => props.theme.textColor2};
-    }
-    @media screen and (max-width: 1000px) {
-      width: 100%;
     }
   }
 `
@@ -286,6 +286,22 @@ const ListBox = styled.div`
         color: #DD4C4C;
       }
     }
+    @media screen and (max-width: 1024px) {
+      p{
+        position: absolute;
+        top: -50px;
+        right: 0px;
+      }
+      .sortSelectBox{
+        width: auto;
+        height: 200px;
+        top: -35px;
+        p{
+          position: relative;
+          top: 0;
+        }
+      }
+    }
   }
   svg{
     width: 32px;
@@ -295,16 +311,13 @@ const ListBox = styled.div`
 const List = styled.div`
   width: 100%;
   background-color: ${props => props.theme.bgColor};
-  padding: 14px 0 14px 0;
+  padding: 18px 0 12.5px 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  font-size: 18px;
-  font-family: 'Pretendard-Regular';
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  @media screen and (max-width: 1000px) {
-    min-width: 800px;
-  }
+  font-size: 20px;
+  font-family: 'Pretendard-Medium';
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   div {
     width: 100%;
     display: flex;
@@ -318,5 +331,10 @@ const List = styled.div`
   }
   .head{
     font-size: 20px;
+  }
+  @media screen and (max-width: 1024px) {
+    :nth-child(1){
+      display: none;
+    }
   }
 `
