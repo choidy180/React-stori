@@ -16,21 +16,10 @@ export default function SalePolicyBox({kind}:kind){
       <Box>
         <>
           <Title>
-            <img src="images/icons/basicCost.svg" alt="" />
+            <img src="/images/icons/basicCost.svg" alt="" />
             기본 가격 판매정책
           </Title>
           <SubTitle>본 세트에 포함 되는 모든 에피소드를 단일한 가격으로 설정 합니다. 예외로 가격을 달리하고 싶은 에피소드가 있을 경우 아래 예외 가격 판매 정책에서 설정 하실 수 있습니다.</SubTitle>
-          {/* {kind === "basic" ? (
-            <ExceptionSelect>
-              <p>특정 에피소드만 예외가격으로 적용하고 싶나요?</p>
-              <label className='toggler-wrapper style-1'>
-                <input type="checkbox" onChange={()=> setException((e) => !e)} />
-                <div className="toggler-slider">
-                  <div className="toggler-knob"></div>
-                </div>
-              </label>
-            </ExceptionSelect>
-          ) : ""} */}
           <BoundaryLine/>
           <AddPolicy>
             판매 정책 추가
@@ -124,34 +113,36 @@ export default function SalePolicyBox({kind}:kind){
                 <p>2022-06-31</p>
               </div>
             </div>
-            {kind === "basic" ? (
-              <ExceptionSelect>
-                <p>특정 에피소드만 예외가격으로 적용하고 싶나요?</p>
-                <label className='toggler-wrapper style-1'>
-                  <input type="checkbox" onChange={()=> setException((e) => !e)} />
-                  <div className="toggler-slider">
-                    <div className="toggler-knob"></div>
-                  </div>
-                </label>
-              </ExceptionSelect>
-            ) : ""}
             <BtnLine>
-              <FiEdit onClick={()=>{
+              <button onClick={()=>{
                 setOnModify((e)=>!e);
                 if(!onModify){
                   alert("이제부터 수정하실 수 있습니다.");
                 }else{
                   alert("수정완료 되었습니다.");
                 }
-              }}/>
-              <FaRegTrashAlt/>
+              }}>
+                {!onModify ? "수정하기" : "수정완료"}
+              </button>
+              <button>삭제하기</button>
             </BtnLine>
           </PolicyBox>
+          {kind === "basic" ? (
+            <ExceptionSelect>
+              <p>특정 에피소드만 예외가격으로 적용하고 싶나요?</p>
+              <label className='toggler-wrapper style-1'>
+                <input type="checkbox" onChange={()=> setException((e) => !e)} />
+                <div className="toggler-slider">
+                  <div className="toggler-knob"></div>
+                </div>
+              </label>
+            </ExceptionSelect>
+          ) : ""}
         </>
         <>
           <ExceptionBox className={exception ? 'exceptionBox' : ''}>
             <Title style={{marginTop: "36px"}}>
-              <img src="images/icons/exceptionCost.svg" alt=""  style={{width : "24px"}}/>
+              <img src="/images/icons/exceptionCost.svg" alt=""  style={{width : "24px"}}/>
               예외 가격 판매 정책
             </Title>
             <SubTitle>기본 가격 판매정책 보다 더 높거나 낮게 판매하고 싶은 에피소드가 있을 경우 이곳에서 설정합니다.</SubTitle>
@@ -249,14 +240,16 @@ export default function SalePolicyBox({kind}:kind){
                 </div>
               </div>
               <BtnLine>
-                <FiEdit onClick={()=>{
+                <span onClick={()=>{
                   setOnModify((e)=>!e);
                   if(!onModify){
                     alert("이제부터 수정하실 수 있습니다.");
                   }else{
                     alert("수정완료 되었습니다.");
                   }
-                }}/>
+                }}>
+                  {!onModify ? "수정하기" : "수정완료"}
+                </span>
                 <FaRegTrashAlt/>
               </BtnLine>
             </PolicyBox>
@@ -299,7 +292,9 @@ const ExceptionSelect = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  font-size: 18px;
+  margin-top: 24px;
+  font-size: 22px;
+  margin-left: 4px;
   .toggler-wrapper {
     display: block;
     width: 40px;
@@ -335,6 +330,12 @@ const ExceptionSelect = styled.div`
       top: 3px;
       background-color: #fff;
     }
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
   }
 `
 const BoundaryLine = styled.div`
@@ -443,6 +444,13 @@ const PolicyBox = styled.div`
           color: ${props => props.theme.textColor};
         }
       }
+      @media screen and (max-width: 768px) {
+        width: calc(100% - 200px);
+        font-size: 16px;
+      }
+      @media screen and (max-width: 500px) {
+        width: calc(100% - 130px);
+      }
     }
     .toggler-wrapper {
       display: block;
@@ -480,6 +488,9 @@ const PolicyBox = styled.div`
         background-color: #fff;
       }
     }
+    @media screen and (max-width: 768px) {
+      font-size: 16px;
+    }
   }
   .line{
     width: 100%;
@@ -494,9 +505,24 @@ const BtnLine = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 10.5px;
+  gap: 24px;
   margin-top: 8px;
   padding-right: 6px;
+  button{
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 64px;
+    border-radius: 6px;
+    background-color: ${props => props.theme.boxColor};
+    border: 1.8px solid ${props => props.theme.textColor2};
+    @media screen and (max-width: 500px) {
+      padding: 4px 32px;
+    }
+    @media screen and (max-width: 380px) {
+      padding: 4px 16px;
+    }
+  }
   svg {
     width: 24px;
     height: 24px;

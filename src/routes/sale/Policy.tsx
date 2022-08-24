@@ -58,7 +58,7 @@ export default function SalePolicy(){
                     <p>{progress.state}</p>
                 </ProgressBox>
                 {i !== 5 ?
-                  (<BarLine>
+                  (<BarLine className={i === 2 ? "opacityLine" : ""}>
                     <Bar className={progress.request === 1 ? "ongoingMax" : progress.request === 2 ? "ongoing" : ""}/>
                   </BarLine>): ""
                 }
@@ -68,15 +68,15 @@ export default function SalePolicy(){
             return (
               <Line>
                 <ProgressBox key={i}>
-                    <EllipseOutline
-                      width={"64px"}
-                      height={"64px"}
-                      color={"#E9446C"}
-                    />
-                    <p>{progress.state}</p>
+                  <EllipseOutline
+                    width={"64px"}
+                    height={"64px"}
+                    color={"#E9446C"}
+                  />
+                  <p>{progress.state}</p>
                 </ProgressBox>
                 {i !== 5 ?
-                  (<BarLine>
+                  (<BarLine className={i === 2 ? "opacityLine" : ""}>
                     <Bar className={progress.request === 1 ? "ongoingMax" : progress.request === 2 ? "ongoing" : ""}/>
                   </BarLine>): ""
                 }
@@ -94,7 +94,7 @@ export default function SalePolicy(){
                     <p>{progress.state}</p>
                 </ProgressBox>
                 {i !== 5 ?
-                  (<BarLine>
+                  (<BarLine className={i === 2 ? "opacityLine" : ""}>
                     <Bar className={progress.request === 1 ? "ongoingMax" : progress.request === 2 ? "ongoing" : ""}/>
                   </BarLine>): ""
                 }
@@ -113,6 +113,12 @@ const TopLine = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
 `
 const TitleImgBox = styled.div`
   width: 200px;
@@ -142,6 +148,16 @@ const TitleTextBox = styled.div`
     line-height: 24px;
     font-size: 16px;
     color: ${props => props.theme.textColor2};
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+  }
+  @media screen and (max-width: 500px) {
+
   }
 `
 const TopLightBox = styled.div`
@@ -184,6 +200,14 @@ const TopLightBox = styled.div`
   p:nth-child(3){
     margin-top: 6px;
   }
+  @media screen and (max-width: 768px) {
+    top: auto;
+    right: auto;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-top: 18px;
+  }
 `
 const ProgressBarBox = styled.div`
   width: 100%;
@@ -191,6 +215,26 @@ const ProgressBarBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 24px;
+  @media screen and (max-width: 1024px) {
+    max-width: 400px;
+    flex-wrap: wrap;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 16px;
+    margin: 0;
+    margin-top: 18px;
+    div{
+      margin-bottom: 4px;
+      gap: 8px;
+    }
+    .opacityLine{
+      display: none;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    max-width: 350px;
+    min-width: 350px;
+  }
 `
 const Line = styled.div`
   width: auto;
@@ -198,6 +242,8 @@ const Line = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+  @media screen and (max-width: 1000px) {
+  }
 `
 const ProgressBox = styled.div`
   display: flex;
@@ -206,6 +252,9 @@ const ProgressBox = styled.div`
   align-items: center;
   min-width: 100px;
   gap: 8px;
+  @media screen and (max-width: 1000px) {
+    min-width: auto;
+  }
 `
 
 const BarLine = styled.div`
@@ -219,6 +268,9 @@ const BarLine = styled.div`
   }
   .ongoing{
     width: 55%;
+  }
+  @media screen and (max-width: 500px) {
+    min-width: 50px;
   }
 `
 const Bar = styled.div`

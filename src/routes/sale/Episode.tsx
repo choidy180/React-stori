@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AddCircleOutline, ChevronBackOutline, ChevronForwardOutline, CopyOutline, ListOutline, SearchOutline } from 'react-ionicons';
 import styled from 'styled-components';
 import AddContentBox from '../../components/sale/AddContentBox';
@@ -27,6 +27,9 @@ export default function SaleEpisode(){
     {img: "5a345987bf1dda7b5d93c2971f8f4975.png", idx: "61ef7a72-795b-4ef8-8e79-b2ff7c43f7e6", number: 3, title: "엄마가 적이 되다", policy: 0, rent: 8, rentSale: 18, own: 18, ownSale: 18 ,textCount: 25112, artworkCount: 5, sceneCount: 2, characterCount: 10},
     {img: "5a345987bf1dda7b5d93c2971f8f4975.png", idx: "6c875b05-9717-4d18-83fc-6eb6a49f776d", number: 4, title: "아이러니 - 착오가 곧 성공 ...", policy: 0, rent: 8, rentSale: 18, own: 18, ownSale: 18 ,textCount: 25112, artworkCount: 5, sceneCount: 2, characterCount: 10},
   ]
+  const sortKind = ["최신순","가나다순","공개순","비공개순","팔로워 공개 순","초대된 사람만 순"];
+  const [sort, setSort] = useState<String>("최신 순");
+  const [sortOn, setSortOn] = useState<Boolean>(false);
   const storyList = [
     // public: 0-공개 / 1-비공개 / 2-팔로워에게만공개 / 3-초대된사람만
     {
@@ -139,13 +142,27 @@ export default function SaleEpisode(){
               height={"24px"}
             />
           </div>
-          <span className='right'>
+          <span className='right' onClick={()=>setSortOn((e) => !e)}>
             <ListOutline
               width={"26px"}
               height={"26px"}
             />
-            최신순
+            {sort}
           </span>
+          {sortOn && (
+            <div className='sortBox'>
+              {sortKind.map((content, i)=>(
+                <p 
+                  key={i}
+                  onClick={()=>{
+                    setSort(content);
+                    setSortOn((e) => !e);
+                  }}
+                >{content}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
         {storyList.map((content, i) => (
           <ContentLine key={i}>
@@ -227,13 +244,6 @@ const Container = styled.div`
   }
 `
 
-const Box = styled.div`
-  width: 100%;
-  padding: 20px 30px;
-  background-color: ${props => props.theme.boxColor};
-  border-radius: 12px;
-`
-
 const TopBox = styled.div`
   padding-top: 20px;
   width: 100%;
@@ -263,6 +273,21 @@ const TopBox = styled.div`
       fill: ${props => props.theme.textColor};
       color: ${props => props.theme.textColor};
       cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    padding: 0px;
+    padding-bottom: 20px;
+    .pagingList{
+      margin-top: 18px;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .title {
+      font-size: 18px;
+    }
+    .subtitle{
+      font-size: 16px;
     }
   }
 `
@@ -336,6 +361,45 @@ const ContentBox = styled.div`
       fill: ${props => props.theme.textColor};
       color: ${props => props.theme.textColor};
     }
+    svg{
+      margin-top: 4px;
+    }
+    .sortBox{
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      right: 0;
+      top: 26px;
+      padding: 12px;
+      border: 1.4px solid ${props => props.theme.textColor};
+      background-color: ${props => props.theme.boxColor};
+      z-index: 999999;
+      gap: 12.5px;
+      border-radius: 8px;
+      p{
+        font-size: 20px;
+        transition: all .1s ease-in-out;
+        &:hover{
+          color: #E9446C;
+          cursor: pointer;
+        }
+      }
+    }
+    @media screen and (max-width:1024px) {
+      padding-bottom: 60px;
+      .center{
+        bottom: 0;
+        input{
+          font-size: 16px;
+          left: 0px;
+          transform: translateX(0%);
+        }
+      }
+      .AddCircleOutline{
+        width: 20px;
+      }
+    }
   }
   .pagingList{
     width: 100%;
@@ -351,6 +415,17 @@ const ContentBox = styled.div`
       fill: ${props => props.theme.textColor};
       color: ${props => props.theme.textColor};
       cursor: pointer;
+    }
+  }
+  @media screen and (max-width:1024px) {
+    margin-top: 24px;
+    padding: 12px;
+    .subtitle{
+      font-size: 16px;
+      line-height: 20px;
+    }
+    .pagingList{
+      margin-top: 18px;
     }
   }
 `
@@ -402,6 +477,25 @@ const ContentLineBox = styled.div`
     margin-left: 8px;
     color: #E9446C;
   }
+  @media screen and (max-width:1024px) {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    .title{
+      position: absolute;
+      top: 0;
+      left: 80px;
+    }
+  }
+  @media screen and (max-width:500px) {
+    .link{
+      font-size: 13.5px;
+    }
+
+    svg{
+      width: 26px;
+    }
+  }
 `
 const ContentImg = styled.div`
   width: 60px;
@@ -431,5 +525,23 @@ const BottomBtnBox = styled.div`
     border: none;
     outline: none;
     cursor: pointer;
+  }
+  @media screen and (max-width:1024px) {
+    button{
+      padding: 6.5px 28px;
+      font-size: 20px;
+    }
+  }
+  @media screen and (max-width:500px) {
+    button{
+      padding: 5.5px 18px;
+      font-size: 16px;
+    }
+  }
+  @media screen and (max-width:390px) {
+    button{
+      padding: 4px 12px;
+      font-size: 14px;
+    }
   }
 `

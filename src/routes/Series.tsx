@@ -645,7 +645,6 @@ const MoblieStory = styled.div`
 const MobileFirstView = styled.div`
   display: none;
   width: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 36px;

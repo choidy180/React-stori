@@ -41,4 +41,11 @@ const TopBar = styled.div`
   a:link{
     text-decoration: none;
   }
+  @media screen and (max-width: 1024px) {
+    padding: 14px 20px;
+    border-radius: 0px;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `

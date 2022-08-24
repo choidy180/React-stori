@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import HelmetPd from '../Helmet';
 import NavBar from '../Nav';
 import SaleTopBar from './saleTopBar';
 
@@ -12,6 +13,7 @@ export default function SaleBox(){
       <NavBar title={
         routerIndex === "policy" ? "정책관리" : "스토리 추가 관리"
       }/>
+      <HelmetPd title={routerIndex === "policy" ? "정책관리" : "스토리 추가 관리"}/>
       <Container>
         <SaleTopBar/>
         <Box>
@@ -34,6 +36,12 @@ const Container = styled.div`
   align-items: center;
   gap: 18px;
   z-index: 5;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    min-width: auto;
+    padding: 0;
+    gap: 0;
+  }
   @media screen and (max-width: 500px) {
     padding: 0px;
     padding-bottom: 20px;
@@ -44,4 +52,8 @@ const Box = styled.div`
   padding: 20px 30px;
   background-color: ${props => props.theme.boxColor};
   border-radius: 12px;
+  @media screen and (max-width: 1024px) {
+    padding: 12px;
+    border-radius: 0px;
+  }
 `

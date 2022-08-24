@@ -34,7 +34,9 @@ export default function AddContentBox(props:any){
         <span className='epText'>EP</span>
         <input type="text" placeholder={props.number !== 0 ? String(props.number) : "에피소드 번호"}/>
         <p className='title'>{props.title.length < 10 ? props.title : props.title.slice(0,10)+"..."}</p>
+        <p className='mobileTitle'>{props.title}</p>
         <p className='underText'>글자수 ({props.textCount})&nbsp;&nbsp;삽화수({props.artworkCount})&nbsp;&nbsp;장면수({props.sceneCount})&nbsp;&nbsp;캐릭터수({props.characterCount})</p>
+        <p className='mobileUnderText'>글자수 ({props.textCount})&nbsp;&nbsp;삽화수({props.artworkCount})<br/>장면수({props.sceneCount})&nbsp;&nbsp;캐릭터수({props.characterCount})</p>
       </div>
       <div className='right'>
         <div className='selectPrice'>
@@ -49,12 +51,12 @@ export default function AddContentBox(props:any){
           </SelectPriceBox>
         </div>
         <div className='top'>
-          <span>대여가 : {props.rent}TC</span>
-          <span>대여할인가 : {props.rentSale}TC</span>
+          <span><b>대여가: </b>&nbsp; {props.rent}TC</span>
+          <span><b>대여할인가: </b>&nbsp; {props.rentSale}TC</span>
         </div>
         <div className='bottom'>
-          <span>소장가: {props.own} TC</span>
-          <span>소장가: {props.ownSale} TC</span>
+          <span><b>소장가: </b>&nbsp; {props.own} TC</span>
+          <span><b>소장가: </b>&nbsp; {props.ownSale} TC</span>
         </div>
       </div>
       <AddCircle>
@@ -80,7 +82,7 @@ const AddContent = styled.div`
   background-color: ${props => props.theme.bgColor};
   margin-top: 12px;
   .left{
-    width: calc(100% - 30px);
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -107,11 +109,42 @@ const AddContent = styled.div`
       padding: 6px 0 0 16px;
       font-weight: bold;
       letter-spacing: -.6px;
+      @media screen and (max-width:1024px) {
+        display: none;
+      }
+    }
+    .mobileTitle{
+      position: absolute;
+      left: 100px;
+      top: 50px;
+      font-size: 22px;
+      display: none;
+      @media screen and (max-width:1024px) {
+        display: block;
+      }
+      @media screen and (max-width:500px) {
+        font-size: 18px;
+      }
     }
     .underText{
       position: absolute;
       bottom: 4px;
       left: 105px;
+      @media screen and (max-width:1024px) {
+        display: none;
+      }
+    }
+    .mobileUnderText{
+      display: none;
+      position: absolute;
+      width: calc(100% - 100px);
+      left: 100px;
+      top: 90px;
+      font-size: 16px;
+      line-height: 18px;
+      @media screen and (max-width:1024px) {
+        display: block;
+      }
     }
   }
   .right{
@@ -122,16 +155,32 @@ const AddContent = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+    .selectPrice {
+      width: 100%;
+      display: flex;
+      span{
+        width: auto;
+      }
+    }
     .top{
+      width: 100%;
       position: absolute;
-      right: 50px;
-      top: 8px;
+      left: 00px;
+      top: 38px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       font-size: 17px;
       letter-spacing: -.4px;
-      gap: 42px;
+      span{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+      }
+      b{
+        width: auto;
+        color: #bababa;
+      }
       .selectPrice {
         display: flex;
         justify-content: center;
@@ -140,39 +189,36 @@ const AddContent = styled.div`
       }
     }
     .bottom{
+      width: 100%;
       position: absolute;
-      right: 50px;
+      left: 0px;
       bottom: 4px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      gap: 42px;
     }
     span{
+      width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       cursor: pointer;
       svg{
         color: ${props=>props.theme.textColor};
         margin-left: 4px;
       }
+      b{
+        color: #bababa;
+      }
     }
   }
-  .removeBtn{
-    position: absolute;
-    right: -4px;
-    top:50%;
-    transform: translateY(-50%);
-    color: ${props=>props.theme.textColor};
-    fill: ${props=>props.theme.textColor};
-    cursor: pointer;
-  }
-  @media screen and (max-width:1023px) {
+  @media screen and (max-width:1024px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: auto !important;
+    margin-top: 18px;
+    padding: 12px;
     gap: 12px;
     .left {
       width: 100%;
@@ -197,12 +243,16 @@ const AddContent = styled.div`
       }
     }
   }
+  @media screen and (max-width:500px) {
+    font-size: 14px;
+  }
 `
 const AddImageBox = styled.div`
   width: 90px !important; 
   height: 100%;
   border-radius: 8px;
   overflow: hidden;
+  color: ${props => props.theme.textColor};
   img {
     width: 100%;
     height: 100%; 
@@ -215,7 +265,8 @@ const SelectPriceBox = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  right: 0;
+  left: 50px;
+  top: 12px;
   z-index: 999;
   background-color: ${props => props.theme.boxColor};
   border: 1.4px solid ${props => props.theme.textColor};
@@ -232,7 +283,22 @@ const SelectPriceBox = styled.div`
 
 const AddCircle = styled.div`
   position: absolute;
-  right: 18px;
+  top: 0;
+  width: 50px;
+  right: 8px;
+  height: 100%;
+  span{
+    position: absolute;
+    transform: translateX(8px) translateY(-50%);
+    top: 50%;
+    cursor: pointer;
+    svg{
+      color: white;
+    }
+  }
+  span{
+    left: 0;
+  }
   @media screen and (max-width:769px) {
     bottom: 30px !important;
   }
